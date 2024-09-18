@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="Vozzware Web Tester">
+    <output-path>$PROJECT_DIR$/out/artifacts/Vozzware_Web_Tester</output-path>
+    <root id="root" />
+  </artifact>
+</component>

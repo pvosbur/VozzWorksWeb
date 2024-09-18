@@ -1,0 +1,59 @@
+
+.VwListBox
+{
+  background-color:white;
+  cursor:pointer;
+  color:black;
+  padding: 4px;
+  border: 1px solid black;
+
+}
+
+
+.VwListImg
+{
+  width:18px;
+  height:18px;
+  margin-right:5px;
+  vertical-align: middle;
+}
+
+.VwListText
+{
+  display:inline-block;
+}
+
+.VwCheckBox
+{
+  vertical-align: middle;
+}
+
+.VwItemHover
+{
+  background-color: lightgrey;
+}
+
+.VwItemSelected
+{
+  background-color: lightgrey;
+}
+
+.VwVerticalList
+{
+  display: flex;
+  flex-direction: column;
+}
+
+.VwHorizontalList
+{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.VwListItem
+{
+  display: flex;
+  align-items: center;
+  margin: 3px 0;
+}

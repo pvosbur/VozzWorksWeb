@@ -1,0 +1,47 @@
+
+.VwTreeNode, .VwTreeLeafNode
+{
+  display:flex;
+  align-items:center;
+  height:1.5em;
+  font-size:80%;
+  margin-top:.2em;
+  color:#333333;
+}
+
+.VwExpanderImg
+{
+  width:.6em;
+  cursor:pointer;
+}
+
+.VwFolderImg
+{
+  width:1.2em;
+  margin-left:.5em;
+}
+
+.VwFolderText
+{
+  margin-left:.5em;
+  cursor:default;
+
+}
+
+.VwTreeChildren
+{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+
+.VwHoverItem
+{
+  background:lightgrey;
+}
+
+.VwSelectedItem
+{
+  background:lightskyblue;
+}

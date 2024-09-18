@@ -1,0 +1,117 @@
+/*
+ * ============================================================================================
+ *
+ *                                  V o z z w o r k s   L L C.
+ *
+ *                                     Copyright(c) 2017 By
+ *
+ *                                       VoZZware LLC
+ *
+ *                             A L L   R I G H T S   R E S E R V E D
+ *
+ * ============================================================================================
+ */
+
+.VwCalendarMonthScroller
+{
+  display: flex;
+  width: 90%;
+  height: 1.5em;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.VwTinyCalendar
+{
+  width: 12em;
+  border: 1px solid black;
+  background-color: beige;
+  position: absolute;
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 0.25em;
+}
+
+.VwTinyCalHeader
+{
+  width: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.VwTinyCalHeader span
+{
+  width: 1.5em;
+  height: 1.5em;
+  font-size: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.VwCalendarRow
+{
+  display: flex;
+  align-items: center;
+}
+
+.VwCalendarGrid
+{
+  width: 90%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+  overflow: auto;
+}
+
+.VwTinyCalDayTile
+{
+  width: 14.28%;
+  height: 1.25em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.VwTinyCalDayTile span
+{
+  font-size: 90%;
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+
+.VwTinyCalDayTile.Selected
+{
+  border:1px solid red !important;
+}
+
+.VwCalendarFooter
+{
+  width: 90%;
+  height: 2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0.25em 0 0.5em;
+}
+
+.VwCalendarFooterTime
+{
+  width: 60%;
+  height: 100%;
+  font-size: 90%;
+  font-weight: lighter;
+  box-sizing: border-box;
+  border: 1px solid black;
+}
+
+

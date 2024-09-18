@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>VwXmlProcessor Tester</title>
+</head>
+<body>
+  <h1>Xml Processor Tester</h1>
+  <div id="vwGridTester"></div>
+</body>
+<script src="/js/jquery-3.7.1.slim.min.js"></script>
+<script src="/js/base64js.min.js"></script>
+<script src="/vozzworks/util/VwCssImport/VwCssImport.js"></script>
+
+<script type="module">
+
+  import VwXmlTokenParser from "../vozzworks/util/VwXmlProcessor/VwXmlTokenParser.js";
+  import VwXmlProcessor   from "../vozzworks/util/VwXmlProcessor/VwXmlProcessor.js";
+  import VwXPath        from "../vozzworks/ui/VwTree/VwXPath.js";
+
+  const strXml =
+  `
+   <!-- Test XML Doc -->
+   <gridConfig>
+     <gridHdr>
+       <globals>
+        <prop id="noReorder" value="true"/>
+        <prop id="noResize" value="true"/>
+       </globals>
+       <gridCols>
+        <col id="img" />
+        <col id="img" width="3em" type="img"/>
+        <col id="title" width="40%"/>
+        <col id="uploadDate" width="20%" type="date"          />
+        <col id="size" width="20%" type="numeric" max="is &gt; 10 &amp;&amp; &lt; 20"/>
+      </gridCols>
+     </gridHdr>
+     <props>
+       <prop id="breadCrumbId" value="assetBreadCribId"/>
+     </props>
+   </gridConfig>`;
+
+  const strXml2 =
+  `<bookStore>
+     <book>
+       <title>Coding Is Easy</title>
+       <price onSale="true">$20</price>
+     </book>
+     <book>
+       <title>Easy Baking</title>
+       <price>$19.99</price>
+     </book>
+   </bookStore>`;
+
+  //testTokenParser();
+  testXmlProcessor()
+  //testXmlProcessorEleNormalForm();
+
+  function testXmlProcessor()
+  {
+    const xmlProcessor = new VwXmlProcessor( strXml );
+    const xmlGraph = xmlProcessor.toObjectGraph( VwXmlProcessor.ATTR_NORMAL_FORM);
+
+    console.log( xmlGraph );
+
+    const xpath = new VwXPath( xmlGraph );
+
+    let result = xpath.evaluate( "/gridConfig");
+
+    result = xpath.evaluate( "//globals");
+
+    result = xpath.evaluate( "//gridHdr");
+
+    result = xpath.evaluate( "/gridConfig/gridHdr/gridCols/col[1]");
+    
+    result = xpath.evaluate( "//col[5]");
+
+
+    result = xpath.evaluate( "/gridConfig/gridHdr/props/prop[1]");
+
+    result = xpath.evaluate( "/gridConfig/props/prop[1]");
+
+    result = xpath.evaluate( "/gridConfig/props/prop");
+
+
+    console.log( result ) ;
+    
+    //xmlProcessor.dumpTreeToConsole();
+
+  }
+
+  function testXmlProcessorEleNormalForm()
+  {
+    const xmlProcessor = new VwXmlProcessor( strXml2 );
+    const xmlGraph = xmlProcessor.toObjectGraph( VwXmlProcessor.ELEMENT_NORMAL_FORM);
+
+    console.log( xmlGraph );
+
+    const xpath = new VwXPath( xmlGraph );
+
+    let result = xpath.evaluate( "/bookStore/book/title");
+
+    result = xpath.evaluate( "/bookStore/book");
+
+    result = xpath.evaluate( "/bookStore/book[1]");
+
+    result = xpath.evaluate( "/bookStore/book[2]/price");
+
+    result = xpath.evaluate( "/bookStore/book[2]/title");
+    console.log( result);
+
+    //xmlProcessor.dumpTreeToConsole();
+
+
+  }
+
+  function testTokenParser()
+  {
+    const xmlTokenParser = new VwXmlTokenParser( strXml2 );
+
+    xmlTokenParser.onTagOpen( handleTagOpen );
+    xmlTokenParser.onTagClose( handleTagClose );
+    xmlTokenParser.onTagData( handleTagData );
+    xmlTokenParser.onComment( handleTagOnComment );
+
+    xmlTokenParser.parseDoc();
+
+    function handleTagOpen( strTagName, aTagAttributes )
+    {
+      console.log( `Processing tag open: ${strTagName}` )
+
+      if ( aTagAttributes )
+      {
+        let strAttrs = "";
+        for ( const attr of aTagAttributes )
+        {
+          strAttrs += `${attr.getName()}=${attr.getValue()} `
+        }
+        console.log( `  ${strAttrs}` );
+      }
+
+    } // end handleTagOpen()
+
+    function handleTagClose( strTagName )
+    {
+      console.log( `Processing tag close: ${strTagName}` )
+
+    } // end handleTagClose()
+
+    function handleTagData( strTagName, strTagData )
+    {
+      console.log( `Processing tag propVal: ${strTagName} -- ${strTagData}` )
+    } // end handleTagData()
+
+    function handleTagOnComment( strComment )
+    {
+      console.log( `Got comment: ${strComment}` )
+
+    } // end handleTagOnComment()
+  }
+
+
+
+</script>
+</html>

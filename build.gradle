@@ -1,0 +1,68 @@
+plugins
+{
+  id 'war'
+  id 'java'
+}
+
+java {
+  toolchain {
+    languageVersion.set(JavaLanguageVersion.of("$jdkVersion"))
+  }
+}
+
+defaultTasks  'clean'
+
+
+java
+{
+  toolchain
+          {
+            languageVersion.set(JavaLanguageVersion.of("$jdkVersion"))
+          }
+} // end java
+
+// we set the web folder for IntelliJ to web
+war
+{
+
+  archiveFileName="$warFileName"
+  webAppDirName="web"
+
+} // end war
+
+
+repositories
+{
+  mavenCentral()
+}
+
+dependencies
+{
+  implementation fileTree('../3rdParty') {
+     include '*.jar'
+  }
+
+  implementation fileTree("../VozzWorks/dist") {
+    include '*.jar'
+  }
+
+  implementation fileTree('lib')
+  {
+    include '*.jar'
+  }
+
+  implementation ('org.apache.tomcat:tomcat-catalina:9.0.60')
+  implementation ('org.apache.commons:commons-lang3:3.9')
+  implementation ('org.apache.httpcomponents:httpcore:4.4.15')
+  implementation ('org.apache.httpcomponents:httpcore-nio:4.4.15')
+  implementation ('commons-codec:commons-codec:1.15')
+  implementation ('commons-fileupload:commons-fileupload:1.4')
+  implementation ('org.slf4j:slf4j-log4j12:1.7.29')
+  implementation('org.springframework.security:spring-security-crypto:5.7.1')
+  implementation('org.bouncycastle:bcpkix-jdk15on:1.70')
+
+  /* JUNIT */
+  testImplementation('org.junit.jupiter:junit-jupiter:5.8.2')
+
+}
+

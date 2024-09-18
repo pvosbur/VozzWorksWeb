@@ -1,0 +1,3636 @@
+<!-- a tag library descriptor -->
+
+<taglib  xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd" version="2.1">
+
+  <tlib-version>1.0</tlib-version>
+  <jsp-version>1.1</jsp-version>
+  <short-name>VwWorks taglib</short-name>
+  <uri>http://www.vozzware.com/jsp/ext</uri>
+  <description>
+	  Tag library for V o z z W o r k s
+  </description>
+
+  <tag>
+    <name>rb</name>
+    <tag-class>com.vozzware.jsp.components.tagdefs.VwBundleTag</tag-class>
+    <description>
+	    Manages resource bundles
+    </description>
+
+    <attribute>
+      <name>load</name>
+      <required>false</required>
+    </attribute>
+    <attribute>
+      <name>bundle</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>name</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>key</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>merge</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- messages -->
+  <tag>
+    <name>messages</name>
+    <tag-class>com.vozzware.jsp.components.tagdefs.VwMessagesTag</tag-class>
+    							 
+    <description>
+	    Manages message object to be displayed
+    </description>
+
+    <attribute>
+      <name>descriptionClass</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>warningClass</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>infoClass</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>errorClass</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>showOnly</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+   </tag>
+
+  <!-- content -->
+  <tag>
+    <name>content</name>
+    <tag-class>com.vozzware.jsp.components.tagdefs.VwContentTag</tag-class>
+    							 
+    <description>
+	 		Retrieves the specified content and writes it to the servlet output stream
+    </description>
+
+    <attribute>
+      <name>contentLoc</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>contentName</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+   </tag>
+
+  <!-- debug -->
+  <tag>
+    <name>debug</name>
+    <tag-class>com.vozzware.jsp.components.tagdefs.VwDebugTag</tag-class>
+    							 
+    <description>
+	 		Dumps request headers and or request parameters to the page output stream
+    </description>
+
+    <attribute>
+      <name>show</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+ 
+  </tag>
+  
+  <!-- Counter -->
+  <tag>
+    <name>counter</name>
+    <tag-class>com.vozzware.jsp.components.tagdefs.VwCounterTag</tag-class>
+     <body-content>JSP</body-content>
+    <description>
+			Iterates an index value
+    </description>
+
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+    </attribute>
+    <attribute>
+      <name>max</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>initial</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>step</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>dec</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+
+  <!-- iterator  -->
+  <tag>
+    <name>iterator</name>
+    <tag-class>com.vozzware.jsp.components.tagdefs.VwIteratorTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+			Iterates a list of objects
+    </description>
+
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+    </attribute>
+    <attribute>
+      <name>bean</name>
+      <required>false</required>
+    </attribute>
+    <attribute>
+      <name>property</name>
+      <required>false</required>
+    </attribute>
+    <attribute>
+      <name>collection</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>break</name>
+      <required>false</required>
+    </attribute>
+    <attribute>
+      <name>offset</name>
+      <required>false</required>
+    </attribute>
+    <attribute>
+      <name>count</name>
+      <required>false</required>
+    </attribute>
+  </tag>
+
+  <!-- write -->
+  <tag>
+    <name>write</name>
+    <tag-class>com.vozzware.jsp.components.tagdefs.VwWriteTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+			Writes bean properties, methods or Map and VwDataObject values
+    </description>
+
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>property</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>method</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  
+    <attribute>
+      <name>params</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>scope</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>format</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+  </tag>
+
+
+  <!-- out -->
+  <tag>
+    <name>out</name>
+    <tag-class>com.vozzware.jsp.components.tagdefs.VwOutTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+			Writes bean properties, methods or Map and VwDataObject values
+    </description>
+
+    <attribute>
+      <name>value</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+ 
+    <attribute>
+      <name>method</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>params</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>format</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+  </tag>
+
+	
+  <!-- If -->
+  <tag>
+    <name>if</name>
+    <tag-class>com.vozzware.jsp.components.tagdefs.VwIfTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+			Conditional JSP processing
+    </description>
+
+    <attribute>
+      <name>test</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>exists</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>notExists</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>object</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>name</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>property</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>method</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>params</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+
+    <attribute>
+      <name>value</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>op</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>nop</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+  </tag>
+
+  <!-- ElseIf -->
+  <tag>
+    <name>elseIf</name>
+    <tag-class>com.vozzware.jsp.components.tagdefs.VwElseIfTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+			Conditional JSP processing
+    </description>
+
+    <attribute>
+      <name>test</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>exists</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+     </attribute>
+
+    <attribute>
+      <name>notExists</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>object</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>name</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>property</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>method</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>params</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+
+    <attribute>
+      <name>value</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>op</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>nop</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	  
+  </tag>
+
+  <tag>
+    <name>else</name>
+    <tag-class>com.vozzware.jsp.components.tagdefs.VwElseTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+			Conditional JSP processing
+    </description>
+  </tag>
+  
+ <!-- ExcludeIf --> 
+  <tag>
+    <name>excludeIf</name>
+    <tag-class>com.vozzware.jsp.components.tagdefs.VwExcludeIfTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+			Conditional JSP processing
+    </description>
+
+    <attribute>
+      <name>test</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>exists</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      </attribute>
+
+    <attribute>
+      <name>notExists</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>object</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>name</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>property</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>method</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>params</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+
+    <attribute>
+      <name>value</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>op</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>nop</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   </tag>
+    <!-- simpleIfElse -->
+   <tag>
+    <name>simpleIfElse</name>
+    <tag-class>com.vozzware.jsp.components.tagdefs.VwSimpleIfElseTag</tag-class>
+    <description>
+			Conditional JSP processing
+    </description>
+
+    <attribute>
+      <name>test</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>trueResult</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>falseResult</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>exists</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>notExists</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>object</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>name</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>property</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>method</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>params</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>scope</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>value</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>op</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>nop</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+  </tag>
+
+
+  <!-- simpleIf -->
+  <tag>
+    <name>simpleIf</name>
+    <tag-class>com.vozzware.jsp.components.tagdefs.VwSimpleIfTag</tag-class>
+    <description>
+			Conditional JSP processing
+    </description>
+
+    <attribute>
+      <name>result</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+     <attribute>
+      <name>test</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>exists</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+     </attribute>
+
+    <attribute>
+      <name>notExists</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>object</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>name</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>property</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>method</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>params</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+
+    <attribute>
+      <name>value</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>op</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>nop</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+  </tag>
+
+
+  <!-- select -->
+  <tag>
+    <name>select</name>
+    <tag-class>com.vozzware.jsp.components.tagdefs.VwSelectTag</tag-class>
+    <description>
+			Creates an html listbox or combo dropdown box
+    </description>
+
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>property</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>collection</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>beanName</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>required</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>size</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>selected</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>selectedValues</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>multiple</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>noSelectItem</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>noSelectItemValue</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>attr</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onClick</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onSelect</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+ 
+    <attribute>
+      <name>onMouseOver</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onMouseOut</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onMouseMove</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onChange</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onBlur</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onFocus</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+  </tag>
+
+  <!-- form -->
+
+  <tag>
+    <name>form</name>
+    <tag-class>com.vozzware.jsp.components.tagdefs.VwFormTag</tag-class>
+    <description>
+			Creates an html form with javascript for validation
+    </description>
+
+    <attribute>
+      <name>method</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+    <attribute>
+      <name>action</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>style</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>attr</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>dir</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>enctype</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>lang</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>language</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>target</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>title</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onSubmit</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onReset</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onClick</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>name</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>id</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onDblClick</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+  </tag>
+	
+  <!-- textField -->
+  
+  <tag>
+    <name>textField</name>
+    <tag-class>com.vozzware.jsp.components.tagdefs.VwTextFieldTag</tag-class>
+    <description>
+				Creates an html input type="text" tag
+    </description>
+
+    <attribute>
+      <name>accept</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>align</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+    <attribute>
+      <name>alt</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+    <attribute>
+      <name>disabled</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+   <attribute>
+      <name>maxLength</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>readOnly</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>size</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+     <attribute>
+      <name>src</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>value</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <!-- standard attributes -->
+    
+    <attribute>
+      <name>id</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>cssClass</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+   
+   <attribute>
+      <name>title</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <attribute>
+      <name>style</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <attribute>
+      <name>dir</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>lang</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+
+   <!-- Event attrbutes -->
+    <attribute>
+      <name>tabIndex</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+     <attribute>
+      <name>accessKey</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+
+    <attribute>
+      <name>onClick</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onDblClick</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onMouseOver</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onMouseOut</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onMouseMove</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onChange</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onBlur</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onFocus</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onSelect</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onKeyUp</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    
+    <attribute>
+      <name>onKeyDown</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onKeyPress</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <!-- Vw Attributes -->
+    <attribute>
+      <name>required</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>attr</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  
+    <attribute>
+      <name>format</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>method</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>params</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>mustMatch</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    
+    <attribute>
+      <name>noMatchText</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   </tag>
+
+  <!-- numericTextField -->
+  
+  <tag>
+    <name>numericTextField</name>
+    <tag-class>com.vozzware.jsp.components.tagdefs.VwNumericTextFieldTag</tag-class>
+    <description>
+				Creates an html input type="text" tag
+				also generates client side java script to only allow digits
+				
+    </description>
+
+    <attribute>
+      <name>accept</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>align</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+    <attribute>
+      <name>alt</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+    <attribute>
+      <name>disabled</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+   <attribute>
+      <name>maxLength</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>readOnly</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>size</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+     <attribute>
+      <name>src</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>value</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <!-- standard attributes -->
+    
+    <attribute>
+      <name>id</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>cssClass</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+   
+   <attribute>
+      <name>title</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <attribute>
+      <name>style</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <attribute>
+      <name>dir</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>lang</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+
+   <!-- Event attrbutes -->
+    <attribute>
+      <name>tabindex</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+     <attribute>
+      <name>accessKey</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+
+    <attribute>
+      <name>onClick</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onDblClick</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onMouseOver</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onMouseOut</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onMouseMove</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onChange</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onBlur</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onFocus</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onSelect</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onKeyUp</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    
+    <attribute>
+      <name>onKeyDown</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onKeyPress</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <!-- Vw Attributes -->
+    <attribute>
+      <name>required</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>attr</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  
+    <attribute>
+      <name>format</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>method</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>params</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>mustMatch</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    
+    <attribute>
+      <name>noMatchText</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   </tag>
+
+   <!-- decimalTextField -->
+  
+  <tag>
+    <name>decimalTextField</name>
+    <tag-class>com.vozzware.jsp.components.tagdefs.VwDecimalTextFieldTag</tag-class>
+    <description>
+				Creates an html input type="text" tag,
+				also generates client side java script to only allow digits and a decimal point
+    </description>
+
+    <attribute>
+      <name>accept</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>align</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+    <attribute>
+      <name>alt</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+    <attribute>
+      <name>disabled</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+   <attribute>
+      <name>maxLength</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>readOnly</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>size</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+     <attribute>
+      <name>src</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>value</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <!-- standard attributes -->
+    
+    <attribute>
+      <name>id</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>cssClass</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+   
+   <attribute>
+      <name>title</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <attribute>
+      <name>style</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <attribute>
+      <name>dir</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>lang</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+
+   <!-- Event attrbutes -->
+    <attribute>
+      <name>tabindex</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+     <attribute>
+      <name>accessKey</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+
+    <attribute>
+      <name>onClick</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onDblClick</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onMouseOver</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onMouseOut</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onMouseMove</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onChange</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onBlur</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onFocus</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onSelect</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onKeyUp</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    
+    <attribute>
+      <name>onKeyDown</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onKeyPress</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <!-- Vw Attributes -->
+    <attribute>
+      <name>required</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>attr</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  
+    <attribute>
+      <name>format</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>method</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>params</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    
+    <attribute>
+      <name>mustMatch</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    
+    <attribute>
+      <name>noMatchText</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   </tag>
+   
+   <!-- password -->
+  <tag>
+    <name>password</name>
+    <tag-class>com.vozzware.jsp.components.tagdefs.VwPasswordTag</tag-class>
+    <description>
+				Creates an html input tag of type="password"
+    </description>
+
+    <attribute>
+      <name>accept</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>align</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+    <attribute>
+      <name>alt</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+    <attribute>
+      <name>disabled</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+   <attribute>
+      <name>maxLength</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>readOnly</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>size</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+     <attribute>
+      <name>src</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>value</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <!-- standard attributes -->
+    
+    <attribute>
+      <name>id</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>cssClass</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+   
+   <attribute>
+      <name>title</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <attribute>
+      <name>style</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <attribute>
+      <name>dir</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>lang</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+
+   <!-- Event attrbutes -->
+    <attribute>
+      <name>tabindex</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+     <attribute>
+      <name>accessKey</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+
+    <attribute>
+      <name>onClick</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onDblClick</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onMouseOver</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onMouseOut</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onMouseMove</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onChange</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onBlur</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onFocus</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onSelect</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onKeyUp</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    
+    <attribute>
+      <name>onKeyDown</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onKeyPress</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <!-- Vw Attributes -->
+    <attribute>
+      <name>required</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>attr</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    
+   <attribute>
+      <name>method</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>params</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  
+      <attribute>
+      <name>mustMatch</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    
+    <attribute>
+      <name>noMatchText</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  
+  </tag>
+
+  <!-- textarea -->
+  <tag>
+    <name>textArea</name>
+    <tag-class>com.vozzware.jsp.components.tagdefs.VwTextAreaTag</tag-class>
+    <description>
+				Creates an html textarea tag
+    </description>
+
+  <attribute>
+      <name>rows</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <attribute>
+      <name>cols</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>disabled</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>readOnly</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+
+    <attribute>
+      <name>value</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <!-- standard attributes -->
+    
+    <attribute>
+      <name>id</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>cssClass</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+   
+   <attribute>
+      <name>title</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <attribute>
+      <name>style</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <attribute>
+      <name>dir</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>lang</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+
+   <!-- Event attrbutes -->
+    <attribute>
+      <name>tabindex</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+     <attribute>
+      <name>accessKey</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+
+    <attribute>
+      <name>onClick</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onDblClick</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onMouseOver</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onMouseOut</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onMouseMove</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onChange</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onBlur</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onFocus</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onSelect</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onKeyUp</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    
+    <attribute>
+      <name>onKeyDown</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onKeyPress</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <!-- Vw Attributes -->
+    <attribute>
+      <name>required</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>attr</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	   
+   </tag>
+  
+   <!-- checkBox -->
+   <tag>
+    <name>checkBox</name>
+    <tag-class>com.vozzware.jsp.components.tagdefs.VwCheckBoxTag</tag-class>
+    <description>
+				Creates an html input tag type="checkbox"
+    </description>
+
+    <attribute>
+      <name>accept</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>align</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+    <attribute>
+      <name>alt</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>disabled</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+     <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+
+     <attribute>
+      <name>src</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>value</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <!-- standard attributes -->
+    
+    <attribute>
+      <name>id</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>cssClass</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+   
+   <attribute>
+      <name>title</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <attribute>
+      <name>style</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <attribute>
+      <name>dir</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>lang</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+
+   <!-- Event attrbutes -->
+    <attribute>
+      <name>tabindex</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+     <attribute>
+      <name>accessKey</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+
+    <attribute>
+      <name>onClick</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onDblClick</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onMouseOver</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onMouseOut</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onMouseMove</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onChange</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onBlur</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onFocus</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onSelect</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onKeyUp</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    
+    <attribute>
+      <name>onKeyDown</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onKeyPress</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+ 
+    <!--  Vw Attributes -->
+    <attribute>
+      <name>checkedValue</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>unCheckedValue</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>label</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>labelPos</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+    <attribute>
+      <name>attr</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	  
+   </tag>
+
+   <!-- radioButton -->
+  
+  <tag>
+    <name>radioButton</name>
+    <tag-class>com.vozzware.jsp.components.tagdefs.VwRadioButtonTag</tag-class>
+    <description>
+				Creates an html input tag type="radio"
+    </description>
+
+    <attribute>
+      <name>accept</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>align</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+    <attribute>
+      <name>alt</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>checked</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+	
+    <attribute>
+      <name>disabled</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+   <attribute>
+      <name>maxLength</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>readOnly</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>size</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+     <attribute>
+      <name>src</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>value</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <!-- standard attributes -->
+    
+    <attribute>
+      <name>id</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>cssClass</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+   
+   <attribute>
+      <name>title</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <attribute>
+      <name>style</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <attribute>
+      <name>dir</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>lang</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+
+   <!-- Event attrbutes -->
+    <attribute>
+      <name>tabindex</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+     <attribute>
+      <name>accessKey</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+
+    <attribute>
+      <name>onClick</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onDblClick</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onMouseOver</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onMouseOut</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onMouseMove</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onChange</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onBlur</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onFocus</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onSelect</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onKeyUp</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    
+    <attribute>
+      <name>onKeyDown</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onKeyPress</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+    <attribute>
+      <name>checked</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+
+    <!--  Vw Attributes -->
+    <attribute>
+      <name>checkedValue</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <attribute>
+      <name>label</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>labelPos</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>attr</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	  
+   </tag>
+
+
+  <!-- comboBox -->
+  <tag>
+    <name>comboBox</name>
+    <tag-class>com.vozzware.jsp.components.tagdefs.VwComboBoxTag</tag-class>
+    <description>
+				Creates an html select with option tags
+    </description>
+
+    <attribute>
+      <name>accept</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>align</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+    <attribute>
+      <name>alt</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+    <attribute>
+      <name>disabled</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+
+     <attribute>
+      <name>src</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <!-- standard attributes -->
+    
+    <attribute>
+      <name>id</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>cssClass</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+   
+   <attribute>
+      <name>title</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <attribute>
+      <name>style</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <attribute>
+      <name>dir</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>lang</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+
+   <!-- Event attrbutes -->
+    <attribute>
+      <name>tabindex</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+     <attribute>
+      <name>accessKey</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+
+    <attribute>
+      <name>onClick</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onDblClick</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onMouseOver</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onMouseOut</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onMouseMove</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onChange</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onBlur</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onFocus</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onSelect</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onKeyUp</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    
+    <attribute>
+      <name>onKeyDown</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onKeyPress</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <!-- Vw Attributes -->
+    <attribute>
+      <name>required</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>attr</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  
+    <attribute>
+      <name>collection</name>
+      <required>true</required>
+       <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+
+   <attribute>
+      <name>noSelectItem</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <attribute>
+      <name>noSelectItemValue</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <attribute>
+      <name>value</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <attribute>
+      <name>valueProp</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <attribute>
+      <name>displayProp</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <attribute>
+      <name>action</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    
+   </tag>
+
+  <!-- statesComboBox -->
+  <tag>
+    <name>statesComboBox</name>
+    <tag-class>com.vozzware.jsp.components.tagdefs.VwStatesComboBoxTag</tag-class>
+    <description>
+				Creates an html select tag with the United States states and state code entries 
+    </description>
+
+    <attribute>
+      <name>accept</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>align</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+    <attribute>
+      <name>alt</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+    <attribute>
+      <name>disabled</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+
+    <attribute>
+      <name>size</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+     <attribute>
+      <name>src</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <!-- standard attributes -->
+    
+    <attribute>
+      <name>id</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>cssClass</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+   
+   <attribute>
+      <name>title</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <attribute>
+      <name>style</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <attribute>
+      <name>dir</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>lang</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+
+   <!-- Event attrbutes -->
+    <attribute>
+      <name>tabindex</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+     <attribute>
+      <name>accessKey</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+
+    <attribute>
+      <name>onClick</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onDblClick</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onMouseOver</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onMouseOut</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onMouseMove</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onChange</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onBlur</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onFocus</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onSelect</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onKeyUp</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    
+    <attribute>
+      <name>onKeyDown</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onKeyPress</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <!-- Vw Attributes -->
+    <attribute>
+      <name>required</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>attr</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  
+   <attribute>
+      <name>noSelectItem</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <attribute>
+      <name>noSelectItemValue</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <attribute>
+      <name>value</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <attribute>
+      <name>action</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   </tag>
+
+  <!-- countriesComboBox -->
+  <tag>
+    <name>countriesComboBox</name>
+    <tag-class>com.vozzware.jsp.components.tagdefs.VwCountriesComboBoxTag</tag-class>
+    <description>
+				Creates an html select tag with the list of countries and country code entries 
+    </description>
+
+    <attribute>
+      <name>accept</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>align</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+    <attribute>
+      <name>alt</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+    <attribute>
+      <name>disabled</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+
+    <attribute>
+      <name>size</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+     <attribute>
+      <name>src</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <!-- standard attributes -->
+    
+    <attribute>
+      <name>id</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>cssClass</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+   
+   <attribute>
+      <name>title</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <attribute>
+      <name>style</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <attribute>
+      <name>dir</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>lang</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+
+   <!-- Event attrbutes -->
+    <attribute>
+      <name>tabindex</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+     <attribute>
+      <name>accessKey</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+
+    <attribute>
+      <name>onClick</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onDblClick</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onMouseOver</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onMouseOut</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onMouseMove</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onChange</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onBlur</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onFocus</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onSelect</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onKeyUp</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    
+    <attribute>
+      <name>onKeyDown</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onKeyPress</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <!-- Vw Attributes -->
+    <attribute>
+      <name>required</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>attr</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  
+
+   <attribute>
+      <name>noSelectItem</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <attribute>
+      <name>noSelectItemValue</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <attribute>
+      <name>value</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <attribute>
+      <name>action</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    
+   </tag>
+
+ <!-- listBox -->
+  <tag>
+    <name>listBox</name>
+    <tag-class>com.vozzware.jsp.components.tagdefs.VwListBoxTag</tag-class>
+    <description>
+				Creates an html select with option tags as a listbox
+    </description>
+
+    <attribute>
+      <name>accept</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>align</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+    <attribute>
+      <name>alt</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+    <attribute>
+      <name>disabled</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+
+    <attribute>
+      <name>size</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+     <attribute>
+      <name>src</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <!-- standard attributes -->
+    
+    <attribute>
+      <name>id</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>cssClass</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+   
+   <attribute>
+      <name>title</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <attribute>
+      <name>style</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <attribute>
+      <name>dir</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>lang</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+
+   <!-- Event attrbutes -->
+    <attribute>
+      <name>tabindex</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+     <attribute>
+      <name>accessKey</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+
+    <attribute>
+      <name>onClick</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onDblClick</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onMouseOver</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onMouseOut</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onMouseMove</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onChange</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onBlur</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onFocus</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onSelect</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onKeyUp</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    
+    <attribute>
+      <name>onKeyDown</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onKeyPress</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <!-- Vw Attributes -->
+    <attribute>
+      <name>required</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>attr</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  
+    <attribute>
+      <name>collection</name>
+      <required>true</required>
+       <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <attribute>
+      <name>attr</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <attribute>
+      <name>value</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    
+   <attribute>
+      <name>multiple</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <attribute>
+      <name>size</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <attribute>
+      <name>valueProp</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <attribute>
+      <name>displayProp</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <attribute>
+      <name>action</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   </tag>
+
+   <!-- submit -->
+  
+  <tag>
+    <name>submit</name>
+    <tag-class>com.vozzware.jsp.components.tagdefs.VwSubmitTag</tag-class>
+    <description>
+				Creates an html input tag of type="submit"
+    </description>
+
+    <attribute>
+      <name>name</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+
+    <attribute>
+      <name>title</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+
+    <attribute>
+      <name>onClick</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <attribute>
+      <name>onSubmit</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onDblClick</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onMouseOver</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onMouseOut</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onMouseMove</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+
+    <attribute>
+      <name>onBlur</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onFocus</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+
+    <attribute>
+      <name>style</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>lang</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>align</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+    <attribute>
+      <name>alt</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+	
+    <attribute>
+      <name>accessKey</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+    <attribute>
+      <name>disabled</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+    <attribute>
+      <name>border</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+    <attribute>
+      <name>id</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>attr</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	  
+    <attribute>
+      <name>value</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <attribute>
+      <name>action</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <attribute>
+      <name>confirm</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <attribute>
+      <name>noValidate</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   </tag>
+
+  <!-- textArea -->
+  <tag>
+    <name>textArea</name>
+    <tag-class>com.vozzware.jsp.components.tagdefs.VwTextAreaTag</tag-class>
+    <description>
+				Creates an html textarea tag
+    </description>
+
+    <attribute>
+      <name>type</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+    <attribute>
+      <name>value</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>maxLength</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>src</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>tabindex</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>title</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>type</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>useMap</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <attribute>
+      <name>isMap</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>size</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>readOnly</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onClick</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onDblClick</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onMouseOver</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onMouseOut</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onMouseMove</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onChange</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onBlur</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onFocus</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onKeyUp</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    
+    <attribute>
+      <name>onKeyDown</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onKeyPress</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>style</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>lang</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>language</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+    <attribute>
+      <name>align</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+    <attribute>
+      <name>alt</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+    <attribute>
+      <name>accept</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+    <attribute>
+      <name>accessKey</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+    <attribute>
+      <name>disabled</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+    <attribute>
+      <name>border</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+	
+    <attribute>
+      <name>id</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+    <attribute>
+      <name>required</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>attr</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	  
+    <attribute>
+      <name>rows</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>cols</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   </tag>
+
+
+   <!-- input NOTE this has been left in for backwards compability-->
+  
+  <tag>
+    <name>input</name>
+    <tag-class>com.vozzware.jsp.components.tagdefs.VwInputTag</tag-class>
+    <description>
+				Creates an html input tag
+    </description>
+
+    <attribute>
+      <name>type</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+    <attribute>
+      <name>value</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>checkTest</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>format</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>checkedValue</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>unCheckedValue</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	  	  	  
+    <attribute>
+      <name>maxLength</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>src</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>tabindex</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>title</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>type</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>useMap</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <attribute>
+      <name>isMap</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>size</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>readOnly</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onClick</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onDblClick</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onMouseOver</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onMouseOut</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onMouseMove</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onChange</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onBlur</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onFocus</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onKeyUp</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    
+    <attribute>
+      <name>onKeyDown</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onKeyPress</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>style</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>lang</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>language</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+    <attribute>
+      <name>align</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+    <attribute>
+      <name>alt</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+    <attribute>
+      <name>accept</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+    <attribute>
+      <name>accessKey</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+    <attribute>
+      <name>disabled</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+    <attribute>
+      <name>border</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+    <attribute>
+      <name>checked</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+	
+    <attribute>
+      <name>id</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	
+    <attribute>
+      <name>required</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>attr</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	  
+   <attribute>
+      <name>rows</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   <attribute>
+      <name>cols</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+   </tag>
+
+  <tag>
+
+    <name>fileUploadUrl</name>
+    <tag-class>com.vozzware.jsp.components.tagdefs.VwFileUploadUrlCopyTag</tag-class>
+    <description>
+    </description>
+
+    <attribute>
+      <name>name</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+     </attribute>
+    <attribute>
+      <description>The initial value of this component.</description>
+      <name>value</name>
+      </attribute>
+  </tag>
+
+</taglib>

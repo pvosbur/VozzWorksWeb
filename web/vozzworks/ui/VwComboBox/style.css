@@ -1,0 +1,151 @@
+/*
+ * ============================================================================================
+ *
+ *                                  V o z z w o r k s   L L C.
+ *
+ *                                     Copyright(c) 2012 By
+ *
+ *                                       VoZZware LLC
+ *
+ *                             A L L   R I G H T S   R E S E R V E D
+ *
+ * ============================================================================================
+ */
+
+.VwComboBoxShell
+{
+  display:flex;
+  flex-direction: column;;
+  width:100%;
+  height:100%;
+  max-height:90vh;
+
+}
+
+.VwComboBoxListBox
+{
+  position:absolute;;
+  width:100%;
+}
+
+.VwComboBtn
+{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  height:100%;
+  cursor: pointer;
+  z-index: 1;
+  border-radius:6px;
+  position:relative;
+
+}
+
+.VwComboBtn > span
+{
+  display:block;
+  margin-right:.4em;
+}
+
+.VwComboBtnTextContainer
+{
+  display:flex;
+  justify-content:center;
+  margin-left:4px;
+  width:100%;
+
+ }
+
+.VwComboBtnArrowImg
+{
+  position:absolute;
+  width:12px;
+  height:12px;
+  right:.4em;
+
+}
+
+.VwHide
+{
+  display:none;
+}
+
+.VwCheckHide
+{
+  visibility: hidden;
+}
+
+.VwRightAlign
+{
+  text-align:right;
+}
+
+.VwComboCheckMark
+{
+  margin-top:3px;
+  margin-left:2px;
+  margin-right:4px;
+  width:10px;
+  height:10px;
+}
+
+
+.VwComboListDropdown
+{
+  display:none;
+  position:absolute;
+  z-index:999999;
+}
+
+.VwComboList
+{
+  border: 1px outset #404040;
+  border-radius: 6px;
+  box-sizing: border-box;
+  padding: 0.25em;
+  box-shadow: 3px 3px 2px #404040;
+  background-color: white;
+  outline:0;
+}
+
+.VwComboListItem
+{
+  display:flex;
+  align-items:center;
+  cursor:pointer;
+}
+
+.VwComboListItem:hover
+{
+  background-color:blue;
+  color:white;
+}
+
+.VwComboListItemImg
+{
+  width:1em;
+}
+
+.VwComboBtnIcon
+{
+  width:1em;
+}
+
+
+
+@media screen and (max-device-width: 736px)
+{
+  .VwComboListItem span
+  {
+    display: inline-block;
+    width: 90%;
+  }
+
+  .VwComboCheckMark
+  {
+    margin-top: 10px;
+  }
+}
+
+

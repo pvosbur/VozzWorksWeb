@@ -1,0 +1,28 @@
+.VwTab
+ {
+   display:inline-flex;
+   align-items: center;
+   justify-content: center;
+   width:4em;
+   height:100%;
+   border:1px solid black;
+   border-top-right-radius:30px;
+   border-top-left-radius:10px;
+   color:black;
+   background-color:#eeeeee;
+   cursor:pointer;
+ }
+
+.VwTab:first-child
+ {
+   border-left:1px solid black;
+}
+
+ .VwTab.VwSelected
+ {
+   border-top:2px solid black;
+   border-right:2px solid black;
+   border-left:2px solid black;
+   margin-left:-4px;
+   background-color:white;
+ }

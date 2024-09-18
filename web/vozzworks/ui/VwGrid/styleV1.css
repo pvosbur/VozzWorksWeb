@@ -1,0 +1,264 @@
+/*
+ * ============================================================================================
+ *
+ *                                  V o z z w o r k s   L L C.
+ *
+ *                                     Copyright(c) 2012 By
+ *
+ *                                       VoZZware LLC
+ *
+ *                             A L L   R I G H T S   R E S E R V E D
+ *
+ * ============================================================================================
+ */
+
+.VwGridParent
+{
+}
+
+.VwGrid
+{
+  display: flex;
+  flex-direction: column;
+
+}
+
+
+.VwGridExtender
+{
+
+}
+
+.VwGridBody
+{
+  width: 100%;
+  margin-top:-7px;
+
+
+}
+
+.VwGridHdr
+{
+  width:100%;
+  white-space:nowrap;
+  display:flex;
+}
+
+.VwGridDataContainer
+{
+  position:relative;;
+  width:100%;
+  height:100%;
+
+}
+
+.VwGridStdHdrCol
+{
+  height:1.8em;
+  color:black;
+  white-space:nowrap;
+  display:flex;
+  align-items:center;
+  box-sizing: border-box;
+  background:whitesmoke;
+
+}
+
+.VwGridHdrBorders
+{
+  border:1px solid #808080;
+  border-bottom:none;
+
+}
+
+.VwGridColContainer
+{
+  height:100%;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  position:relative;
+}
+
+.VwGridHdrCol
+{
+  display:flex;
+  align-items:center;
+}
+
+.VwGridColBorder
+{
+  border-right: 1px solid #808080;
+
+}
+
+.VwGridHdrColBorder
+{
+  position:absolute;
+  height:100%;
+  width:2px;
+  right:5px;
+  border-left:1px outset lightgrey;
+  border-right:1px outset lightgrey;
+  box-sizing:border-box;
+  top:0;
+}
+
+.VwGridResizeCol
+{
+  width:1px;
+  min-width:1px;
+  height:100%;
+  cursor:col-resize;
+  background: #808080;
+  z-index:100;
+}
+
+.VwGridHdrText
+{
+  font-size:90%;
+}
+
+.VwGridHdrImg
+{
+  vertical-align:middle;
+}
+
+
+.VwGridHdrMargin
+{
+   margin-left:-3px;
+}
+
+.VwGridStdHdrBtn:hover
+{
+  background-color:#f0f0f0;
+}
+
+
+.VwGridStdHdrBtn:active
+{
+  background-color:white;
+  background:-moz-linear-gradient(top, white, whitesmoke 40%, #B6DAE5);
+  background:-webkit-linear-gradient(top, white, whitesmoke 40%, #B6DAE5);
+  background:-ms-linear-gradient(top, white, whitesmoke 40%, #B6DAE5);
+  border:1px inset #404040;
+}
+
+.VwColumnResizeSplitter
+{
+  width:1px;
+  background-color:black;
+  display:inline-block;
+  cursor:col-resize;
+  vertical-align:top;
+  margin-left:-1px;
+
+}
+.VwGridSortArrow
+{
+  width:.7em;
+  height:.7em;
+  margin-left:2px;
+  display:none;
+}
+
+.VwGridRow
+{
+  white-space: nowrap;
+  display:flex;
+}
+
+
+.VwGridRowSelected
+{
+  background:#eeeeee;
+}
+
+.VwGridRowStripeEven:nth-child(2n)
+{
+  background-color:#eeeeee;
+}
+
+.VwGridRowStripeOdd:nth-child(2n+1)
+{
+  background-color:#eeeeee;
+}
+
+.VwGridRowBorder
+{
+  border-left: 1px solid #808080;
+  border-bottom: 1px solid #808080;
+  box-sizing: border-box;
+}
+
+.VwGridRowBorder:nth-child(3)
+{
+  border-top: 1px solid #808080;
+  margin-top:.4em;
+
+}
+
+.VwTextCol
+{
+  overflow:hidden;
+  text-overflow: ellipsis;
+  white-space:nowrap;
+  display:block;
+}
+
+.VwImgCol
+{
+  justify-content: center;
+}
+
+.VwContainerDragEnter
+{
+  border: 2px dashed red;
+  box-sizing:border-box;
+}
+
+.VwRowDragEnter
+{
+  border: 3px dashed darkgreen;
+  box-sizing:border-box;
+}
+
+.VwTileDragEnter
+{
+  border: 3px dashed lightgreen;
+}
+
+.VwGridFolderAssetRow
+{
+  width: 100%;
+  height: 100%;
+}
+
+.VwGridAiFolderRow
+{
+  width: 100%;
+  height: 100%;
+}
+
+.VwFixedVerticalScrollbar
+{
+  position: fixed;
+  right:0;
+}
+
+.VwAbsoluteVerticalScrollbar
+{
+  position: absolute;
+  right:0;
+  top:0;
+}
+
+/* Default sub grid folder */
+
+.VwFolderParent
+{
+  width:100%;
+  display:none;
+}
+

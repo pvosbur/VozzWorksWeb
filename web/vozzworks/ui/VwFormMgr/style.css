@@ -1,0 +1,60 @@
+/*
+ * ============================================================================================
+ *
+ *                                  V o z z w o r k s   L L C.
+ *
+ *                                     Copyright(c) 2012 By
+ *
+ *                                       VoZZware LLC
+ *
+ *                             A L L   R I G H T S   R E S E R V E D
+ *
+ * ============================================================================================
+ */
+
+/* this is the focus color */
+.VwInputFocusError:focus::-webkit-input-placeholder { color: #cc0000; }
+.VwInputFocusError:focus::-moz-placeholder { color: #cc0000; }
+.VwInputFocusError:focus:-moz-placeholder { color: #cc0000; }
+.VwInputFocusError:focus:-ms-input-placeholder { color: #cc0000; }
+
+
+.VwErrorField
+{
+  background-color: #cc0000;
+  color: yellow;
+  border-color: #cc0000;
+}
+
+.VwErrorOutlineField
+{
+  border:2px solid red !important;
+}
+
+.VwErrorInfoBox
+{
+  padding: 5px;
+  background-color:black;
+  color: #FFF;
+  font-weight: bold;
+  z-index: 99999;
+}
+
+
+#vwFormError
+{
+  display: none;
+  position: absolute;
+  z-index: 99999;
+}
+
+
+.VwErrorArrow
+{
+}
+
+
+.VwErrorArrowColor
+{
+  color: #cc0000;
+}

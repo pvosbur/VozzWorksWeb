@@ -1,0 +1,36 @@
+/*
+ * ============================================================================================
+ *
+ *                                  V o z z w o r k s   L L C.
+ *
+ *                                     Copyright(c) 2014 By
+ *
+ *                                       VoZZware LLC
+ *
+ *                             A L L   R I G H T S   R E S E R V E D
+ *
+ * ============================================================================================
+ */
+
+.VwScrollerArrowImg
+{
+  width:1rem;
+  height:1rem;
+  width:100%;
+  cursor: pointer;
+  margin-left:.2rem;
+  margin-right:.2rem;
+}
+
+.VwScrollerContainer
+{
+  display:flex;
+  align-items: center;
+  width:100%;
+}
+
+.VwScrollerContent
+{
+  width:100%;
+  text-align:center;
+}

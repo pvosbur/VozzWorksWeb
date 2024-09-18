@@ -1,0 +1,31 @@
+.VwBreadCrumbContainer
+{
+  display:flex;
+  justify-content:flex-start;
+  height:100%;
+  width:100%;
+  color:black;
+  padding-left:.5em;
+}
+
+.VwBreadCrumbEntry
+{
+  height:100%;
+  display:flex;
+  align-items:center;
+  margin-left:.2em;
+}
+
+.VwBreadCrumbEntry span
+{
+  text-decoration:underline;
+  cursor:pointer;
+  display:block;
+}
+
+.VwBreadCrumbEntry img
+{
+  height:0.75em;
+  margin-right:.5em;
+  margin-left:.5em;
+}

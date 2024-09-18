@@ -1,0 +1,141 @@
+
+.VwDisableTextSelection
+ {
+   -webkit-touch-callout: none;
+   -webkit-user-select: none;
+   -khtml-user-select: none;
+   -moz-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
+ }
+
+.VwDisplayNone
+{
+  display:none;
+}
+
+.VwCursorPointer
+{
+  cursor:pointer;
+}
+
+.VwNotVisible
+{
+  visibility:hidden;
+}
+
+
+.VwBubble
+{
+  display: none;
+  z-index:99999;
+  position:absolute;
+  bottom:0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 10px 10px 10px;
+
+  border-top-color:transparent;
+  border-right-color:transparent;
+  border-bottom-color:#5c9ec8;
+  border-left-color:transparent;
+
+}
+
+.VwInputCntrl
+{
+  outline:0;
+  font-size: 100%;
+  width:95%;
+}
+
+.VwElementSelected
+{
+  background-color:lightgrey;
+  outline:0;
+}
+
+.VwVerticalAlign
+{
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  transform-style: preserve-3d;
+  -webkit-transform: translateY(-50%);
+  -webkit-transform-style: preserve-3d;
+
+}
+
+.VwTooltip
+{
+  text-align: center;
+  color: #fff;
+  background: #111;
+  position: absolute;
+  z-index: 100;
+  padding: 15px;
+
+}
+
+.VwTooltip:after
+{
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  content: '';
+  position: absolute;
+  left: 50%;
+
+}
+
+.VwTooltipTop:after /* triangle decoration */
+{
+  border-bottom: 10px solid #111;
+  top:-9px;
+  margin-left: -10px;
+}
+
+.VwTooltip.bottom:after /* triangle decoration */
+{
+  border-top: 10px solid #111;
+  bottom:-10px;
+  margin-left: -10px;
+}
+
+.VwGreyScaleImg
+{
+  filter: grayscale(1) brightness( 70%)
+
+}
+
+.VwGreyScaleText
+{
+  color:#999999;
+
+}
+
+
+.VwScroll
+{
+  overflow-y: scroll;
+
+}
+
+.VwScrollable
+{
+  overflow: hidden;
+}
+
+
+.VwExecArrowRight
+{
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 10px 0 10px 20px;
+  border-color: transparent transparent transparent red;
+  cursor:pointer;
+}
+

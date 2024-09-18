@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    #clickMe
+    {
+      display:flex;
+      align-items: center;
+      justify-content: center;
+      background: #5c9ec8;
+      width:6rem;
+      height:2rem;
+    }
+  </style>
+</head>
+<body>
+
+<div id="clickMe">Click Me</div>
+</body>
+<script src="/js/jquery-3.7.1.slim.min.js"></script>
+<script src="/js/base64js.min.js"></script>
+<script src="/vozzworks/util/VwCssImport/VwCssImport.js"></script>
+
+
+<script type="module">
+
+  import VwMouseClickMgr from "../vozzworks/util/VwMouseClickMgr/VwMouseClickMgr.js";
+  const clickMgr = new VwMouseClickMgr( "clickMe", "test click data", singleClickHandler, dblClickHandler );
+
+  function singleClickHandler( strClickId, clickData )
+  {
+    console.log( `Single Click Handler for id: ${strClickId}, data: ${clickData}`);
+
+  }
+
+  function dblClickHandler( strClickId, clickData )
+  {
+    console.log( `Double Click Handler for id: ${strClickId}, data: ${clickData}`);
+
+  }
+
+</script>
+</html>

@@ -1,0 +1,60 @@
+/*
+ * ============================================================================================
+ *
+ *                                  V o z z w o r k s   L L C.
+ *
+ *                                     Copyright(c) 2016 By
+ *
+ *                                       VoZZware LLC
+ *
+ *                             A L L   R I G H T S   R E S E R V E D
+ *
+ * ============================================================================================
+ */
+
+
+#vwPswdInfoHdr
+{
+	font-size: 1.6em;
+	text-transform: uppercase;
+  font-weight: normal;
+	line-height: 1em;
+}
+
+#vwPswdInfo
+{
+  display:none;
+  position:absolute;
+  width: 25em;
+  padding:0.2em;
+  padding-left: 2em;
+  background:#fefefe;
+  font-size:.875em;
+  border-radius:5px;
+  box-shadow: 10px 10px 5px #000000;
+  border:1px solid #ddd;
+  z-index: 99999;
+
+}
+
+#vwPswdInfo ul, li
+{
+	margin:0;
+	padding:0;
+}
+
+.VwInvalid
+{
+	background:url(../../../images/vw/vwInvalid.png) no-repeat 0 50%;
+	padding-left:22px;
+	line-height:24px;
+	color:#ec3f41;
+}
+.VwValid
+{
+	background:url(../../../images/vw/vwValid.png) no-repeat 0 50%;
+	padding-left:22px;
+	line-height:24px;
+	color:#3a7d34;
+}
+

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="VwWorksWeb" default="build" basedir=".">
+	
+     <property file="${basedir}/build.properties" />
+     <property name="path.source" value="${basedir}/src" />
+     <property name="path.dist.lib" value="${path.vozzworksdist}/lib" />
+     <property name="path.docs" value="${path.vozzworksdist}/docs" />
+     <property name="resources.dir" value="/resources"/>
+     <property name="path.classes" value="${path.build}/classes" />
+     <property name="path.meta.inf" value="${path.build}/classes/META-INF" />
+     <property name="path.src.base" value="${path.build}/src/src" />
+     <property name="path.src" value="${path.src.base}/src" />
+     <property name="src" value="./src" />
+     <property name="releaseNbr" value="3.1.41" />
+     <property name="baseJarName" value="vozzworksweb" />
+     <property name="distJarName" value="${baseJarName}_${releaseNbr}.jar" />
+
+    <path id="path.class">
+      <fileset dir = "${path.runtime}" includes="*.jar,*.zip" excludes="${distJarName}"/>
+      <fileset dir = "${path.dist.lib}" includes="*.jar" />
+       <fileset dir = "${path.weblib}" includes="*.jar" />
+       <fileset dir = "${path.classes}" />
+     </path>  
+
+    <path id="path.javadoc.class">
+      <fileset dir = "${path.dist.lib}" includes="*.jar" />
+     </path>  
+
+	
+    <path id="path.source">
+    	<dirset dir="${basedir}/src" >
+    	 <exclude name="test/**"/>
+    	</dirset>
+    </path>
+
+    <path id="javadoc.src">
+      <pathelement location="${basedir}/src" />
+    </path>
+	
+    <target name="init" depends="clean">
+      <tstamp />
+    	
+      <mkdir dir="${path.build}"/>	
+      <mkdir dir="${path.vozzworksdist}"/>	
+      <mkdir dir="${path.dist.lib}"/>	
+      <mkdir dir="${path.meta.inf}"/>	
+      <mkdir dir="${path.docs}"/>	
+      <mkdir dir="${path.src}"/>	
+    </target>
+	
+ 
+    <target name="clean"  description="Removes classses and javadoc">
+    	<echo>Deleting ${path.build}</echo>
+
+        <delete dir="${path.build}" />
+    </target>
+
+    <target name="compile" depends="init" description="Compiles sources">
+    	<echo>Compiling VozzWorksWeb .... path is ${src}</echo>
+        <mkdir dir="${path.classes}" />
+        <javac classpathref="path.class" destdir="${path.classes}" debug="on" deprecation="on" encoding="8859_1">
+        	<src path="${src}"/>
+        	<exclude name="test/**"/>
+        	<exclude name="com/vozzware/print/**"/>
+
+        </javac>
+    	
+    </target>
+
+
+    <target name="build" depends="jar" description="Rebuilds project" >
+    </target>
+	
+    <target name="jar" depends="compile" description="jar the classes dirs">
+        <copy todir="${path.classes}">
+            <fileset dir ="src/main/resources" >
+              <include name="**/*.properties"/>
+                <include name="**/*.dtd"/>
+                <include name="**/*.xsd"/>
+                <include name="**/*.xml"/>
+                <include name="**/*.gif"/>
+            </fileset>
+            <fileset dir ="${path.source}" >
+              <include name="**/*.properties"/>
+                <include name="**/*.dtd"/>
+                <include name="**/*.xsd"/>
+                <include name="**/*.xml"/>
+                <include name="**/*.gif"/>
+            </fileset>
+        </copy>
+        <jar destfile="${path.dist.lib}/${distJarName}" basedir="${path.build}/classes" excludes="**/.dependency-info/**" />
+    	<copy todir="${path.runtime}" file="${path.dist.lib}/${distJarName}"/>
+    </target>
+	
+	<target name="genDoc"  >
+	  <javadoc packagenames="com.vozzware.*"
+	           sourcepathref="javadoc.src"
+	  	       classpathref="path.javadoc.class"
+	           defaultexcludes="yes"
+	           destdir="${path.docs}"
+	           author="true"
+	           version="true"
+	           use="true"/>
+        <jar destfile="${path.vozzworksdist}/javadocsweb.zip" basedir="${path.docs}" />
+	      <tar tarfile="${path.vozzworksdist}/javadocsweb.tar" basedir="${path.docs}"/>
+        <gzip zipfile="${path.vozzworksdist}/javadocsweb.tar.gz" src="${path.vozzworksdist}/javadocs.tar"/>
+
+	</target>
+		
+  <target name="makeSrc"  depends="genDoc" description="zip up the source and docs">
+		
+		<delete dir="${path.src.base}"/>
+		<mkdir dir="${path.src.base}"/>
+		<mkdir dir="${path.src}"/>
+		
+      <copy todir="${path.src}">
+          <fileset dir ="${basedir}/src" includes="**/*.*" />
+          <fileset dir ="${path.docs}" includes="javadocs.zip,javadocs.tar.gz" />
+          <fileset dir ="${basedir}" includes="build.xml" />
+      </copy>
+	
+      <jar destfile="${path.vozzworksdist}/vozzworkswebsrc.zip" basedir="${path.src.base}" excludes="**/.tar.*" />
+      <tar tarfile="${path.vozzworksdist}/vozzworkswebsrc.tar" basedir="${path.src.base}" excludes="**/.zip"/>
+      <gzip zipfile="${path.vozzworksdist}/vozzworkswebsrc.tar.gz" src="${path.vozzworksdist}/vozzworkssrc.tar"/>
+		
+    </target>
+
+
+	<target name="buildAll" depends="build,makeSrc" description="Builds everything with javadoc and source zip files"/>
+	
+</project>
+

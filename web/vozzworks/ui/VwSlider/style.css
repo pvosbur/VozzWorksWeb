@@ -1,0 +1,17 @@
+.VwSlider
+{
+  background-color:whitesmoke;
+  border:1px solid black;
+  border-radius: 5px;
+
+}
+
+.VwSliderThumb
+{
+  width:1em;
+  height:1em;
+  background-color:red;
+  border-radius:1em;
+  position:absolute;
+  cursor:pointer;
+}

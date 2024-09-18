@@ -1,0 +1,33 @@
+
+.VwInputContainer
+{
+  width:100%;
+  min-height:1.4rem;
+  position:relative;
+  outline:0;
+}
+
+
+.VwCursor
+{
+  width:1px;
+  height:18px;
+  position:absolute;
+  top:1px;
+  left:0;
+}
+
+.VwBlack
+{
+  color:black;
+}
+
+.blink {
+  animation: blinker 1s step-start infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}

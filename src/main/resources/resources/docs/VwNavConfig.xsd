@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://itc.com/jsp/components/dvo"
+	          xmlns:tns="http://itc.com/jsp/components/dvo"
+		        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+		        elementFormDefault="qualified"
+		        attributeFormDefault="unqualified">
+	
+  <xsd:element name="navConfig" type="tns:VwNavBar"/>
+	
+  <xsd:complexType name="VwNavBar">
+	<xsd:sequence>
+	  <xsd:element name="navItem" maxOccurs="unbounded" type="tns:VwNavItem"/>
+	</xsd:sequence>
+	<xsd:attribute name="actionName" type="xsd:string"/>
+	<xsd:attribute name="name" type="xsd:string"/>
+	<xsd:attribute name="navXmlDoc" type="xsd:string"/>
+	<xsd:attribute name="home" type="xsd:string"/>
+	<xsd:attribute name="openImage" type="xsd:string" use="optional"/>
+	<xsd:attribute name="closedImage" type="xsd:string" use="optional"/>
+	<xsd:attribute name="openClass" type="xsd:string" use="optional"/>
+	<xsd:attribute name="closedClass" type="xsd:string" use="optional"/>
+	
+  </xsd:complexType>
+
+  <xsd:complexType name="VwNavItemChildren">
+	<xsd:sequence>
+	  <xsd:element name="level" type="xsd:string"/>
+	  <xsd:element name="navItem" maxOccurs="unbounded" type="tns:VwNavItem"/>
+	</xsd:sequence>
+  </xsd:complexType>
+	
+  <xsd:complexType name="VwNavItem">
+	<xsd:sequence>
+	  <xsd:element name="children" type="tns:VwNavItemChildren"/>
+	  <xsd:element name="level" type="xsd:string"/>
+	  <xsd:element name="expanded" type="xsd:boolean"/>
+	  <xsd:element name="clicked" type="xsd:boolean"/>
+	</xsd:sequence>
+	<xsd:attribute name="id" type="xsd:string" use="required"/>
+	<xsd:attribute name="assocNodeClickedId" type="xsd:string" use="optional"/>
+	<xsd:attribute name="itemText" type="xsd:string"/>
+	<xsd:attribute name="itemTextLength" type="xsd:int"/>
+	<xsd:attribute name="itemImage" type="xsd:string"/>
+	<xsd:attribute name="url" type="xsd:string" use="required"/>
+	<xsd:attribute name="action" type="xsd:string" use="optional"/>
+	<xsd:attribute name="onClick" type="xsd:string" use="optional"/>
+	<xsd:attribute name="enabled" type="xsd:boolean" use="optional"/>
+	<xsd:attribute name="openImage" type="xsd:string" use="optional"/>
+	<xsd:attribute name="closedImage" type="xsd:string" use="optional"/>
+	<xsd:attribute name="openClass" type="xsd:string" use="optional"/>
+	<xsd:attribute name="closedClass" type="xsd:string" use="optional"/>
+  </xsd:complexType>
+	
+</xsd:schema>

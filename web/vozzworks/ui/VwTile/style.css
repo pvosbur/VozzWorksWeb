@@ -1,0 +1,30 @@
+/*
+ * ============================================================================================
+ *
+ *                                  V o z z w o r k s   L L C.
+ *
+ *                                     Copyright(c) 2012 By
+ *
+ *                                       VoZZware LLC
+ *
+ *                             A L L   R I G H T S   R E S E R V E D
+ *
+ * ============================================================================================
+ */
+
+.VwTileRow
+{
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.6rem;
+  white-space: nowrap;
+}
+
+.VwTileDefault
+{
+  display:inline-block;
+  margin-left:2px;
+  white-space: nowrap;
+  vertical-align:top;
+}
+

@@ -1,0 +1,316 @@
+/*
+ * ============================================================================================
+ *
+ *                                  V o z z w o r k s   L L C.
+ *
+ *                                     Copyright(c) 2012 By
+ *
+ *                                       VoZZware LLC
+ *
+ *                             A L L   R I G H T S   R E S E R V E D
+ *
+ * ============================================================================================
+ */
+.VwPopupBox
+{
+  background : linear-gradient(to right, #ffffff, #fffff1);
+  background : -webkit-linear-gradient(320deg, #ffffff, #fffff1);
+  background : -moz-linear-gradient(320deg, #ffffff, #fffff1);
+  background : -o-linear-gradient(320deg, #ffffff, #fffff1);
+  background : -ms-linear-gradient(320deg, #ffffff, #fffff1);
+}
+
+.VwPopupContent
+{
+  width  : 100%;
+  height : 100%;
+  background-color: black;
+  border-radius:6px;
+}
+
+.VwPopupCenter
+{
+  display             : flex;
+  flex-direction      : column;
+  position            : fixed;
+  top                 : 50%;
+  left                : 50%;
+  max-width           : 90%;
+  height              : auto;
+  backface-visibility : hidden;
+  transform           : translateX(-50%) translateY(-50%);
+  -webkit-transform   : translateX(-50%) translateY(-50%);
+}
+
+.VwPopupBoxHdr
+{
+  width          : 100%;
+  text-align     : center;
+  font-size      : 120%;
+  font-weight    : bold;
+  vertical-align : middle;
+
+}
+
+.VwPopupActionBtn
+{
+  display : inline-block;
+}
+
+.VwPopupBoxActions
+{
+  display         : table;
+  border-collapse : collapse;
+  margin          : 0.5em auto 0.5em;
+}
+
+.VwPopupBoxContent
+{
+  margin     : auto;
+  text-align : center;
+  box-shadow : 6px 6px 12px #888888;
+  width      : 96%;
+
+}
+
+.VwPopupCloseIcon
+{
+  width      : 2em;
+  height     : 2em;
+  margin-top : -2.8em;
+  cursor     : pointer;
+
+}
+
+.VwOverlay
+{
+  width    : 100%;
+  height   : 100%;
+  position : absolute;
+  left     : 0;
+  top      : 0;
+}
+
+.VwImgDiv
+{
+  position : absolute;
+  top      : 1px;
+  left     : 1px;
+}
+
+.VwPopupContentTextDiv
+{
+  width      : 100%;
+  padding    : 4px;
+  text-align : center;
+  box-sizing : border-box;
+}
+
+.VwPopupContentText
+{
+  display        : block;
+  width          : 100%;
+  max-height     : 20em;
+  overflow       : hidden;
+  text-overflow  : ellipsis;
+  padding-right  : 2em;
+  padding-bottom : 1em;
+  padding-top    : .2em;
+
+}
+
+.VwPopupHdrText, .VwPopupContentText
+{
+  display : inline-block;
+}
+
+.VwDialogHdr
+{
+  border-bottom : 1px solid black;
+  width         : 100%;
+  height        : 1.8em;
+  line-height   : 2em;
+  text-align    : center;
+  font-size     : 150%;
+  font-weight   : bold;
+  color         : white;
+  background    : linear-gradient(to right, #e0e0e0, #313131);
+  background    : -webkit-linear-gradient(320deg, #e0e0e0, #313131);
+  background    : -moz-linear-gradient(320deg, #e0e0e0, #313131);
+  background    : -o-linear-gradient(320deg, #e0e0e0, #313131);
+  background    : -ms-linear-gradient(320deg, #e0e0e0, #313131);
+
+}
+
+.VwDialogHdr > span
+{
+  width   : 100%;
+  display : block;
+  height  : 1.8em;
+
+}
+
+.VwPopupImg
+{
+  width       : 2.2em;
+  height      : 2.2em;
+  margin-top  : 2px;
+  margin-left : 2px;
+
+}
+
+.VwPopupBoxHdr.alert
+{
+  background : linear-gradient(to right, #ffffff, #1a42ff);
+  background : -webkit-linear-gradient(320deg, #ffffff, #1a42ff);
+  background : -moz-linear-gradient(320deg, #ffffff, #1a42ff);
+  background : -o-linear-gradient(320deg, #ffffff, #1a42ff);
+  background : -ms-linear-gradient(320deg, #ffffff, #1a42ff);
+}
+
+.VwPopupBoxHdr.info
+{
+  background : linear-gradient(to right, #ffffff, #0000ff);
+  background : -webkit-linear-gradient(320deg, #ffffff, #0000ff);
+  background : -moz-linear-gradient(320deg, #ffffff, #0000ff);
+  background : -o-linear-gradient(320deg, #ffffff, #0000ff);
+  background : -ms-linear-gradient(320deg, #ffffff, #0000ff);
+}
+
+.VwPopupBoxHdr.error
+{
+  background : linear-gradient(to right, #ffffff, red);
+  background : -webkit-linear-gradient(320deg, #ffffff, red);
+  background : -moz-linear-gradient(320deg, #ffffff, red);
+  background : -o-linear-gradient(320deg, #ffffff, red);
+  background : -ms-linear-gradient(320deg, #ffffff, red);
+}
+
+.VwPopupBoxHdr.confirm
+{
+  background : linear-gradient(to right, #ffffff, #009200);
+  background : -webkit-linear-gradient(320deg, #ffffff, #009200);
+  background : -moz-linear-gradient(320deg, #ffffff, #009200);
+  background : -o-linear-gradient(320deg, #ffffff, #009200);
+  background : -ms-linear-gradient(320deg, #ffffff, #009200);
+}
+
+.VPopupBoxHdr.progress
+{
+  background : linear-gradient(to right, #ffffff, yellow);
+  background : -webkit-linear-gradient(320deg, #ffffff, yellow);
+  background : -moz-linear-gradient(320deg, #ffffff, yellow);
+  background : -o-linear-gradient(320deg, #ffffff, yellow);
+  background : -ms-linear-gradient(320deg, #ffffff, yellow);
+}
+
+.VwTextArea
+{
+  width   : 30em;
+  height  : 20em;
+  outline : 0;
+}
+
+.VwInput
+{
+  width   : 30em;
+  height  : 2em;
+  outline : 0;
+}
+
+.VwOpacityZero
+{
+  opacity:0;
+}
+
+/* Begin Animation styles */
+
+.VwAnimationMsg
+{
+  position        : absolute;
+  top             : 0;
+  background      : #ccc;
+  border-radius   : 5px;
+  width           : 11em;
+  height          : 4em;
+  display         : flex;
+  align-items     : center;
+  justify-content : center;
+}
+
+.VwAnimationStart
+{
+  animation-name     : vwSlideLeft;
+  animation-duration : 2s;
+}
+
+.VwAnimationFinish
+{
+  animation          : vwSlideRight;
+  animation-duration : 2s;
+}
+
+@keyframes vwSlideLeft
+{
+}
+
+@keyframes vwSlideRight
+{
+}
+
+@keyframes vwSlideAnimation
+{
+}
+
+.VwSlideAnimationClose
+{
+  display : none;
+}
+
+.VwToast
+{
+  display:inline-flex;
+  align-items: center;
+  justify-content: center;
+  position:absolute;
+  z-index:99999;
+
+}
+
+
+.VwToastLong
+{
+  animation:vwToast 6s ease forwards;
+
+}
+
+.VwToastShort
+{
+  animation:vwToast 4s ease forwards;
+
+}
+
+@keyframes vwToast
+{
+  0%,40% {opacity:1}
+  50%    {opacity:.9}
+  60%    {opacity:.8}
+  70%    {opacity:.7}
+  80%    {opacity:.6}
+  90%    {opacity:.5}
+  95%    {opacity:.3}
+  100%   {opacity:0}
+}
+
+.VwRelative
+{
+  position:relative;
+}
+
+@keyframes toast
+{
+  from { opacity:1 }
+  to {opacity:0}
+}
+
+/* End Animation styles */

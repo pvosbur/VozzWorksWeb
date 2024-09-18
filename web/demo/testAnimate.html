@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    #clickMe
+    {
+      display:flex;
+      align-items: center;
+      justify-content: center;
+      background: #5c9ec8;
+      width:6rem;
+      height:2rem;
+    }
+  </style>
+</head>
+<body>
+
+<div id="clickMe">Click Me</div>
+</body>
+<script src="/js/jquery-3.7.1.slim.min.js"></script>
+<script src="/js/base64js.min.js"></script>
+<script src="/vozzworks/util/VwCssImport/VwCssImport.js"></script>
+
+<script src="/vozzworks/util/VwMouseClickMgr/VwMouseClickMgr.js"></script>
+
+<script>
+
+  const clickMgr = new VwMouseClickMgr();
+  let ncount = 0;
+  let toid = null;
+  const completeHandler = clickDone;
+  $("#clickMe").click( async () =>
+   {
+    ++ncount;
+
+    if ( !toid )
+    {
+      requestAnimationFrame( frame );
+
+    function frame( time )
+    {
+      if ( !toid )
+      {
+        toid = time;
+      }
+
+      if ( (performance.now() - toid) > 300 )
+      {
+        toid = null;
+        completeHandler( ncount );
+        ncount = 0;
+        return;
+
+      }
+      requestAnimationFrame( frame );
+
+    }
+  }
+                         /*
+                                toid = setTimeout( () =>
+                          {
+                            toid = null;
+                            completeHandler(ncount);
+                            ncount = 0;
+                          }, 250 )
+
+                         console.log("In Click");
+                         await clickMgr.handleClick();
+                         console.log( `Is singleClick: ${clickMgr.isSingleClick() }`)
+                         */
+                      
+                       })
+
+  function clickDone( ncount )
+  {
+    console.log( `count : ${ncount}`);
+
+  }
+</script>
+</html>

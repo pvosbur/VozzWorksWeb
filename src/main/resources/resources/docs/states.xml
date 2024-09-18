@@ -1,0 +1,94 @@
+<states> 
+	<state code="" name=""/> 
+  <state code="AL" name="Alabama"/> 
+	<state code="AK" name="Alaska"/> 
+	<state code="AS" name="American Samoa"/> 
+	<state code="AZ" name="Arizona"/> 
+	<state code="AR" name="Arkansas"/> 
+	<state code="AE - Europe" name="Armed Forces - Europe"/>
+	<state code="AP" name="Armed Forces - Pacific"/>
+	<state code="AA" name="Armed Forces - USA/Canada"/> 
+	<state code="CA" name="California"/> 
+	<state code="CO" name="Colorado"/> 
+	<state code="CT" name="Connecticut"/> 
+
+	<state code="DE" name="Delaware"/> 
+	<state code="DC" name="District of Columbia"/> 
+	<state code="FM" name="Federated States of Micronesia"/> 
+	<state code="FL" name="Florida"/> 
+	<state code="GA" name="Georgia"/> 
+	<state code="GU" name="Guam"/> 
+	<state code="HI" name="Hawaii"/> 
+	<state code="ID" name="Idaho"/> 
+	<state code="IL" name="Illinois"/> 
+
+	<state code="IN" name="Indiana"/> 
+	<state code="IA" name="Iowa"/> 
+	<state code="KS" name="Kansas"/> 
+	<state code="KY" name="Kentucky"/> 
+	<state code="LA" name="Louisiana"/> 
+	<state code="ME" name="Maine"/> 
+	<state code="MH" name="Marshall Islands"/> 
+	<state code="MD" name="Maryland"/> 
+	<state code="MA" name="Massachusetts"/> 
+
+	<state code="MI" name="Michigan"/> 
+	<state code="MN" name="Minnesota"/> 
+	<state code="MS" name="Mississippi"/> 
+	<state code="MO" name="Missouri"/> 
+	<state code="MT" name="Montana"/> 
+	<state code="NE" name="Nebraska"/> 
+	<state code="NV" name="Nevada"/> 
+	<state code="NH" name="New Hampshire"/> 
+	<state code="NJ" name="New Jersey"/> 
+
+	<state code="NM" name="New Mexico"/> 
+	<state code="NY" name="New York"/> 
+	<state code="NC" name="North Carolina"/> 
+	<state code="ND" name="North Dakota"/> 
+	<state code="OH" name="Ohio"/> 
+	<state code="OK" name="Oklahoma"/> 
+	<state code="OR" name="Oregon"/> 
+	<state code="PA" name="Pennsylvania"/> 
+	<state code="PR" name="Puerto Rico"/> 
+
+	<state code="RI" name="Rhode Island"/> 
+	<state code="SC" name="South Carolina"/> 
+	<state code="SD" name="South Dakota"/> 
+	<state code="TN" name="Tennessee"/> 
+	<state code="TX" name="Texas"/> 
+	<state code="UT" name="Utah"/> 
+	<state code="VT" name="Vermont"/> 
+	<state code="VI" name="Virgin Islands"/> 
+	<state code="VA" name="Virginia"/> 
+
+	<state code="WA" name="Washington"/> 
+	<state code="WV" name="West Virginia"/> 
+	<state code="WI" name="Wisconsin"/> 
+	<state code="WY" name="Wyoming"/> 
+	<state code="AB" name="Alberta"/> 
+	<state code="BC" name="British Columbia"/> 
+	<state code="MB" name="Manitoba"/> 
+	<state code="NB" name="New Brunswick"/> 
+	<state code="NF" name="Newfoundland"/> 
+
+	<state code="MP" name="Northern Mariana Island"/> 
+	<state code="NT" name="Northwest Territories"/> 
+	<state code="NS" name="Nova Scotia"/> 
+	<state code="ON" name="Ontario"/> 
+	<state code="PW" name="Palau Island"/> 
+	<state code="PE" name="Prince Edward Island"/> 
+	<state code="QC" name="Quebec"/> 
+	<state code="SK" name="Saskatchewan"/> 
+	<state code="YT" name="Yukon Territory"/> 
+
+	<!-- <state code="Australian Capital Territory" name="Australian Capital Territory"/> 
+	<state code="New South Wales" name="New South Wales"/> 
+	<state code="Northern Territory" name="Northern Territory"/> 
+	<state code="Queensland" name="Queensland"/> 
+	<state code="South Australia" name="South Australia"/> 
+	<state code="Tasmania" name="Tasmania"/> 
+	<state code="Victoria" name="Victoria"/> 
+	<state code="Western Australia" name="Western Australia"/>-->
+</states> 
+

@@ -1,0 +1,109 @@
+
+/*
+ * ============================================================================================
+ *
+ *                                  V o z z w o r k s   L L C.
+ *
+ *                                     Copyright(c) 2012 By
+ *
+ *                                       VoZZware LLC
+ *
+ *                             A L L   R I G H T S   R E S E R V E D
+ *
+ * ============================================================================================
+ */
+.VwElasticBorder
+ {
+   border-top: 3px solid black;
+   border-left: 3px solid black;
+   position:relative;
+ }
+
+ .VwResizeSE
+ {
+   width:3px;
+   height:100%;
+   background-color:black;
+   float:right;
+   cursor:e-resize;
+   position:relative;
+
+ }
+
+ .VwResizeS
+ {
+   width:100%;
+   height:3px;
+   background-color:black;
+   position:absolute;
+   bottom:0;
+   cursor:s-resize;
+
+ }
+
+ .VwResizeCornerR
+ {
+   width:3px;
+   height:8px;
+   background-color:black;
+   cursor:se-resize;
+   float:right;
+   position:absolute;
+   bottom:0;
+ }
+
+.VwResizeCornerB
+ {
+   width:8px;
+   height:3px;
+   background-color:black;
+   cursor:se-resize;
+   float:right;
+ }
+
+.VwElementWrapContainer
+{
+  border: 2px solid black;
+  position:absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index:99998;
+}
+
+.VwStretchMarker
+{
+  position:absolute;
+  width:6px;
+  height:6px;
+  border:2px solid red;
+  z-index:99999;
+  background-color:white;
+
+}
+
+#vwMarkerTop, #vwMarkerBot
+{
+  cursor:ns-resize;
+
+}
+
+
+#vwMarkerLeft, #vwMarkerRight
+{
+  cursor:ew-resize;
+
+}
+
+#vwBotMarkerRightCorner, #vwTopMarkerLeftCorner
+{
+  cursor: nwse-resize;
+}
+
+#vwTopMarkerRightCorner, #vwBotMarkerLeftCorner
+{
+  cursor:nesw-resize;
+
+}
+
+

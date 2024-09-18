@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>VwGrid Tester</title>
+  <style>
+
+    #VwTesterContainer
+    {
+      display:flex;
+      flex-direction: column;
+      width:50rem;
+    }
+
+    #vwGridTester
+    {
+      display:flex;
+      flex-direction: column;
+      width:100%;
+      height:22rem;
+      border:2px solid black;
+      border-radius:6px;
+      background:#2e2e2e;
+    }
+
+    #testBtnBar
+    {
+      display:flex;
+      align-items:center;
+      position:relative;
+      width:100%;
+      height:2.4rem;
+      background:grey;
+      margin-bottom:1rem;
+      padding:.1rem;
+      border-radius:6px;
+    }
+
+    #searchImg
+    {
+      position:absolute;;
+      right:.4rem;
+      width:1.8rem;
+      height:1.8rem;
+      cursor:pointer;
+    }
+
+    #breadCrumbSearchBar
+    {
+      display:flex;
+      align-items: center;
+      width:100%;
+      height:2rem;
+      padding:.1rem;
+      background:#5c9ec8;
+      border-top-left-radius: 6px;
+      border-top-right-radius: 6px;
+    }
+
+    #breadCrumbBar
+    {
+      display:flex;
+      align-items: center;
+      width:70%;
+      height:100%;
+    }
+
+    #searchBar
+    {
+      display:flex;
+      align-items: center;
+      width:30%;
+      height:100%;
+    }
+
+    #vwGrid
+    {
+      width:100%;
+      height:21rem;
+      color:#969696;
+      padding:.2rem;
+      border-radius:6px;
+
+    }
+
+    .TestImg
+    {
+      width:1.4rem;;
+      height:1.4rem;;
+      cursor:pointer;
+      padding:.1rem;
+    }
+
+    .TestCheckBox
+    {
+      width:1.2rem;
+      height:1.2rem;
+      background:#2e2e2e;
+      border:1px solid #969696;
+    }
+
+    .TestGridRow
+    {
+      height:2rem;
+    }
+
+    .TestCheckBoxParent
+    {
+      display:flex;
+      justify-content:end;
+    }
+
+    .TestActionBtn
+    {
+      width:10rem;
+      height:2rem;
+      background: #5c98c8;
+      color:black;
+      border:2px solid black;
+      border-radius: 6px;
+      margin-right:1rem;
+    }
+
+    .TestRowSelected
+    {
+      border: 2px solid red;
+    }
+
+    .TestRowHovered
+    {
+      border:1px dashed red;
+      background: lightgray;
+      font-style: italic;
+    }
+
+    .SearchXImg
+    {
+      width:1rem;
+      height:1rem;
+      cursor: pointer;
+      margin-right:.4rem;
+    }
+
+  </style>
+</head>
+<body>
+  <h1>VwGrid Tester</h1>
+  <div id="VwTesterContainer">
+    <div id="testBtnBar">
+      <div id="showMain" class="TestActionBtn"></div>
+      <div id="showGallery" class="TestActionBtn"></div>
+    </div>
+    <div id="breadCrumbSearchBar">
+      <div id="breadCrumbBar"></div>
+      <div id="searchBar">
+        <img id="searchImg" src="/demo/images/search_grey.png"/>
+      </div>
+    </div>
+     <div id="vwGridTester">
+       <div id="vwGrid"></div>
+    </div>
+  </div>
+</body>
+<script src="/js/jquery-3.7.1.slim.min.js"></script>
+<script src="/js/base64js.min.js"></script>
+<script src="/vozzworks/util/VwCssImport/VwCssImport.js"></script>
+
+<script type="module">
+  import VwGrid                 from "../vozzworks/ui/VwGrid/VwGrid.js";
+  import VwGridDataModel from "../vozzworks/ui/VwGrid/VwGridDataModel.js";
+  import VwXmlProcessor         from "../vozzworks/util/VwXmlProcessor/VwXmlProcessor.js";
+  import VwBreadCrumbMgr from "../vozzworks/ui/VwBreadCrumbMgr/VwBreadCrumbMgr.js";
+  import VwExString from "../vozzworks/util/VwExString/VwExString.js";
+  import VwRowColViewMgr from "../vozzworks/ui/VwGrid/VwRowColViewMgr.js";
+  import VwButton from "../vozzworks/ui/VwButton/VwButton.js";
+  import VwSearchBar from "../vozzworks/ui/VwSearchBar/VwSearchBar.js";
+
+  let bSearchShowing;
+  let searchBar;
+  
+  const strGridConfigXml =
+          `<gridConfig>
+            <views>
+              <view name="main" type="rowCol">
+                <gridHdr>
+                  <common>
+                    <prop id="noReorder" value="true"/>
+                    <prop id="noSeparator" value="true"/>
+                  </common>
+                  <gridCols>
+                    <col id="img" width="3em" type="img" class="TestImg"/>
+                    <col id="title" value="Title" width="50%" sortType="text"/>
+                    <col id="size" value="Size" width="20%" sortType="number" format="dynamic"/>
+                    <col id="uploadDate" value="Upload Date" width="18%" sortType="date" format="MMM dd hh:mm aa"/>
+                    <col id="isSelected" width="5%" type="custom" impl="/vozzworks/ui/VwCheckBox/VwCheckBox.js" class="TestCheckBoxParent" props="//checkBoxProps">
+                      <args value="$parentId,$null,$props,$data"/>
+                    </col>
+                  </gridCols>
+                </gridHdr>
+                <props>
+                  <prop id="cssRowSelected" value="TestRowSelected"/>
+                  <prop id="cssRowHovered" value="TestRowHovered"/>
+                  <prop id="cssUserGridRow" value="TestGridRow"/>
+                  <prop id="viewPortSize" value="200"/>
+                </props>
+              </view>
+              <view name="gallery" type="tile" implProps="//checkBoxProps">
+                <props>
+                  <prop id="maxRowTiles" value="3"/>
+                  <prop id="tileImplClass" value="/demo/VwGridDemoTileImpl/VwGridDemoTileImpl.js"/>
+                  <prop id="viewPortSize" value="3"/>
+                 </props>
+              </view>
+            </views>
+            <props>
+              <prop id="sortImgArrowDownUrl" value="/vozzworks/ui/images/vw_arrow_down_grey.png"/>
+              <prop id="sortImgArrowUpUrl" value="/vozzworks/ui/images/vw_arrow_up_grey.png"/>
+              <prop id="scrollBarsOutsideScrollArea" value="true"/>
+              <prop id="defaultView" value="main"/>
+               <!--<prop id="silentScrolling" value="true"/>-->
+            </props>
+            <checkBoxProps>
+              <prop id="checkImgUrl" value="/demo/images/check_c5.png"/>
+              <prop id="cssUserCheckBox" value="TestCheckBox"/>
+              <prop id="idCheckProp" value="isSelected"/>
+            </checkBoxProps>
+           </gridConfig>`;
+
+  startDemo();
+
+  /**
+   * Grid Tester
+   * @return {Promise<void>}
+   */
+  async function startDemo()
+  {
+    const breadCrumbBar = new VwBreadCrumbMgr( "breadCrumbBar", {"strLinkNameProp":"title", "baseCrumb":"Test Project"});
+    const modelProps = {};
+    modelProps.textFilterDataIds = ["title"];
+    modelProps.matchType = "startsWith";
+    modelProps.dataIdProp = "id";
+    modelProps.isFolderIdProp = "isFolder";
+    modelProps.folderIdProp = "folderId";
+    modelProps.folderItemsIdProp = "folderItems" ;
+
+    const gridDataModel = new VwGridDataModel( modelProps );
+    gridDataModel.addFilter( "byCategory", {callback:handleFilterByCategory});
+    loadGridModel( gridDataModel);
+
+    const vwGrid = await new VwGrid( "vwGrid", null, strGridConfigXml);
+    const viewMgr = vwGrid.getViewMgr( "main");
+    viewMgr.onColFormat( "size", handleSizeFormat );
+    viewMgr.onControlCreated( "isSelected", handleCheckBoxCreated );
+    viewMgr.onRowSelected( handleOnRowSelected );
+    viewMgr.onRowDeSelected( handleOnRowDeSelected );
+    viewMgr.onRowHoveredIn( handleOnRowHoveredIn );
+    viewMgr.onRowHoveredOut( handleOnRowHoveredOut );
+    viewMgr.onRowDblClicked( handleItemDblClicked );
+
+    vwGrid.setBreadCrumbMgr( breadCrumbBar );
+    vwGrid.setDataModel( gridDataModel );
+     vwGrid.onFolderOpened( (folderItem ) => console.log( `Folder: ${ folderItem.title} opened`) );
+    vwGrid.onFolderClosed( (folderItem ) => console.log( `Folder: ${ folderItem.title} closed`) );
+
+    setupActionBtns( vwGrid );
+    setupGridSearchBar( gridDataModel) ;
+
+    await vwGrid.show();
+
+    //gridDataModel.applyFilter( "byCategory", "bogus");
+  } // end startDemo()
+
+  function handleFilterByCategory( dataItem, filterProps, strValueToMatch )
+  {
+    return dataItem.category == strValueToMatch;
+
+  } // end handleFilterByCategory()
+
+  /**
+   * Double click event handler
+   * @param dataItemClicked
+   */
+  function handleItemDblClicked( strDOMId, dataItemClicked )
+  {
+    console.log( `Item id: ${dataItemClicked.id} DblClicked`);
+  } // end handleItemDblClicked()
+
+  function handleOnRowSelected( strDOMId, dataItem )
+  {
+    console.log( `Item id: ${dataItem.id} Row Selected`);
+  }
+
+  function handleOnRowDeSelected( strDOMId, dataItem )
+  {
+    console.log( `Item id: ${dataItem.id} Row De-Selected`);
+  }
+
+  function handleOnRowHoveredIn( strDOMId, dataItem )
+  {
+    console.log( `Item id: ${dataItem.id} Row Hovered In`);
+  }
+
+  function handleOnRowHoveredOut( strDOMId, dataItem )
+  {
+    console.log( `Item id: ${dataItem.id} Row Hovered Out`);
+  }
+
+  /**
+   * Size format callback
+   * @param sizeData
+   * @return {string}
+   */
+  function handleSizeFormat( sizeData )
+  {
+    if ( sizeData == 0 )
+    {
+      return "--";
+    }
+
+    return VwExString.formatSize( sizeData );
+    
+  } // end handleSizeFormat()
+
+
+  /**
+   * Custom ciontrol create event handler
+   * @param dataItem
+   * @param checkBoxInstance
+   */
+  function handleCheckBoxCreated( dataItem, checkBoxInstance )
+  {
+    //console.log( `Checkbox created for dataItem: ${dataItem.id}`);
+
+    checkBoxInstance.onSelectionChange( (bSelected ) =>
+     {
+       console.log( `Chackbox Id: ${checkBoxInstance.getId()} check state = ${bSelected}`);
+     });
+  }
+
+  /**
+   * Setup demo action buttons
+   * @param vwGrid
+   */
+  function setupActionBtns( vwGrid )
+  {
+    const vwShowMainBtn = new VwButton( "showMain", {"id":"main", "text":"Show Main"});
+    vwShowMainBtn.onClick( () => vwGrid.show( "main"));
+
+    const vwShowGalleryBtn = new VwButton( "showGallery", {"id":"gallery", "text":"Show Gallery"});
+    vwShowGalleryBtn.onClick( () => vwGrid.show( "gallery"));
+
+    $("#searchImg").click( handleSearchIconClicked );
+
+  } // end setupActionBtns()
+
+  /**
+   * Show hide search bar
+   */
+  function handleSearchIconClicked()
+  {
+    if ( !bSearchShowing )
+    {
+      $("#gridSearchBar").show();
+      searchBar.setFocus();
+    }
+    else
+    {
+      $("#gridSearchBar").hide();
+    }
+
+    bSearchShowing = !bSearchShowing;
+
+  } // end handleSearchIconClicked()
+
+  /**
+   * Config grid search bar
+   */
+  function setupGridSearchBar( gridDataModel )
+  {
+    const searchProps = {};
+    searchProps.cssSearchXImg = "SearchXImg";
+    searchProps.placeHolder = "Search";
+    searchBar = new VwSearchBar( "searchBar", gridDataModel, searchProps );
+
+  } // end setupGridSearchBar()
+
+
+  /**
+   * Load model with test demo data
+   * @param gridDataModel
+   */
+  function loadGridModel( gridDataModel )
+  {
+    const rootFolderItems = {};
+
+    rootFolderItems.id = 0;
+    rootFolderItems.isFolder = true;
+    rootFolderItems.folderItems = [];
+    rootFolderItems.title = "root";
+    
+    for( let x = 0; x < 10; x++ )
+    {
+      const dataItem = {};
+      dataItem.id = x;
+      dataItem.img = "/demo/images/alert_circle_red.png";
+      dataItem.title = `Title Nbr ${x}`;
+      dataItem.size = x * 1000;
+      dataItem.uploadDate = new Date();
+      dataItem.isSelected = false;
+      dataItem.isFolder = false;
+      dataItem.category = "img";
+      rootFolderItems.folderItems.push( dataItem );
+
+    }
+
+    let folderAsset = {};
+    folderAsset.id = 20;
+    folderAsset.title = "Folder One";
+    folderAsset.img = "/demo/images/folder_blue.png";
+    folderAsset.size = 0;
+    folderAsset.uploadDate = new Date();
+    folderAsset.isSelected = false;
+    folderAsset.isFolder = true;
+    folderAsset.category = "folder";
+    folderAsset.folderItems = []
+
+    rootFolderItems.folderItems.push( folderAsset )
+
+    for ( let x = 21; x < 23; x++ )
+    {
+      const dataItem = {};
+      dataItem.id = x;
+      dataItem.img = "/demo/images/all_circle_blue.png";
+      dataItem.title = `Audio Item ${x}`;
+      dataItem.size = x * 1000;
+      dataItem.uploadDate = new Date();
+      dataItem.isSelected = false;
+      dataItem.isFolder = false;
+      dataItem.folderId = 20;
+      dataItem.category = "audio";
+
+      folderAsset.folderItems.push( dataItem );
+
+    }
+
+
+    let folderAsset2 = {};
+    folderAsset2.id = 99;
+    folderAsset2.title = "Folder Two";
+    folderAsset2.img = "/demo/images/folder_blue.png";
+    folderAsset2.size = 0;
+    folderAsset2.uploadDate = new Date();
+    folderAsset2.isSelected = false;
+    folderAsset2.folderItems = [];
+    folderAsset2.isFolder = true;
+    folderAsset2.category = "folder";
+    folderAsset2.folderId = 20;
+
+    folderAsset.folderItems.push( folderAsset2 );
+
+    for ( let x = 36; x < 41; x++ )
+    {
+      const dataItem = {};
+      dataItem.id = x;
+      dataItem.img = "/demo/images/all_circle_blue.png";
+      dataItem.title = `Video Item ${x}`;
+      dataItem.size = x * 1000;
+      dataItem.uploadDate = new Date();
+      dataItem.isSelected = false;
+      dataItem.isFolder = false;
+      dataItem.category = "video";
+      dataItem.folderId = 99;
+
+      folderAsset2.folderItems.push( dataItem );
+
+    }
+
+    gridDataModel.setRootFolderItem( rootFolderItems );
+
+  } // end loadGridModel()
+
+</script>
+</html>

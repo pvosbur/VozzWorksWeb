@@ -1,0 +1,18 @@
+.VwNavBarHide
+{
+  display: none;
+}
+
+.VwNavBarDivider
+{
+  width: 50%;
+  background: #444;
+  height: 2px;
+  margin: 2px auto;
+}
+
+.VwNavBarVertFiller
+{
+  width:100%;
+  height:.5em;
+}

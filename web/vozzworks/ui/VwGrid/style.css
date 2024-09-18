@@ -1,0 +1,92 @@
+.VwGrid
+{
+  width:100%;
+  height:100%;
+  overflow:hidden;
+}
+
+.VwGridHdr
+{
+  display:flex;
+  align-items:center;
+  width:100%;
+}
+
+.VwGridHdrCol
+{
+  display:flex;
+  align-items:center;
+}
+
+.VwGridHdrCol > img
+{
+  width:.8rem;
+  height:.8rem;
+  margin-left:.2rem;
+}
+
+.VwControlEnvelope
+{
+  display:flex;
+  align-items:center;
+  justify-content: center;
+  width:100%;
+  height:100%;
+}
+
+.VwGridHdrCol.Center
+{
+  justify-content:center;
+}
+
+.VwGridHdrCol.Left
+{
+  justify-content:flex-start;
+}
+
+.VwGridHdrCol.Right
+{
+  justify-content:flex-end;
+}
+
+.VwGridBody
+{
+  display:flex;
+  flex-direction:column;
+  width:100%;
+}
+
+.VwGridRow
+{
+  display:flex;
+  align-items:center;
+  width:100%;
+  cursor:default;
+}
+
+.VwGridRowCol
+{
+  display:flex;
+  align-items: center;
+  
+}
+
+.VwGridSortArrow
+{
+  width:.7rem;
+  height:.7rem;
+  display:none;
+}
+
+.VwVertScrollContainer, .VwHorzScrollContainer
+{
+  position:absolute;
+
+}
+
+.VwGridTileRow
+{
+  display:flex;
+  align-items:center;
+}
+

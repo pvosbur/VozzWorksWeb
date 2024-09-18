@@ -1,0 +1,98 @@
+.VwMenu
+{
+  border:1px solid black;
+  border-radius:5px;
+  box-shadow:4px 4px #d0d0d0;
+
+}
+
+.VwContextMenu
+{
+  position:absolute;
+  background:whitesmoke;
+  color:#666666;
+  display: flex;
+  flex-direction: column;
+  border:1px solid black;
+  border-radius:6px;
+  width:10em;
+  align-items:center;
+  justify-content:center;
+
+}
+
+.VwContextMenu > span
+{
+  cursor:pointer;
+}
+
+.VwMenuGroup
+{
+  display:flex;
+  flex-direction:column;
+  width:100%;
+  border-radius:5px;
+  border-bottom:1px dashed #d0d0d0;
+}
+
+.VwMenuItem
+{
+  display:flex;
+  width:100%;
+  height:1.5em;
+  align-items:center;
+  margin-left:4px;
+  position:relative;
+  cursor:pointer;
+}
+
+.VwMenuDisabled
+{
+  color:#999999;
+  cursor:not-allowed;
+}
+
+.VwSubMenu
+{
+  position:absolute;
+  box-shadow: 4px 4px #d0d0d0;
+  border:1px solid black;
+  display:none;
+}
+
+.VwMenuItem:hover
+{
+  background:#5c9ec8;
+}
+
+
+.VwMenuIcon
+{
+  width:1em;
+  height:1em;
+  margin-right:.3em;
+}
+
+.VwSubMenuArrow
+{
+  width:.6em;
+  position:absolute;
+  right:.4em;
+}
+
+.VwMenuItemHotKey
+{
+  position:absolute;
+  right:.4em;
+
+}
+
+.VwMenuItemImg
+{
+  height:.6em;
+  right:4px;
+  position:absolute;
+  top:1px;
+
+}
+

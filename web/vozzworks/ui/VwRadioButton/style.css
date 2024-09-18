@@ -1,0 +1,57 @@
+.VwRadioContainer
+{
+  display:inline-flex;
+  align-items:center;
+  justify-content: space-between;
+  cursor:pointer;
+  vertical-align: top;
+  margin-left:.4em;
+}
+
+
+.VwRadioBtnOuter
+{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:1rem;
+  height:1rem;
+  border:2px solid black;
+  border-radius:50%;
+}
+
+.VwRadioBtnInner
+{
+  width:.6rem;
+  height:.6rem;
+  border-radius:50%;
+  background:black;
+  display:none;
+}
+
+.VwLabel
+{
+  margin-left:.4em;
+  color:black;
+}
+
+.VwRadioGroupHorz
+{
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+  width:100%;
+}
+
+.VwRadioGroupVert
+{
+  display:flex;
+  flex-direction: column;
+  align-items:flex-start;
+  justify-content: space-between;
+  height:100%;
+}
+
+
+
+

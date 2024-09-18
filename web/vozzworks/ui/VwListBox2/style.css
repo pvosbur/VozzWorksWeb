@@ -1,0 +1,44 @@
+.VwListBox
+{
+  display:flex;
+  flex-direction:column;
+  border:1px solid black;
+  border-radius:6px;
+  width:100%;
+  cursor:pointer;
+}
+
+.VwListBoxContent
+{
+  display:flex;
+  flex-direction:column;
+  border-radius:6px;
+  width:100%;
+}
+
+.VwListBoxImg
+{
+  width:2rem;
+  height:2rem;
+}
+
+.VwListBoxItem
+{
+  display:flex;
+  align-items:center;
+}
+
+.VwListBoxItemText
+{
+  margin-left:1rem;
+}
+
+.VwListBoxItemHover
+{
+  background:#5c9ec8;
+}
+
+.VwListBoxSelectedItem
+{
+  background:#5c9ec8;
+}
