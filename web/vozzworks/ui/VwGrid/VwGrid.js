@@ -18,7 +18,7 @@ import VwTileViewMgr          from "./VwTileViewMgr.js";
 VwCssImport( "/vozzworks/ui/VwGrid/style");
 
 /**
- * THis class defines the VwGrid for displaying propVal in row/column for gallery type views. The gid can have multiple views as
+ * This class defines the VwGrid for displaying object properties in row/column display or for gallery type views. The gid can have multiple views as
  * defined in the grids propVal model. The constructor returns a promise and is resolved when the view defined is complete
  *
  * @param strParent   The grids parent element
