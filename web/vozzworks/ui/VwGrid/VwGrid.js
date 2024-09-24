@@ -11,7 +11,7 @@ import VwXPath                from "../VwTree/VwXPath.js";
 import VwGridHdr              from "./VwGridHdr.js";
 import VwRowColViewMgr        from "./VwRowColViewMgr.js";
 import VwScrollBar            from "../VwScrollBar/VwScrollBar.js";
-import VwGridDataModel from "./VwGridDataModel.js";
+import VwGridDataModel        from "./VwGridDataModel.js";
 import VwHashMap              from "../../util/VwHashMap/VwHashMap.js";
 import VwTileViewMgr          from "./VwTileViewMgr.js";
 
@@ -210,7 +210,8 @@ function VwGrid( strParent, gridModel, gridProps )
   } // end clearGrid()
 
   /**
-   * Prcess views defined in the xml
+   * Process views defined in the xml
+   *
    * @param xmlGraph
    * @param vwXpath
    */
