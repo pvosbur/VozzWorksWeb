@@ -1,6 +1,5 @@
 .VwScrollContainer
 {
-  width:100%;
 }
 
 .VwVertScroll
@@ -9,8 +8,6 @@
   height:100%;
   background-color:transparent;
   position:absolute;
-  right:0;
-  top:0;
   display:none;
   opacity:.85;
   z-index:9999;
@@ -29,12 +26,9 @@
 
 .VwHorzScroll
 {
-  width:100%;
   height:14px;
   background-color:transparent;
   position:absolute;
-  left:0;
-  bottom:0;
   display:none;
   opacity:.85;
   z-index:9999;

@@ -32,21 +32,22 @@ await  VwCssImport( "/vozzworks/ui/VwScrollBar/style", true);
  *
  * This class creates a horizontal/vertical scrollbar based on the orientation property". It extends the VwSlider class
  *
- * @param strParentId The parent contatiner id the the scrollbar will live in
+ * @param strScrollContainerParentId The parent contatiner id the the scrollbar will live in
  * @oaram scrollbarProps:
  *        orientation:String:Required must be one of "vert" (for a vertical scrollbar) or "horz" (for a horizontal scrollbar)
  *        cssScrollContainer:String:Optional One or more Css Class names to be added to the scroll data container
  * @constructor
  */
-function VwScrollBar( strParentId, scrollbarProps )
+function VwScrollBar( strScrollContainerParentId, strScrollContentId, scrollbarProps )
 {
 
   const self = this;
   const m_aScrollListeners = [];
-  const SCROLL_CONTAINER_ID = `${strParentId}_${scrollbarProps.orientation}_container`;
+  const m_scrollContainerParentEle = $(`#${strScrollContainerParentId}`)[0];
+  const SCROLL_CONTAINER_ID = `${strScrollContainerParentId}_${scrollbarProps.orientation}_container`;
+  const m_scrollablContainerEle = $(`#${strScrollContentId}` )[0];
+  const m_scrollContentParentEle = $(m_scrollablContainerEle).parent()[0];
 
-  let   m_scrollablContainerEle = $(`#${strParentId}` )[0];
-  let   m_scrollContainerParentEle;
   let   m_bVertScrollShowing = false;
   let   m_nCurThumbPos;
   let   m_fVertScrollBar;
@@ -54,6 +55,7 @@ function VwScrollBar( strParentId, scrollbarProps )
   let   m_nPixelsPerPage;
   let   m_bInScrollBar;
 
+  this.getScrollContainer = () => SCROLL_CONTAINER_ID;
   this.isVertScroll = () => scrollbarProps.orientation == "vert";
   this.resize = resize;
   this.addScrollListener = addScrollListener;
@@ -78,22 +80,12 @@ function VwScrollBar( strParentId, scrollbarProps )
       createHorzScrollContainer();
     }
 
-    if ( scrollbarProps.scrollableContainerId )
-    {
-      const scrollableParentEle = $(`#${scrollbarProps.scrollableContainerId}`).parent()[0];
-      $(scrollableParentEle).css( "overflow", "hidden" );
-      $(scrollableParentEle).css( "position", "relative" );
-
-    }
-    else
-    {
-      $( m_scrollContainerParentEle ).css( "overflow", "hidden" );
-      $( m_scrollContainerParentEle ).css( "position", "relative" );
-    }
+    $( m_scrollContentParentEle ).css( "overflow", "hidden" );
+    $( m_scrollContentParentEle ).css( "position", "relative" );
 
     VwSlider.call( self, SCROLL_CONTAINER_ID, m_scrollbarProps, false );
 
-    m_nPixelsPerPage = $(m_scrollContainerParentEle).outerHeight();
+    m_nPixelsPerPage = $( m_scrollContentParentEle).outerHeight();
 
     setupEventListeners();
 
@@ -123,7 +115,7 @@ function VwScrollBar( strParentId, scrollbarProps )
   function resizeVertScrollbar()
   {
     $( `#${SCROLL_CONTAINER_ID}` ).show();
-    const nNbrUnits = $( m_scrollablContainerEle ).height();
+    const nNbrUnits = $( `#${strScrollContentId}` ).height();
 
     if ( nNbrUnits <= 0 )
     {
@@ -142,7 +134,7 @@ function VwScrollBar( strParentId, scrollbarProps )
    */
   function resizeHorzScrollbar( nWidth )
   {
-    const nCurWidth = $(m_scrollContainerParentEle).width();
+    const nCurWidth = $( m_scrollablContainerEle).width();
 
     if ( nCurWidth == 0 )
     {
@@ -165,9 +157,9 @@ function VwScrollBar( strParentId, scrollbarProps )
     }
     else
     {
-      if ( $(`#${strParentId}`)[0] )
+      if ( $(`#${strScrollContainerParentId}`)[0] )
       {
-        $(`#${strParentId}`)[0].style.marginLeft = "0px";
+        $(`#${strScrollContainerParentId}`)[0].style.marginLeft = "0px";
       }
 
       moveManagedScrollIds( 0 );
@@ -277,10 +269,16 @@ function VwScrollBar( strParentId, scrollbarProps )
     }
 
     const vertScrollContainerEle = $("<div>").attr("id", SCROLL_CONTAINER_ID ).addClass("VwVertScroll").addClass( scrollbarProps.cssScrollContainer )[0];
-
     $( m_scrollContainerParentEle ).append( vertScrollContainerEle );
 
-     const observer = new MutationObserver((mutationRecords) =>
+    const nHeight = $( m_scrollablContainerEle ).parent().height();
+    $(vertScrollContainerEle).height(nHeight );
+
+    const offsetParent = $( m_scrollContentParentEle).offset();
+    offsetParent.left = $( m_scrollContentParentEle).width();
+    $(vertScrollContainerEle).offset( offsetParent );
+
+    const observer = new MutationObserver((mutationRecords) =>
                                           {
                                             resize();
 
@@ -306,6 +304,12 @@ function VwScrollBar( strParentId, scrollbarProps )
     const horzScrollContainerEle = $("<div>").attr("id", SCROLL_CONTAINER_ID).addClass("VwHorzScroll").addClass( scrollbarProps.cssScrollContainer )[0];
 
     $( m_scrollContainerParentEle ).append( horzScrollContainerEle );
+    const offsetHorzScroll = $( m_scrollContentParentEle).offset();
+
+    offsetHorzScroll.top += $( m_scrollContentParentEle ).height();
+    $(horzScrollContainerEle).width( m_scrollContainerParentEle.offsetWidth );
+    $(horzScrollContainerEle).offset( offsetHorzScroll );
+
 
   } // end createHorzScrollContainer()
 
@@ -314,22 +318,11 @@ function VwScrollBar( strParentId, scrollbarProps )
    */
   function setupEventListeners()
   {
-    m_scrollContainerParentEle.addEventListener( "mousewheel", handleMouseWheelMove, false );
+    m_scrollContentParentEle.addEventListener( "mousewheel", handleMouseWheelMove, false );
 
     m_scrollablContainerEle.addEventListener( "VwVisibleEvent", handleResize );
 
-    let hoverIdEle;
-
-    if ( scrollbarProps.scrollableContainerId)
-    {
-      hoverIdEle = $(`#${scrollbarProps.scrollableContainerId}`)[0];
-    }
-    else
-    {
-      hoverIdEle = m_scrollContainerParentEle ;
-    }
-
-    $( hoverIdEle ).hover( () =>
+    $( m_scrollContainerParentEle ).hover( () =>
                                         {
                                           if ( m_fVertScrollBar )
                                           {
@@ -346,7 +339,7 @@ function VwScrollBar( strParentId, scrollbarProps )
       {
         if ( scrollbarProps.scrollableContainerId )
         {
-         $( `#${strParentId}` ).hide();
+         $( `#${strScrollContainerParentId}` ).hide();
         }
         else
         {
@@ -359,15 +352,15 @@ function VwScrollBar( strParentId, scrollbarProps )
 
     if ( scrollbarProps.scrollableContainerId )
     {
-      $(`#${strParentId}`).mouseenter(  () =>
+      $(`#${strScrollContainerParentId}`).mouseenter( () =>
                                       {
                                         m_bInScrollBar = true;
-                                        $( `#${strParentId}` ).show();
+                                        $( `#${strScrollContainerParentId}` ).show();
                                       });
 
-       $(`#${strParentId}`).mouseleave(  () =>
+       $(`#${strScrollContainerParentId}`).mouseleave( () =>
        {
-         $( `#${strParentId}` ).hide();
+         $( `#${strScrollContainerParentId}` ).hide();
        });
 
     } // end if
@@ -564,7 +557,7 @@ function VwScrollBar( strParentId, scrollbarProps )
   function handleVertScrollHover()
   {
     const nScrollContainerHeight = $(m_scrollablContainerEle).height();
-    const nScrollContainerParentHeight = $( m_scrollContainerParentEle).height();
+    const nScrollContainerParentHeight = $( m_scrollContentParentEle).height();
     const nThumbHeight = self.getThumbHeight();
 
     if ( isNaN( nThumbHeight ) || nScrollContainerHeight <= nScrollContainerParentHeight + 3 )
@@ -577,7 +570,7 @@ function VwScrollBar( strParentId, scrollbarProps )
 
     if ( scrollbarProps.scrollableContainerId )
     {
-      $(`#${strParentId}`).show();
+      $(`#${strScrollContainerParentId}`).show();
     }
     
     $(`#${SCROLL_CONTAINER_ID}` ).show()
@@ -589,13 +582,13 @@ function VwScrollBar( strParentId, scrollbarProps )
    */
   function handleHorzScrollHover()
   {
-    if ( !$(`#${strParentId}`)[0] )
+    if ( !$(`#${strScrollContainerParentId}`)[0] )
     {
       return;
     }
 
     const nScrollContainerWidth = m_scrollablContainerEle.scrollWidth;
-    const nScrollContainerParentWidth = $( m_scrollContainerParentEle).width();
+    const nScrollContainerParentWidth = $( m_scrollContentParentEle).width();
     const nThumbWidth = self.getThumbWidth();
 
     if ( isNaN( nThumbWidth ) || nScrollContainerWidth <= nScrollContainerParentWidth + 3 )
@@ -605,7 +598,7 @@ function VwScrollBar( strParentId, scrollbarProps )
 
     if ( scrollbarProps.scrollableContainerId )
     {
-      $(`#${strParentId}`).show();
+      $(`#${strScrollContainerParentId}`).show();
     }
 
     $(`#${SCROLL_CONTAINER_ID}` ).show()
@@ -646,18 +639,6 @@ function VwScrollBar( strParentId, scrollbarProps )
     props.computeThumb = true;
     props.useThumbSizeInBoundsCheck = true;
 
-    // this is an override from the default scrollbar parent id
-    if ( scrollbarProps.scrollableContainerId )
-    {
-      m_scrollablContainerEle = $(`#${scrollbarProps.scrollableContainerId}` )[0];
-      m_scrollContainerParentEle = $(`#${strParentId}`)[0];
-
-    }
-    else
-    {
-      m_scrollContainerParentEle = $(m_scrollablContainerEle).parent()[0];
-    }
-
     props.position = "absolute";
     props.fnPosChange = handleThumbPosChanged;
 
@@ -672,7 +653,7 @@ function VwScrollBar( strParentId, scrollbarProps )
     {
       props.cssSlider = "VwHorzScroll";
       props.cssThumb = "VwHorzThumb";
-      props.nbrOfUnits = $(m_scrollContainerParentEle ).scrollWidth;
+      props.nbrOfUnits = $( m_scrollContentParentEle ).scrollWidth;
 
     }
 

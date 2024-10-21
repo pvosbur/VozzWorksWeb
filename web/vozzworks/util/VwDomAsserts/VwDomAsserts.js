@@ -60,7 +60,7 @@ function VwDomAssert()
 
 VwDomAssert(); // Load the map
 
-VwDomAssert.getColor = ( strKey ) => window["_vwMapColorConversions"].get( strKey );
+VwDomAssertions.getColor = ( strKey ) => window["_vwMapColorConversions"].get( strKey );
 
 
 /**
@@ -70,32 +70,32 @@ VwDomAssert.getColor = ( strKey ) => window["_vwMapColorConversions"].get( strKe
  * @param strExpectedElementVal  The expected value of the element
  * @param strFailMsg Failure text that is thrown in the exception if the test fails
  */
-VwDomAssert.equals = ( strDomEleId, strExpectedElementVal, strFailMsg ) =>
+VwDomAssertions.equals = ( strDomEleId, strExpectedElementVal, strFailMsg ) =>
 {
   const strElementVal = $(`#${strDomEleId}`).text();
 
   if ( !(strElementVal == strElementVal ))
   {
-    VwAssert.processErrorStack( `Assert Failure equals ${strFailMsg} '${strElementVal}''` );
+    VwAssertions.processErrorStack( `Assert Failure equals ${strFailMsg} '${strElementVal}''` );
   }
 
-} // end VwDomAssert.equals()
+} // end VwDomAssertions.equals()
 
 /**
  * Asserts that the element id exists in the DOM
  * @param strDomEleId The DOM element id
  * @param strFailMsg Fail text on exception
  */
-VwDomAssert.existsById = ( strDomEleId, strFailMsg ) =>
+VwDomAssertions.existsById = ( strDomEleId, strFailMsg ) =>
 {
   const strElement = $(`#${strDomEleId}`)[0];
 
   if ( !(strElement ) )
   {
-    VwAssert.processErrorStack(  `Assert Failure existsById: ${strFailMsg}` );
+    VwAssertions.processErrorStack(  `Assert Failure existsById: ${strFailMsg}` );
   }
 
-} // end VwDomAssert.existsById()
+} // end VwDomAssertions.existsById()
 
 /**
  * Asserts that the element with the strDomEleClassName exists
@@ -103,16 +103,16 @@ VwDomAssert.existsById = ( strDomEleId, strFailMsg ) =>
  * @param strDomEleClassName The name of the element class
  * @param strFailMsg Fail text msg on exception
  */
-VwDomAssert.existsByClass = ( strDomEleClassName, strFailMsg ) =>
+VwDomAssertions.existsByClass = ( strDomEleClassName, strFailMsg ) =>
 {
   const strElement = $(`.${strDomEleClassName}`)[0];
 
   if ( !(strElement ) )
   {
-    VwAssert.processErrorStack( `Assert Failure existsByClass: ${strFailMsg}` );
+    VwAssertions.processErrorStack( `Assert Failure existsByClass: ${strFailMsg}` );
   }
 
-} // end VwDomAssert.existsByClass()
+} // end VwDomAssertions.existsByClass()
 
 
 /**
@@ -126,7 +126,7 @@ VwDomAssert.existsByClass = ( strDomEleClassName, strFailMsg ) =>
  *
  * @return {Promise<unknown>}
  */
-VwDomAssert.waitForElement = async ( strDomEleId, nMaxWaitTime, strFailMsg ) =>
+VwDomAssertions.waitForElement = async ( strDomEleId, nMaxWaitTime, strFailMsg ) =>
 {
 
   const nStartTime = Date.now();
@@ -155,7 +155,7 @@ VwDomAssert.waitForElement = async ( strDomEleId, nMaxWaitTime, strFailMsg ) =>
 
       if ( (Date.now() - nStartTime) >= nMaxWaitTime )
       {
-        fail( VwAssert.processErrorStack( `Assert Failure waitForElement: ${strFailMsg}` ) ) // This will throw an exception
+        fail( VwAssertions.processErrorStack( `Assert Failure waitForElement: ${strFailMsg}` ) ) // This will throw an exception
       }
 
       setTimeout( timeoutHandler, 50 );
@@ -164,7 +164,7 @@ VwDomAssert.waitForElement = async ( strDomEleId, nMaxWaitTime, strFailMsg ) =>
 
   }); // end promise
 
-} // end VwDomAssert.waitForElement()
+} // end VwDomAssertions.waitForElement()
 
 
 /**
@@ -173,22 +173,22 @@ VwDomAssert.waitForElement = async ( strDomEleId, nMaxWaitTime, strFailMsg ) =>
  * @param strDomEleId The dom element id to test
  * @param strFailMsg
  */
-VwDomAssert.isEmpty = ( strDomEleId, strFailMsg ) =>
+VwDomAssertions.isEmpty = ( strDomEleId, strFailMsg ) =>
 {
   const strElement = $(`#${strDomEleId}`)[0];
 
   if ( !(strElement ) )
   {
-    VwAssert.processErrorStack(  `Assert Failure isEmpty, element is null: ${strFailMsg}` );
+    VwAssertions.processErrorStack(  `Assert Failure isEmpty, element is null: ${strFailMsg}` );
   }
 
   if ( $(`#${strDomEleId}`).length > 0 )
   {
-    VwAssert.processErrorStack(  `Assert Failure isEmpty: ${strFailMsg}` );
+    VwAssertions.processErrorStack(  `Assert Failure isEmpty: ${strFailMsg}` );
 
   }
 
-} // end VwDomAssert.isEmpty()
+} // end VwDomAssertions.isEmpty()
 
 /**
  * Performs a not null or zero length string test
@@ -196,16 +196,16 @@ VwDomAssert.isEmpty = ( strDomEleId, strFailMsg ) =>
  * @param strDomEleId The dom element id to test
  * @param strFailMsg The fail text thron in the exception
  */
-VwDomAssert.isNotNull = ( strDomEleId, strFailMsg ) =>
+VwDomAssertions.isNotNull = ( strDomEleId, strFailMsg ) =>
 {
   const strElementVal = $(`#${strDomEleId}`).text();
 
   if ( !strElementVal)
   {
-    VwAssert.processErrorStack(  `Assert Failure isNotNull: ${strFailMsg}` );
+    VwAssertions.processErrorStack(  `Assert Failure isNotNull: ${strFailMsg}` );
   }
 
-} // end VwDomAssert.isNotNull()
+} // end VwDomAssertions.isNotNull()
 
 /**
  * Performs a null or zero length string test
@@ -213,16 +213,16 @@ VwDomAssert.isNotNull = ( strDomEleId, strFailMsg ) =>
  * @param strDomEleId The dom element id to test
  * @param strFailMsg The fail text thron in the exception
  */
-VwDomAssert.isNull = ( strDomEleId, strFailMsg ) =>
+VwDomAssertions.isNull = ( strDomEleId, strFailMsg ) =>
 {
   const strElementVal = $(`#${strDomEleId}`).text();
 
   if ( strElementVal)
   {
-    VwAssert.processErrorStack(  `Assert Failure isNull: ${strFailMsg}` );
+    VwAssertions.processErrorStack(  `Assert Failure isNull: ${strFailMsg}` );
   }
 
-} // end VwDomAssert.isNull()
+} // end VwDomAssertions.isNull()
 
 /**
  * Performs a DOM css test on an element
@@ -232,7 +232,7 @@ VwDomAssert.isNull = ( strDomEleId, strFailMsg ) =>
  * @param strCssExpectedVal The expected property value
  * @param strFailMsg Failure text that is thrown in the exception if the test fails
  */
-VwDomAssert.cssEquals = ( strDomElelId, strCssProperty, strCssExpectedVal, strFailMsg ) =>
+VwDomAssertions.cssEquals = ( strDomElelId, strCssProperty, strCssExpectedVal, strFailMsg ) =>
 {
   let strCssVal = $(`#${strDomElelId}`).css( strCssProperty);
 
@@ -244,12 +244,12 @@ VwDomAssert.cssEquals = ( strDomElelId, strCssProperty, strCssExpectedVal, strFa
 
   if ( strCssExpectedVal.charAt(0) != "#") // THis is a css color value
   {
-    strCssVal = VwDomAssert.getColor( strCssVal );
+    strCssVal = VwDomAssertions.getColor( strCssVal );
   }
 
   if ( !(strCssVal == strCssExpectedVal) )
   {
-    VwAssert.processErrorStack( `Assert Failure cssEquals: ${strFailMsg} '${strCssVal}'` );
+    VwAssertions.processErrorStack( `Assert Failure cssEquals: ${strFailMsg} '${strCssVal}'` );
   }
 
   /**
@@ -279,7 +279,7 @@ VwDomAssert.cssEquals = ( strDomElelId, strCssProperty, strCssExpectedVal, strFa
 
   } // end rgb2HexColor()
 
-} // end VwDomAssert.assertCssEquals )
+} // end VwDomAssertions.assertCssEquals )
 
 
 export default VwDomAssert;

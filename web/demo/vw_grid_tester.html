@@ -97,6 +97,7 @@
       height:1.2rem;
       background:#2e2e2e;
       border:1px solid #969696;
+      margin-right:.2rem;
     }
 
     .TestGridRow
@@ -110,6 +111,7 @@
       justify-content:end;
     }
 
+ 
     .TestActionBtn
     {
       width:10rem;
@@ -184,15 +186,14 @@
               <view name="main" type="rowCol">
                 <gridHdr>
                   <common>
-                    <prop id="noReorder" value="true"/>
                     <prop id="noSeparator" value="true"/>
                   </common>
                   <gridCols>
-                    <col id="img" width="3em" type="img" class="TestImg"/>
-                    <col id="title" value="Title" width="50%" sortType="text"/>
-                    <col id="size" value="Size" width="20%" sortType="number" format="dynamic"/>
-                    <col id="uploadDate" value="Upload Date" width="18%" sortType="date" format="MMM dd hh:mm aa"/>
-                    <col id="isSelected" width="5%" type="custom" impl="/vozzworks/ui/VwCheckBox/VwCheckBox.js" class="TestCheckBoxParent" props="//checkBoxProps">
+                    <col id="img" width="48px" type="img" class="TestImg" noResize="true"/>
+                    <col id="title" value="Title" width="500px" sortType="text"/>
+                    <col id="size" value="Size" width="60px" sortType="number" format="dynamic"/>
+                    <col id="uploadDate" value="Upload Date" width="200px" sortType="date" format="MMM dd hh:mm aa"/>
+                    <col id="isSelected" width="55px" noResize="true" type="custom" impl="/vozzworks/ui/VwCheckBox/VwCheckBox.js" class="TestCheckBoxParent" props="//checkBoxProps">
                       <args value="$parentId,$null,$props,$data"/>
                     </col>
                   </gridCols>
@@ -202,6 +203,7 @@
                   <prop id="cssRowHovered" value="TestRowHovered"/>
                   <prop id="cssUserGridRow" value="TestGridRow"/>
                   <prop id="viewPortSize" value="200"/>
+                  <prop id="allowColResize" value="true"/>
                 </props>
               </view>
               <view name="gallery" type="tile" implProps="//checkBoxProps">
@@ -215,7 +217,7 @@
             <props>
               <prop id="sortImgArrowDownUrl" value="/vozzworks/ui/images/vw_arrow_down_grey.png"/>
               <prop id="sortImgArrowUpUrl" value="/vozzworks/ui/images/vw_arrow_up_grey.png"/>
-              <prop id="scrollBarsOutsideScrollArea" value="true"/>
+              <!--<prop id="scrollBarsOutsideScrollArea" value="true"/>-->
               <prop id="defaultView" value="main"/>
                <!--<prop id="silentScrolling" value="true"/>-->
             </props>
@@ -226,8 +228,49 @@
             </checkBoxProps>
            </gridConfig>`;
 
+  //testGroupBy();
   startDemo();
 
+  function testGroupBy()
+  {
+    let a1 = [{"name":"apples"},{"name":"ants"},{"name":"bananas"},{"name":"boys"}];
+    const res = Object.groupBy( a1, ({name}) =>
+    {
+      if (name =="apples" || name == "bananas" )
+      {
+        return "fruit";
+      }
+      else
+      if (name == "boys" )
+      {
+        return "people";
+      }
+      else
+      {
+        return "insects";
+      }
+    });
+
+    for ( let type in res )
+    {
+      console.log( `Type: ${type}` )
+      print( res[type] );
+
+    }
+
+    function print( obj )
+    {
+      let strVal = "";
+      for ( let entry of obj )
+      {
+        strVal += " " + entry.name;
+      }
+
+      console.error( strVal );
+    }
+
+  }
+  
   /**
    * Grid Tester
    * @return {Promise<void>}

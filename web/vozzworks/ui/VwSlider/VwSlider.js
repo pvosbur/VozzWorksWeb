@@ -306,13 +306,7 @@ function VwSlider( strSliderParentId, sliderProps, bNoResize )
       if ( m_sliderProps.computeThumb )
       {
 
-        let nPctShowing = m_nWidth / nNbrUnits * 100;  // % of units showing
-        if ( nPctShowing < 0 || nPctShowing > 100 )
-        {
-          nPctShowing = 1;
-        }
-
-        m_nThumbWidth = m_nWidth * (nPctShowing / 100)
+        m_nThumbWidth = m_nWidth * m_nPixPerUnit;
 
         if ( m_nThumbWidth < 2 )
         {
@@ -339,13 +333,8 @@ function VwSlider( strSliderParentId, sliderProps, bNoResize )
       // If this prop set, the thumb height is computed on the pct of units showing in the container
       if ( m_sliderProps.computeThumb )
       {
-        let nPctShowing = m_nHeight / nNbrUnits * 100;  // % of units showing
-        if ( nPctShowing < 0 || nPctShowing > 100 )
-        {
-          nPctShowing = 1;
-        }
 
-        m_nThumbHeight = m_nHeight * (nPctShowing / 100);  // Height from % of units showng to the height of the scrollable container
+        m_nThumbHeight = m_nHeight * m_nPixPerUnit;  // Height from % of units showng to the height of the scrollable container
         if ( m_nThumbHeight < 2 )
         {
           m_nThumbHeight = 2;
@@ -1078,12 +1067,12 @@ function VwSlider( strSliderParentId, sliderProps, bNoResize )
 
     if ( m_sliderProps.width )
     {
-      m_nWidth = m_sliderProps.width; //VwExString.convertToPixels( _objProps.width.toString() );
+      m_nWidth = m_sliderProps.width;
     }
 
     if ( m_sliderProps.height )
     {
-      m_nHeight = m_sliderProps.height; //VwExString.convertToPixels( _objProps.height.toString() );
+      m_nHeight = m_sliderProps.height;
     }
 
 

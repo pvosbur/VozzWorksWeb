@@ -16,6 +16,7 @@
 {
   display:flex;
   align-items:center;
+  position:relative;
 }
 
 .VwGridHdrCol > img
@@ -77,6 +78,29 @@
   height:.7rem;
   display:none;
 }
+
+.VwGridHdrResizeColSplitter
+{
+  position:absolute;
+  right:2px;
+  width:2px;
+  min-width:2px;
+  height:80%;
+  cursor:col-resize;
+  background: #808080;
+  z-index:100;
+}
+
+.VwGridColResizeSplitter
+{
+  position:absolute;
+  width:2px;
+  min-width:2px;
+  cursor:col-resize;
+  background: #808080;
+  z-index:99999;
+}
+
 
 .VwVertScrollContainer, .VwHorzScrollContainer
 {

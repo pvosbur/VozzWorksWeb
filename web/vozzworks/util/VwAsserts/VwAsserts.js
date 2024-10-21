@@ -24,13 +24,13 @@ function VwAssert()
  * @param objToTest The object to test
  * @param strFailMsg  throws exception if objToTest is null with the strFailMsg as the Exception reason
  */
-VwAssert.isNotNull = ( objToTest, strFailMsg ) =>
+VwAssertions.isNotNull = ( objToTest, strFailMsg ) =>
 {
   if ( !objToTest )
   {
-    VwAssert.processErrorStack( `Assert Failure isNotNull: ${strFailMsg}` );
+    VwAssertions.processErrorStack( `Assert Failure isNotNull: ${strFailMsg}` );
   }
-} // end VwAssert.isNotNull()
+} // end VwAssertions.isNotNull()
 
 
 /**
@@ -39,14 +39,14 @@ VwAssert.isNotNull = ( objToTest, strFailMsg ) =>
  * @param objToTest The object to test
  * @param strFailMsg  throws exception if objToTest is not null with the strFailMsg as the Exception reason
  */
-VwAssert.isNull = ( objToTest, strFailMsg ) =>
+VwAssertions.isNull = ( objToTest, strFailMsg ) =>
 {
   if ( !objToTest )
   {
-    VwAssert.processErrorStack(`Assert Failure isNull: ${strFailMsg}` );
+    VwAssertions.processErrorStack(`Assert Failure isNull: ${strFailMsg}` );
   }
 
-} // end VwAssert.isNull()
+} // end VwAssertions.isNull()
 
 /**
  * Asserts the boolean expression ffrom some compare is true
@@ -54,22 +54,22 @@ VwAssert.isNull = ( objToTest, strFailMsg ) =>
  *
  * @param strFailMsg Throws an exception if the btest is false with the strFailMsg as the Exception reason
  */
-VwAssert.isTrue = ( bTest, strFailMsg ) =>
+VwAssertions.isTrue = ( bTest, strFailMsg ) =>
 {
   if (! bTest )
   {
-    VwAssert.processErrorStack( `Assert Failure isTrue: ${strFailMsg}` );
+    VwAssertions.processErrorStack( `Assert Failure isTrue: ${strFailMsg}` );
 
   }
 
-} // end VwAssert.isTrue()
+} // end VwAssertions.isTrue()
 
 
 /**
  * THis creates a statckn trace so we can show the developer the harmess class, method name and line nbr of the assert that failed
  * @param strErrMsg
  */
-VwAssert.processErrorStack = ( strErrMsg ) =>
+VwAssertions.processErrorStack = ( strErrMsg ) =>
 {
 
   const errStack = new Error( strErrMsg ).stack;

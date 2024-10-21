@@ -37,7 +37,7 @@ function VwXmlProcessor( strDocument, parserProps  )
 
   this.dumpTreeToConsole = handleDumpTreeToConsole;
   this.getTreeModel = () => m_treeModel;
-  this.toObjectGraph = (style) => m_treeModel.toObjectGraph( style );
+  this.toObjectGraph = (style, bConvertToNativeType) => m_treeModel.toObjectGraph( style, bConvertToNativeType );
 
   processDocument();
 

@@ -40,6 +40,7 @@ function VwRowColViewMgr( vwGrid, gridHdr, vwXPath, viewSpec, gridProps )
   this.remove = handleRemoveItem;
   this.update = handleUpdateItem;
   this.clear = handleClear;
+  this.getProperty = (strPropId ) => m_viewProps[strPropId];
   this.onColFormat = ( strColId, fnOnColFormat) => m_mapColFormatters.put( strColId, fnOnColFormat );
   this.onControlCreate = ( strColId, fnOnControlCreate) => m_mapCustomControlImpl.put( strColId, fnOnControlCreate );
   this.onControlCreated = ( strColId, fnOnControlCreated) => m_mapCustomControlCreated.put( strColId, fnOnControlCreated );
@@ -49,6 +50,8 @@ function VwRowColViewMgr( vwGrid, gridHdr, vwXPath, viewSpec, gridProps )
   this.onRowHoveredOut = ( fnOnRowHoveredOut ) => addEventListener( m_strRowHoveredOut, fnOnRowHoveredOut );
   this.onRowDblClicked = ( fnOnRowDblClicked ) => addEventListener( m_strRowDblClicked, fnOnRowDblClicked );
   this.setDataModel = handleSetDataModel;
+  this.getRowId = getRowId;
+  this.getColContainerId = (row, strColId ) => `${getRowId(row)}_colContainer_${strColId}`;
   this.getDomItemId = (rowItem ) => getRowId( rowItem );
   this.openFolder = handleOpenFolder;
   this.onPostItemAdd = (fnPostRowListener ) => m_mapPostRowAddListeners.put( fnPostRowListener, fnPostRowListener );

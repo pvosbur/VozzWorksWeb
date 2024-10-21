@@ -30,6 +30,10 @@ war
 
 } // end war
 
+test
+{
+  useJUnitPlatform()
+}
 
 repositories
 {
@@ -62,7 +66,7 @@ dependencies
   implementation('org.bouncycastle:bcpkix-jdk15on:1.70')
 
   /* JUNIT */
-  testImplementation('org.junit.jupiter:junit-jupiter:5.8.2')
+  testImplementation('org.junit.jupiter:junit-jupiter:5.11.2')
 
 }
 

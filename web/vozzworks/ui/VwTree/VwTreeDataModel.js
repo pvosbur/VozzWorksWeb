@@ -361,7 +361,7 @@ function VwTreeDataModel( strInstallId, nodeDataRoot, modelProps, rootNodeProps 
    *  Builds an object graph hierarchy from the tree structure
    *
    */
-  function toObjectGraph( style )
+  function toObjectGraph( style, bConvertToNativeType )
   {
     if ( !style )
     {
@@ -392,6 +392,11 @@ function VwTreeDataModel( strInstallId, nodeDataRoot, modelProps, rootNodeProps 
         for ( const vwAttribute of aAttributes )
         {
           let strAttrVal = vwAttribute.getValue();
+
+          if ( bConvertToNativeType )
+          {
+            strAttrVal = convertToType( strAttrVal );
+          }
           objNode[ vwAttribute.getName() ] = strAttrVal;
         }
       }
@@ -418,6 +423,38 @@ function VwTreeDataModel( strInstallId, nodeDataRoot, modelProps, rootNodeProps 
 
   } // end buildObject()
 
+  /**
+   * Convert prop values defined in xml (which are all strings to natic data types
+   *
+   * @param propVal The xml property val
+   * @return {number|*|boolean}
+   */
+  function convertToType( propVal )
+  {
+    switch( propVal )
+    {
+      case "true":
+
+        return true;
+        break;
+
+      case "false":
+
+        return false;
+        break;
+
+      default:
+
+        if ( isNaN( propVal ))
+        {
+          return propVal; // This is a string, return it as is
+        }
+
+        return Number( propVal ); // return as a number
+
+    } // end switch()
+
+  } // end convertToType()
 
   /**
    * Organizes object in attribut normal for where each child is a new object

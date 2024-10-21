@@ -14,7 +14,6 @@ import VwScrollBar            from "../VwScrollBar/VwScrollBar.js";
 import VwGridDataModel        from "./VwGridDataModel.js";
 import VwHashMap              from "../../util/VwHashMap/VwHashMap.js";
 import VwTileViewMgr          from "./VwTileViewMgr.js";
-
 VwCssImport( "/vozzworks/ui/VwGrid/style");
 
 /**
@@ -87,9 +86,7 @@ function VwGrid( strParent, gridModel, gridProps )
        <div id="${m_strGridId}_gridDataContainer">
          <div id="${m_strGridId}_gridBody"></div>
        </div>
-       <div id="${m_strGridId}_vertScrollContainer" class="VwVertScrollContainer" style="display:none;position:absolute"></div>
-       <div id="${m_strGridId}_horzScrollContainer" class="VwHorzScrollContainer" style="display:none;position:absolute"></div>
-     </div>`;
+      </div>`;
 
   } // end render()
 
@@ -123,7 +120,7 @@ function VwGrid( strParent, gridModel, gridProps )
   async function configGridProps()
   {
     const xmlParser = new VwXmlProcessor( gridProps );
-    const xmlGraph = xmlParser.toObjectGraph( );
+    const xmlGraph = xmlParser.toObjectGraph( null, true );
     const vwXpath = new VwXPath( xmlGraph );
 
     processGlobalGridProps( vwXpath );
@@ -177,7 +174,7 @@ function VwGrid( strParent, gridModel, gridProps )
       }
     }
 
-    fireGridEventHandlers( VwGrid.ViewOpened );
+    await fireGridEventHandlers( VwGrid.ViewOpened );
 
     calcGridDataContainterHeight();
 
@@ -187,7 +184,7 @@ function VwGrid( strParent, gridModel, gridProps )
 
     if ( viewPortProp )
     {
-      m_gridModel.setViewPortSize( Number( viewPortProp.value ) );
+      m_gridModel.setViewPortSize( viewPortProp.value );
     }
 
     await m_gridModel.refresh();
@@ -220,6 +217,7 @@ function VwGrid( strParent, gridModel, gridProps )
     const aViews = xmlGraph.views.view;
 
     m_strDefaultView = m_props.defaultView;
+
     if ( !m_strDefaultView )
     {
       m_strDefaultView = aViews[0].name;
@@ -336,7 +334,7 @@ function VwGrid( strParent, gridModel, gridProps )
   {
     for ( const prop of aXmlProps )
     {
-      props[prop.id] = convertToType( prop.value );
+      props[prop.id] = prop.value;
     }
 
   } // end xmlPropsToObject()
@@ -353,41 +351,11 @@ function VwGrid( strParent, gridModel, gridProps )
     m_props.allowItemSelection = true;
     m_props.allowDrag = false;
     m_props.allowDrop = false;
+    m_props.cssGridHdrResizeColSplitter = "VwGridHdrResizeColSplitter";
+    m_props.cssGridColResizeSplitter = "VwGridColResizeSplitter";
 
   } // end configDefaultProps()
 
-  /**
-   * Convert prop values defined in xml (which are all strings to natic data types
-   *
-   * @param propVal The xml property val
-   * @return {number|*|boolean}
-   */
-  function convertToType( propVal )
-  {
-    switch( propVal )
-    {
-      case "true":
-
-        return true;
-        break;
-
-      case "false":
-
-        return false;
-        break;
-
-      default:
-
-        if ( isNaN( propVal ))
-        {
-          return propVal; // This is a string, return it as is
-        }
-
-        return Number( propVal ); // return as a number
-
-    } // end switch()
-
-  } // end convertToType()
 
   /**
    * Calculate the absolut grid data container height which is height of the grid's parent minus the height of the grid's header
@@ -502,7 +470,7 @@ function VwGrid( strParent, gridModel, gridProps )
 
       case "resize":
 
-        resizeScrollBars();
+        updateScrollBars();
         break;
 
     } // end switch()
@@ -521,7 +489,7 @@ function VwGrid( strParent, gridModel, gridProps )
       setupHorzScrollBarContainer();
     }
 
-    resizeScrollBars();
+    updateScrollBars();
 
     self.setVertScrollPos( 0 );
     self.setHorzScrollPos( 0 );
@@ -541,6 +509,7 @@ function VwGrid( strParent, gridModel, gridProps )
     if ( m_horzScrollBar )
     {
       m_horzScrollBar.resize();
+
     }
   } // end updateScrollBars()
 
@@ -550,41 +519,9 @@ function VwGrid( strParent, gridModel, gridProps )
   function setupVertScrollBarContainer()
   {
     const scrollProps = {};
-
-    let strScrollBarParentId;
-
-    if ( m_props.scrollBarsOutsideScrollArea )
-    {
-      scrollProps.scrollableContainerId = m_strGridBodyId;
-      strScrollBarParentId = `${m_strGridId}_vertScrollContainer`;
-      $(`#${strScrollBarParentId}`).show();
-      $(`#${strScrollBarParentId}`).css( "opacity", 0 );
-    }
-    else
-    {
-      strScrollBarParentId = `${m_strGridId}_gridBody`;
-    }
-
     scrollProps.orientation = "vert";
 
-    m_vertScrollBar = new VwScrollBar( strScrollBarParentId,scrollProps);
-
-    // set width, height and position of scrllbar container if outside the scrolling div
-    if ( m_props.scrollBarsOutsideScrollArea )
-    {
-      const nVertScrollWidth = m_vertScrollBar.getWidth()
-
-      const offsetDataContainer = $( `#${m_strGridId}_gridDataContainer` ).offset();
-      const nDataWidth = $( `#${m_strGridId}_gridDataContainer` ).width();
-
-      $( `#${m_strGridId}_vertScrollContainer` ).width( nVertScrollWidth );
-      $( `#${m_strGridId}_vertScrollContainer` ).height( $( `#${m_strGridId}_gridDataContainer` ).height() );
-      $( `#${m_strGridId}_vertScrollContainer` ).css( "top", offsetDataContainer.top );
-      $( `#${m_strGridId}_vertScrollContainer` ).css( "left", offsetDataContainer.left + nDataWidth - 6);
-      $(`#${strScrollBarParentId}`).hide();
-    }
-
-    $(`#${strScrollBarParentId}`).css( "opacity", 1 );
+    m_vertScrollBar = new VwScrollBar( m_strGridId, `${m_strGridId}_gridBody`, scrollProps );
 
   } // end setupVertScrollBarContainer()
 
@@ -594,62 +531,12 @@ function VwGrid( strParent, gridModel, gridProps )
   function setupHorzScrollBarContainer()
   {
     const scrollProps = {};
-
-    let strScrollBarParentId;
-
-    if ( m_props.scrollBarsOutsideScrollArea )
-    {
-      scrollProps.scrollableContainerId = m_strGridBodyId;
-      strScrollBarParentId = `${m_strGridId}_horzScrollContainer`;
-      $(`#${strScrollBarParentId}`).show();
-    }
-    else
-    {
-      strScrollBarParentId = `${m_strGridId}_gridBody`;
-    }
-
     scrollProps.orientation = "horz";
     scrollProps.managedScrollIds = [m_strGridHdrId];
 
-    $(`#${strScrollBarParentId}`).css( "opacity", 0 );
-
-    m_horzScrollBar = new VwScrollBar( strScrollBarParentId, scrollProps);
-
-    // set width, height and position of scrllbar container if outside the scrolling div
-    if ( m_props.scrollBarsOutsideScrollArea )
-    {
-      const offsetDataContainer = $( `#${m_strGridId}_gridDataContainer` ).offset();
-      const nDataContainerHeight = $( `#${m_strGridId}_gridDataContainer` ).outerHeight();
-
-      const nHorzScrollHeight = m_horzScrollBar.getHeight()
-
-      $( `#${m_strGridId}_horzScrollContainer` ).width( $( `#${m_strGridId}_gridDataContainer` ).width() );
-      $( `#${m_strGridId}_horzScrollContainer` ).height( nHorzScrollHeight );
-      $( `#${m_strGridId}_horzScrollContainer` ).css( "top",offsetDataContainer.top + nDataContainerHeight);
-      $( `#${m_strGridId}_horzScrollContainer` ).css( "left", offsetDataContainer.left );
-      $(`#${strScrollBarParentId}`).hide();
-    }
-
-    $(`#${strScrollBarParentId}`).css( "opacity", 1 );
-
+    m_horzScrollBar = new VwScrollBar( m_strGridId, `${m_strGridId}_gridBody`, scrollProps );
   } // end setupVertScrollBarContainer()
 
-  /**
-   * updates the scrolbar metrics base on new size of the scrolling data
-   */
-  function resizeScrollBars()
-  {
-    $(`#${m_strGridId}_vertScrollContainer`).show();
-    m_vertScrollBar.resize();
-    $(`#${m_strGridId}_vertScrollContainer`).hide();
-
-    if ( m_horzScrollBar )
-    {
-      $(`#${m_strGridId}_horzScrollContainer`).show();
-      m_horzScrollBar.resize();
-      $(`#${m_strGridId}_horzScrollContainer`).hide();
-    }
-  } // end resizeScrollBars()
 
   /**
    * Converts the object passed to an array if its not already

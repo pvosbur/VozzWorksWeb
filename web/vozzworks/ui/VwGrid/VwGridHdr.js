@@ -4,18 +4,31 @@
  * Time: 7:47 AM
  * 
  */
-import VwExString   from "../../util/VwExString/VwExString.js";
-import VwHashMap    from "../../util/VwHashMap/VwHashMap.js";
+import VwExString       from "../../util/VwExString/VwExString.js";
+import VwHashMap        from "../../util/VwHashMap/VwHashMap.js";
+import VwElementResizer from "../VwElementResizer/VwElementResizer.js";
+import VwMetrics from "../VwMetrics/VwMetrics.js";
 
 function VwGridHdr( vwGrid, hdrProps, gridProps )
 {
+  const self = this;
+
   const m_mapHdrColsById = new VwHashMap();
   const m_strGridHdrId = vwGrid.getHdrId();
+  const m_strGridId = vwGrid.getGridId();
+  const m_strGridSplitterId = `${m_strGridId}_splitter`;
+
   const m_hdrProps = {};
 
   let   m_strHdrCol;
   let   m_fnOnHdrColClick;
   let   m_hdrColCommonProps;
+  let   m_strResizeColSplitterDivTemplate;
+  let   m_strGridSplitterDiv;
+  let   m_strResizeGridSplitterId;
+  let   m_colResized;
+  let   m_nOrigSizeInPx;
+  let   m_bAllowColResize;
 
   this.onHdrColClick = ( fnOnHdrColClick ) => m_fnOnHdrColClick = fnOnHdrColClick;
   this.getHdrCols = () => hdrProps.gridCols.col;
@@ -33,11 +46,19 @@ function VwGridHdr( vwGrid, hdrProps, gridProps )
     m_strHdrCol =
     `<div id="\${gridId}_\${id}" class="VwGridHdrCol" style="${strStyle}"></div>`;
 
+    m_strResizeColSplitterDivTemplate =
+    `<div id="\${id}_resizerId" class="${gridProps.cssGridHdrResizeColSplitter}"></div>`;
+
+    m_strGridSplitterDiv =
+     `<div id="${m_strGridSplitterId}" class="${gridProps.cssGridColResizeSplitter}" style="display:none"></div>`;
+
   } // end render()
 
   function configObject()
   {
     render();
+
+    $(`#${m_strGridId}`).append( m_strGridSplitterDiv );
 
     setupHdrProps();
 
@@ -50,6 +71,8 @@ function VwGridHdr( vwGrid, hdrProps, gridProps )
    */
   function handleRefresh()
   {
+    m_bAllowColResize = vwGrid.getViewMgr().getProperty( "allowColResize");
+    
     buildHdrCols();
 
   } // end handleRefresh()
@@ -93,12 +116,17 @@ function VwGridHdr( vwGrid, hdrProps, gridProps )
 
     if ( col.value )
     {
-      $(`#${m_strGridHdrId}_${col.id}`).append( `<span>${col.value}</span>`)
+      $(`#${m_strGridHdrId}_${col.id}`).append( `<span id="${m_strGridHdrId}_${col.id}_value">${col.value}</span>`)
     }
 
     if ( col.sortType )
     {
       setupSortableColumn( col );
+    }
+
+    if ( m_bAllowColResize && !col.noResize )
+    {
+      installColResizeSplitter(`${m_strGridHdrId}_${col.id}`);
     }
 
   } // end setupHdrCol()
@@ -111,14 +139,223 @@ function VwGridHdr( vwGrid, hdrProps, gridProps )
    */
   function setupSortableColumn( col )
   {
-    const strCanonicalColId = `${col.gridId}_${col.id}`;
+    let strCanonicalColId = `${col.gridId}_${col.id}`;
 
     $(`#${strCanonicalColId}`).append( `<img id="sortImg_${strCanonicalColId}" style="display:none"/>`);
-    $(`#${strCanonicalColId}`).css( "cursor", m_hdrProps.sortCursor );
+
+    if ( col.value )
+    {
+      strCanonicalColId += "_value";
+      $(`#${strCanonicalColId}`).css( "cursor", m_hdrProps.sortCursor );
+
+    }
 
     $(`#${strCanonicalColId}`).click( () => handleSortColClicked( col ));
 
   } // end setupSortableColumn()
+
+  /**
+   * Install splitter in the resizer div
+   * @param htmlBorderOrColResizerEl
+   */
+  function installColResizeSplitter( strColId )
+  {
+    const strResizerColHtml = VwExString.expandMacros( m_strResizeColSplitterDivTemplate, strColId );
+    $( `#${strColId}` ).append( strResizerColHtml );
+
+    const colResizerProps = {};
+    colResizerProps.metric = "px"; // Always use px for col resize and convert to user metircs on mouseup
+    colResizerProps.totalWidth = gridProps.width;
+
+    const colResizer = new VwElementResizer( `${strColId}_resizerId`, m_strGridSplitterId, strColId, colResizerProps );
+
+    colResizer.onResizeComplete( handlesResizedComplete );
+    colResizer.onResizeStart( handleResizeStart );
+
+  } // end installColResizeSplitter()
+
+  /*
+  /**
+   * Event handler on a mouse down event on the column being resized
+   *
+   * @param strDOMColId The id of the column being resized
+   */
+  function handleResizeStart( strCanonicalColId )
+  {
+    const offsetResizeMarker = $(`#${strCanonicalColId}_resizerId`).offset();
+
+    $(`#${strCanonicalColId}_resizerId`).hide();
+    $(`#${m_strGridSplitterId}` ).show();
+    $(`#${m_strGridSplitterId}` ).height( $(`#${m_strGridId}` ).height() );
+    $(`#${m_strGridSplitterId}` ).offset( offsetResizeMarker );
+
+    // Strip off the _container from id to get the column nbr
+    const strColId = strCanonicalColId.substring( strCanonicalColId.lastIndexOf( "_" ) + 1);
+
+    const hdrCol = getHdrColFromId( strColId );
+
+    m_colResized = hdrCol;
+    m_nOrigSizeInPx = $(`#${strCanonicalColId}`).width();
+
+  } // end handleResizeStart()
+
+
+  /**
+   * Final resize event handler a mouse up event
+   *
+   * @param strDOMColId The id the column to resize
+   * @param nWidthInPixels The width in raw numeric units
+   * @param strWidthUnits The new column width in the units specified by the properties. will be px, em or %
+   */
+  function handlesResizedComplete( strDOMColId, nWidthInPixels, strWidthUnits )
+  {
+    $(`#${strDOMColId}_resizerId`).show();
+    $(`#${m_strGridSplitterId}` ).hide();
+
+    // apply resize to the col just resized
+
+    let strWidth = `${nWidthInPixels}px` ;
+
+    /*
+    if ( m_colResized.width.endsWith( "%" ) )
+    {
+      strWidth = VwMetrics.pixelsToPct( m_strGridId,  nWidthInPixels );
+    }
+    else
+    if ( m_colResized.width.endsWith( "em" ) )
+    {
+      let strEmRem;
+      if ( m_colResized.width.endsWith( "rem" ) )
+      {
+        strEmRem = "rem";
+      }
+      else
+      {
+        strEmRem = "em";
+      }
+      strWidth = VwMetrics.pixelsToEms( m_strGridId,  nWidthInPixels, strEmRem );
+    }
+
+    */
+
+    $(`#${strDOMColId}`).css( "width", strWidth);
+    $(`#${strDOMColId}`).css( "min-width",  strWidth );
+
+    //todo setTotalColumnsWidth();
+
+    resizeRowCol( m_colResized.id, nWidthInPixels );
+
+    vwGrid.resize();
+
+  } // end handlesResizedComplete()
+
+  /**
+   * Update the new width of the data container
+   */
+  function setTotalColumnsWidth()
+  {
+    let nTotColWidth = 0;
+
+    for ( const hdrCol of hdrProps.gridCols.col )
+    {
+      const nWidth = $(`#${m_strGridHdrId}_${hdrCol.id}`).width();
+
+      nTotColWidth += nWidth;
+    }
+
+    $(`#${m_strGridId}_gridBody`).css( "width", `${nTotColWidth}px` );
+    $(`#${m_strGridId}_gridBody`).css( "min-width", `${nTotColWidth}px` );
+
+  } //end setTotalColumnsWidth()
+
+  /**
+   * Loops through all rows in the grid resizing the column specified by strDOMColId
+   *
+   * @param strColResizedId  The id the column to resize
+   * @param nColResizedWidth The width in raw numeric units
+   */
+  function resizeRowCol( strColResizedId, nColResizedWidth )
+  {
+    const rowColView = vwGrid.getViewMgr();
+
+    const aAllRows = vwGrid.getDataModel().getDataSet();
+
+    for ( const row of aAllRows )
+    {
+      setColSize( rowColView, row, strColResizedId, nColResizedWidth );
+    }
+
+  } // end resizeRowCol()
+
+  /**
+   * Sets the column size in the specific row
+   *
+   * @param rowColView  The VwRowColViewMgr Instance
+   * @param row The row data containing the columnto update the new size
+   * @param strColToResizeId The column id to be rersized
+   *
+   * @param nWidth
+   */
+  function setColSize( rowColView, row, strColToResizeId, nWidth  )
+  {
+    let strRowColId = rowColView.getColContainerId( row, strColToResizeId );
+
+    let strWidth = `${nWidth}px`;   // the default
+
+    /*
+    const colHdr = getHdrColFromId( strColToResizeId );
+
+    if ( colHdr.width.endsWith( "%" ) || colHdr.width.endsWith( "m" ) )
+    {
+      if ( colHdr.width.endsWith( "%" ) )
+      {
+        strWidth = VwMetrics.pixelsToPct( m_strGridId, nWidth );
+      }
+      else
+      {
+        let strEnRem;
+        if ( colHdr.width.endsWith( "rem" ) )
+        {
+          strEnRem = "rem";
+        }
+        else
+        {
+          strEnRem = "em";
+
+        }
+
+        strWidth = VwMetrics.pixelsToEms( strRowColId, nWidth, strEnRem );
+
+      }
+    }
+    colHdr.width = strWidth;
+    
+     */
+
+    $( `#${strRowColId}` ).css( "width", strWidth );
+    $( `#${strRowColId}` ).css( "min-width", strWidth );
+
+  } // end setColSize()
+
+
+  /**
+   * Gets the hdr col object from its col id
+   *
+   * @param strColId The ColId
+   * @return {*}
+   */
+  function getHdrColFromId( strColId )
+  {
+    const aHdrCols = self.getHdrCols();
+    for ( const hdrCol of aHdrCols )
+    {
+      if ( hdrCol.id == strColId )
+      {
+        return hdrCol;
+      }
+    }
+
+  } // end getHdrColFromId()
 
 
   /**

@@ -16,29 +16,18 @@
 
 import VwExString from "../../util/VwExString/VwExString.js";
 import VwUiUtils from "../VwCommon/VwUiUtils.js";
-/**
- * jQuery invoker
- */
-$.fn.vwColResizer = function( strResizeElementId, objProperties )
-{
-
-  return new VwColResizer( this, strResizeElementId, objProperties );
-
-};
-
-
 
 /**
  * Function to split user div horizontally or vertically
  *
- * @param thisResizerDiv The jquery 'this' pointer to the div we're wrapping
+ * @param resizerEle The jquery 'this' pointer to the div we're wrapping
  * @constructor
  */
-function VwColResizer( thisResizerDiv, strResizeElementId, objResizeProperties )
+function VwElementResizer( strColResizerId, strSplitterId, strResizeElementId, resizeProperties )
 {
-  "use strict";
-
-  const m_resizerDivParent = thisResizerDiv.parent();
+  const m_splitterEle = $(`#${strSplitterId}`)[0];
+  const m_resizMarkerEle = $(`#${strColResizerId}`)[0];
+  const m_colToResizeEle = $( m_resizMarkerEle).parent();
   const m_objResizeProperties = configResizerProperties();
 
   let   m_nPosLeftAdjustment;
@@ -48,54 +37,53 @@ function VwColResizer( thisResizerDiv, strResizeElementId, objResizeProperties )
   let   m_nMaxBounds;
   let   m_nMinBounds;
   let   m_nResizerWidth;
-
   let   m_nEmSize;
+  let   m_fnOnResizeStart;
+  let   m_fnOnResizeComplete;
+  let   m_fnOnResize;
 
-  setup();
+  this.onResizeStart = ( fnOnResizeStart ) => m_fnOnResizeStart = fnOnResizeStart;
+  this.onResize = ( fnOnResize ) => m_fnOnResize = fnOnResize;
+  this.onResizeComplete = ( fnOnResizeComplete ) => m_fnOnResizeComplete = fnOnResizeComplete;
+
+  configObject();
 
   setupActions();
 
   /**
    * Wrap the users div inside this div
    */
-  function setup()
+  function configObject()
   {
-    ;
-
     if ( m_objResizeProperties.metric == "em" )
     {
       m_nEmSize = VwUiUtils.getEmSize( strResizeElementId );
     }
 
-    $(m_resizerDivParent).css( "position", "relative" );
-    
-    const offsetParent = $( "#" + strResizeElementId).parent().offset();
+    const offsetColToResize = $(m_colToResizeEle).offset();
 
-    const strBorderLeft = $(m_resizerDivParent ).css( "border-left");
+    const strBorderLeft = $( m_colToResizeEle ).css( "border-left");
 
     const aBorderPieces = strBorderLeft.split( " " );
 
     const nBorderSize = Number( VwExString.strip( aBorderPieces[ 0 ], "px") );
 
-    m_nPosLeftAdjustment = offsetParent.left + nBorderSize ;
+    m_nPosLeftAdjustment = offsetColToResize.left + nBorderSize ;
 
+    m_nResizerWidth = $(m_colToResizeEle).width();
+    $( m_colToResizeEle).css( "min-width", m_nResizerWidth = "px");
+    m_offsetResizerDiv = $( m_resizMarkerEle ).offset();
 
-    // todo const nSplitterSize = $(thisResizerDiv).width();
-
-    m_nResizerWidth = $( thisResizerDiv ).width();
-    $( thisResizerDiv ).css( "min-width", m_nResizerWidth = "px");
-    m_offsetResizerDiv = $( thisResizerDiv ).offset();
-
+    /*todo
 
     const offResizeElement = $( "#" + strResizeElementId ).offset();
 
     m_nMinBounds = offResizeElement.left;
-    m_nMaxBounds = $( "#" + strResizeElementId).parent().width() - offsetParent.left;
+    m_nMaxBounds = $( "#" + strResizeElementId).parent().width() - offsetColToResize.left;
 
-    $( thisResizerDiv ).css( "cursor", "col-resize");
+     */
 
-
-  } // end setup()
+  } // end configObject()
 
 
   /**
@@ -103,25 +91,26 @@ function VwColResizer( thisResizerDiv, strResizeElementId, objResizeProperties )
    */
   function setupActions()
   {
-
-    $( thisResizerDiv ).unbind( "mouseDown", handleResizerMouseDown );
-    $( thisResizerDiv ).mousedown( handleResizerMouseDown );
+    $( m_resizMarkerEle ).unbind( "mouseDown", handleResizerMouseDown );
+    $( m_resizMarkerEle ).mousedown( handleResizerMouseDown );
 
   } // end setupActions()
 
 
+  /**
+   * mouseup event handler - complete user callbacks
+   * @param event
+   */
   function handleResizerMouseUp( event )
   {
-
     $( window ).unbind( "mouseup", handleResizerMouseUp );
     $( window ).unbind( "mousemove", handleResizerMouseMove );
 
-    adjustResizerSplitterCssPosition( false );
+    //adjustResizerSplitterCssPosition( true );
 
     // See if we did any splitter movement
     if ( m_nAnchorX >= 0  )
     {
-
       const nXpos = event.screenX;
 
       // Move the splitter bar
@@ -131,19 +120,17 @@ function VwColResizer( thisResizerDiv, strResizeElementId, objResizeProperties )
       $("body" ).removeClass( "VwDisableTextSelection");
 
       const selection = window.getSelection();
-        // remove all the ranges
+      // remove all the ranges
       selection.removeAllRanges();
 
       moveResizerDiv( event );
 
-      $( thisResizerDiv ).css( "left", "" );
-
       let nWidth;
 
       // If the resize event not specified then the actual column is not resized
-      if ( !m_objResizeProperties.resize )
+      if ( !m_fnOnResize )
       {
-        nWidth = $( "#" + strResizeElementId).width() + nAmt;  // original column size + the nre width amount
+        nWidth = $(m_colToResizeEle).width() + nAmt;  // original column size + the nre width amount
       }
       else
       {
@@ -153,16 +140,16 @@ function VwColResizer( thisResizerDiv, strResizeElementId, objResizeProperties )
       const strUserMetrics = convertWidthToUserMetrics( nWidth );
 
       // Call the users re-sized event handler if specified
-      if ( m_objResizeProperties.resized )
+      if ( m_fnOnResizeComplete )
       {
-         m_objResizeProperties.resized( strResizeElementId, nWidth, strUserMetrics );
+        m_fnOnResizeComplete( strResizeElementId, nWidth, strUserMetrics );
       }
 
-    }
+    } // end if
 
     m_nAnchorX =  -1;
 
-  }
+  } // end handleResizerMouseUp()
 
   /**
    * Mouse down handler for the splitter bar
@@ -173,7 +160,7 @@ function VwColResizer( thisResizerDiv, strResizeElementId, objResizeProperties )
     // This will disable text selection when dragging the mouse
     $("body" ).addClass( "VwDisableTextSelection");
 
-    adjustResizerSplitterCssPosition( true );
+    //adjustResizerSplitterCssPosition( true );
 
     m_nAnchorX = event.screenX;
     m_nLastXPos = m_nAnchorX;
@@ -186,43 +173,30 @@ function VwColResizer( thisResizerDiv, strResizeElementId, objResizeProperties )
     $( window ).bind( "mousemove", handleResizerMouseMove );
     $( window ).bind( "mouseup", handleResizerMouseUp );
 
-    if ( m_objResizeProperties.resizeStart )
+    if ( m_fnOnResizeStart )
     {
-      m_objResizeProperties.resizeStart( strResizeElementId );
+      m_fnOnResizeStart( strResizeElementId );
     }
-  }
-
-
+  } // end handleResizerMouseDown(
 
   /**
-   * Swucthes the resizer div to absolulute or static position
+   * Switches the resizer div to absolulute or static position
    *
-   * @param bAbsolutePos if true make splitter div absolur positioning es;e make it static
+   * @param bAbsolutePos if true make splitter div absolute positioning esle make it static
    */
   function adjustResizerSplitterCssPosition( bAbsolutePos )
   {
-
     if ( bAbsolutePos )
     {
-      const strMarginLeft = m_resizerDivParent[0].style.marginLeft;
-      let nMarginLeft = 0;
-
-      if ( strMarginLeft.charAt( 0 ) == "-" )
-      {
-        nMarginLeft = Number( VwExString.strip( strMarginLeft, "px")) * -1;
-
-      }
-      const offsetSplitter = $( thisResizerDiv ).offset();
-
-      $( thisResizerDiv ).css( "position", "absolute" );
+      const offsetSplitter = $(m_splitterEle).offset();
 
       // move splitter to its current position
-      $( thisResizerDiv ).css( {"top": 0, "left": offsetSplitter.left - m_nPosLeftAdjustment + nMarginLeft } );
+      $(m_splitterEle).css( {"top": 0, "left": offsetSplitter.left } );
+
     }
     else
     {
-      $( thisResizerDiv ).css( "position", "static" );
-
+      $(m_splitterEle).css( "position", "static" );
     }
 
   } // end adjustResizerSplitterCssPosition
@@ -245,7 +219,7 @@ function VwColResizer( thisResizerDiv, strResizeElementId, objResizeProperties )
 
     return false;
 
-  }
+  } // end handleResizerMouseMove()
 
   /**
    * Move the vertical split bar
@@ -258,34 +232,32 @@ function VwColResizer( thisResizerDiv, strResizeElementId, objResizeProperties )
     // Move the splitter bar
     let nAmt = nXpos - m_nLastXPos;
 
-    const nLeftPos = $( thisResizerDiv ).offset().left;
+    $(m_splitterEle).offset( {left:m_nLastXPos + nAmt} );
 
-    /*
-    if ( !checkBounds( nLeftPos, nAmt ) )
+     /*
+    adjustResizerSplitterCssPosition( true );
+   if ( !checkBounds( nLeftPos, nAmt ) )
     {
       resetResizerBar( nAmt );
       return;
     }
 
-*/
-    const nWidth = $( "#" + strResizeElementId ).width() + nAmt;
-
-     $( thisResizerDiv ).offset( {left:nLeftPos + nAmt } );
-
+    */
 
     m_nLastXPos = nXpos;
 
     // don't resize windows during dragging if this event handler is not defined
-    if ( m_objResizeProperties.resize )
+    if ( m_fnOnResize )
     {
+      const nWidth = $(m_colToResizeEle).width() + nAmt;
 
-      const strUserMetrics =  convertWidthToUserMetrics( nWidth );
-      $( "#" + strResizeElementId ).css( "width", strUserMetrics );
-      $( "#" + strResizeElementId ).css( "min-width", strUserMetrics );
-      m_objResizeProperties.resize( strResizeElementId, nWidth, strUserMetrics );
+      $(m_colToResizeEle).css( "width", `${nWidth}px` );
+      $(m_colToResizeEle).css( "min-width", `${nWidth}px` );
+
+      m_fnOnResize( strResizeElementId, nWidth );
     }
 
-  }
+  } // end moveResizerDiv()
 
   /**
    * Converts units in pixels to the user specified metric type
@@ -294,23 +266,23 @@ function VwColResizer( thisResizerDiv, strResizeElementId, objResizeProperties )
    */
   function convertWidthToUserMetrics( nWidth )
   {
-     switch( m_objResizeProperties.metric )
-     {
-       case "px":
+    switch( m_objResizeProperties.metric )
+    {
+      case "px":
 
-            return nWidth + "px";
+        return nWidth + "px";
 
-       case "em":
+      case "em":
 
-            return nWidth / m_nEmSize + "em";
+        return nWidth / m_nEmSize + "em";
 
 
-       case "%":
+      case "%":
 
-            return (nWidth / m_objResizeProperties.totalWidth * 100) + "%";
+        return (nWidth / m_objResizeProperties.totalWidth * 100) + "%";
 
-     }
-  }
+    } // end switch()
+  }  // end convertWidthToUserMetrics()
 
   /**
    * Reset a splitter bar that went out of bounds to its min or max position based on the direction
@@ -327,17 +299,18 @@ function VwColResizer( thisResizerDiv, strResizeElementId, objResizeProperties )
     else
     {
       nResizerPos = m_nMaxBounds;
-
     }
 
-    $( thisResizerDiv ).offset( {left: nResizerPos} );
+    $( resizerEle ).offset( {left: nResizerPos} );
 
     clearTextSelection();
 
-  }
+  } // end resetResizerBar()
 
 
-
+  /**
+   * Clear any selected text during reize drag operation
+   */
   function clearTextSelection()
   {
     const sel = window.getSelection ? window.getSelection() : document.selection;
@@ -348,10 +321,10 @@ function VwColResizer( thisResizerDiv, strResizeElementId, objResizeProperties )
         sel.removeAllRanges();
       }
       else
-      if (sel.empty)
-      {
-        sel.empty();
-      }
+        if (sel.empty)
+        {
+          sel.empty();
+        }
     }
 
   } // end VwClearTextSelection{}
@@ -372,16 +345,14 @@ function VwColResizer( thisResizerDiv, strResizeElementId, objResizeProperties )
       return false;
     }
     else
-    if ( nNewPos >= m_nMaxBounds )
-    {
-      return false;
-    }
-
+      if ( nNewPos >= m_nMaxBounds )
+      {
+        return false;
+      }
 
     return true;   // In bounds
-  }
 
-
+  } // end checkBounds()
 
   /**
    * Configure the default properties
@@ -393,12 +364,12 @@ function VwColResizer( thisResizerDiv, strResizeElementId, objResizeProperties )
 
     resizeProperties.metric = "px"; // Pixels is the defualt metric for width units
 
-    $.extend( resizeProperties, objResizeProperties );
+    $.extend( resizeProperties, resizeProperties );
 
     return resizeProperties;
 
   } // end configResizerProperties()
 
-} // end VwColResizer{}
+} // end VwElementResizer{}
 
-export default VwColResizer;
+export default VwElementResizer;
