@@ -31,7 +31,7 @@ VwMetrics.pixelsToEms = function( strParent, nPixels, strEmUnit)
     strUnit = strEmUnit;
   }
 
-  const strRuler = `<div id="vwRuler" width="1${strUnit} style="display:none">&nbsp</div>`;
+  const strRuler = `<div id="vwRuler" style="width:1rem;display:none">&nbsp</div>`;
 
   $("#vwRuler").remove();
 
@@ -57,14 +57,12 @@ VwMetrics.pixelsToEms = function( strParent, nPixels, strEmUnit)
 /**
  * Convert number of pixels to a pct of the total width of the parent
  *
- * @param strElementId The id of the element the pct is computed from. Computed from the element's width.
- * @param nPixels   The pixel number to convert to the pct of the total width of the element id
+ * @param nWidth   The width the of parent element the pct is calculated from
+ * @param nPixels  The width in pixels to compute pct frpm
  */
-VwMetrics.pixelsToPct = function( strElementId, nPixels)
+VwMetrics.pixelsToPct = function( nWidth, nPixels)
 {
-  const nTotalWidth = $(`#${strElementId}`).width();
-
-  return `${(nPixels / nTotalWidth) * 100}%`;
+   return `${(nPixels / nWidth) * 100}%`;
 
 } // end VwMetrics.pixelsToPct()
 

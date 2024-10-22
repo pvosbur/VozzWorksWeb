@@ -426,8 +426,19 @@ function VwRowColViewMgr( vwGrid, gridHdr, vwXPath, viewSpec, gridProps )
     const strRowId = getRowId( rowData );
     const strColContainerId = `${strRowId}_colContainer_${hdrColSpec.id}`;
 
+    let strMinWidth;
+    if ( hdrColSpec.minWidth )
+    {
+      strMinWidth = hdrColSpec.minWidth ;
+    }
+    else
+    {
+      strMinWidth = hdrColSpec.width ;
+
+    }
+
     const strDataColHtml =
-     `<div id="${strColContainerId}" class="${strColClasses}" style="width:${hdrColSpec.width};min-width:${hdrColSpec.width}"></div>`
+     `<div id="${strColContainerId}" class="${strColClasses}" style="width:${hdrColSpec.width};min-width:${strMinWidth}"></div>`
 
     $(`#${strRowId}`).append( strDataColHtml );
 

@@ -538,6 +538,11 @@ function VwGridDataModel( dataModelProps )
       aDataItems = m_aDataSet;
     }
 
+    if ( aDataItems.length == 0 )
+    {
+      return;
+    }
+
     if ( m_nViewPortSize )
     {
       let nItemCount = -1;

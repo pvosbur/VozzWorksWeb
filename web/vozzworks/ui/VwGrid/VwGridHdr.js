@@ -25,10 +25,12 @@ function VwGridHdr( vwGrid, hdrProps, gridProps )
   let   m_hdrColCommonProps;
   let   m_strResizeColSplitterDivTemplate;
   let   m_strGridSplitterDiv;
-  let   m_strResizeGridSplitterId;
   let   m_colResized;
   let   m_nOrigSizeInPx;
   let   m_bAllowColResize;
+  let   m_bGridWidthChangesOnColResize = true;
+  let   m_bColumnsHavePcts;
+  let   m_horzScrollBar;
 
   this.onHdrColClick = ( fnOnHdrColClick ) => m_fnOnHdrColClick = fnOnHdrColClick;
   this.getHdrCols = () => hdrProps.gridCols.col;
@@ -41,7 +43,7 @@ function VwGridHdr( vwGrid, hdrProps, gridProps )
    */
   function render()
   {
-    const strStyle="width:\${width};min-width:\${width}";
+    const strStyle="width:\${width};min-width:\${minWidth}";
 
     m_strHdrCol =
     `<div id="\${gridId}_\${id}" class="VwGridHdrCol" style="${strStyle}"></div>`;
@@ -105,11 +107,23 @@ function VwGridHdr( vwGrid, hdrProps, gridProps )
    */
   function setupHdrCol( col )
   {
+    testColHdrMinRequirements( col );
+
     m_mapHdrColsById.put( col.id, col );
     applyCommonColProps( col );
 
     col.gridId = m_strGridHdrId;
     col.sortDir = -1;
+
+    if ( col.width.endsWith( "%") )
+    {
+      m_bColumnsHavePcts = true;
+    }
+
+    if ( !col.minWidth )
+    {
+      col.minWidth = col.width;
+    }
 
     const strHdrHtml = VwExString.expandMacros( m_strHdrCol, col );
     $(`#${m_strGridHdrId}`).append( strHdrHtml );
@@ -130,6 +144,25 @@ function VwGridHdr( vwGrid, hdrProps, gridProps )
     }
 
   } // end setupHdrCol()
+
+
+  /**
+   * Make sure each col hdr spec has an id and width attribute
+   * @param colHdrSpec
+   */
+  function testColHdrMinRequirements( colHdrSpec )
+  {
+    if ( !colHdrSpec.id )
+    {
+      throw `Column header defined in xml config must define an id`;
+    }
+
+    if ( !colHdrSpec.width )
+    {
+      throw `Column header id: ${colHdrSpec} muist deine a width property attribute`;
+    }
+
+  } // end testColHdrMinRequirements()
 
 
   /**
@@ -212,47 +245,102 @@ function VwGridHdr( vwGrid, hdrProps, gridProps )
     $(`#${strDOMColId}_resizerId`).show();
     $(`#${m_strGridSplitterId}` ).hide();
 
-    // apply resize to the col just resized
+    // update the hdr col with the new resized width.this is initially pixels
+    $(`#${strDOMColId}`).css( "width", strWidthUnits);
+    $(`#${strDOMColId}`).css( "min-width",  strWidthUnits );
 
-    let strWidth = `${nWidthInPixels}px` ;
+    const nNewHdrWidth = updateTotalColumnsWidth();
 
-    /*
-    if ( m_colResized.width.endsWith( "%" ) )
+    if ( m_bGridWidthChangesOnColResize && m_bColumnsHavePcts )
     {
-      strWidth = VwMetrics.pixelsToPct( m_strGridId,  nWidthInPixels );
+      if ( m_colResized.width.endsWith( "%" ) )
+      {
+
+        adjustAllColPctsToNewWidth( nNewHdrWidth );
+        adjustAllRowColPctsToNewWidth( nNewHdrWidth, nWidthInPixels );
+
+      }
     }
     else
-    if ( m_colResized.width.endsWith( "em" ) )
     {
-      let strEmRem;
-      if ( m_colResized.width.endsWith( "rem" ) )
+      if ( m_colResized.width.endsWith( "em" ) )
       {
-        strEmRem = "rem";
+        strWidthUnits = convertToRemsOrEms( strDOMColId, m_colResized, nWidthInPixels )
       }
-      else
-      {
-        strEmRem = "em";
-      }
-      strWidth = VwMetrics.pixelsToEms( m_strGridId,  nWidthInPixels, strEmRem );
+
+      // re-apply units in ems/rems
+      $(`#${strDOMColId}`).css( "width", strWidthUnits);
+      $(`#${strDOMColId}`).css( "min-width",  strWidthUnits );
+
+      resizeRowCol( m_colResized.id, nWidthInPixels );
     }
 
-    */
+    // fix up horizontal scrollbar
+    m_horzScrollBar = vwGrid.getHorzScrollBar();
 
-    $(`#${strDOMColId}`).css( "width", strWidth);
-    $(`#${strDOMColId}`).css( "min-width",  strWidth );
-
-    //todo setTotalColumnsWidth();
-
-    resizeRowCol( m_colResized.id, nWidthInPixels );
-
-    vwGrid.resize();
+    m_horzScrollBar.resize();
+    m_horzScrollBar.hide();
+    m_horzScrollBar.setThumbPos( 0);
 
   } // end handlesResizedComplete()
+
+
+  /**
+   * Adjust all pct cols to the new total cols width
+   *
+   * @param nTotColsWidth The width of all the columns after resize
+   */
+  function adjustAllColPctsToNewWidth( nTotColsWidth )
+  {
+    for ( const hdrCol of hdrProps.gridCols.col )
+    {
+      if ( hdrCol.width.endsWith( "%" ))
+      {
+        const strCanonicalHdrId = `${m_strGridHdrId}_${hdrCol.id}`;
+        const nElementWidth = $(`#${strCanonicalHdrId}`).width();
+        const strWidth = VwMetrics.pixelsToPct( nTotColsWidth, nElementWidth  );
+        $(`#${strCanonicalHdrId}`).css( "width", strWidth );
+        $(`#${strCanonicalHdrId}`).css( "min-width", strWidth );
+
+      }
+    }
+  } // end adjustAllColPctsToNewWidth()
+
+
+  function adjustAllRowColPctsToNewWidth( nNewRowWidth, nNewColWidth )
+  {
+    const rowColView = vwGrid.getViewMgr();
+
+    const aAllRows = vwGrid.getDataModel().getDataSet();
+
+    for ( const row of aAllRows )
+    {
+      for ( const hdrCol of hdrProps.gridCols.col )
+      {
+        let strUnits;
+        const strRowColId = rowColView.getColContainerId( row, hdrCol.id );
+        if ( hdrCol.id == m_colResized.id )
+        {
+          strUnits = VwMetrics.pixelsToPct( nNewRowWidth, nNewColWidth );
+        }
+        else
+        {
+          const nOrigColWidth = $(`#${strRowColId}`).width();
+          strUnits = VwMetrics.pixelsToPct( nNewRowWidth, nOrigColWidth );
+        }
+
+        $(`#${strRowColId}`).css( "width", strUnits );
+        $(`#${strRowColId}`).css( "min-width", strUnits );
+
+      } // end for()
+    } // end for()
+
+  } // end adjustAllRowColPctsToNewWidth()
 
   /**
    * Update the new width of the data container
    */
-  function setTotalColumnsWidth()
+  function updateTotalColumnsWidth()
   {
     let nTotColWidth = 0;
 
@@ -263,10 +351,13 @@ function VwGridHdr( vwGrid, hdrProps, gridProps )
       nTotColWidth += nWidth;
     }
 
+    $(`#${m_strGridHdrId}`).css( "width", `${nTotColWidth}px` );
     $(`#${m_strGridId}_gridBody`).css( "width", `${nTotColWidth}px` );
     $(`#${m_strGridId}_gridBody`).css( "min-width", `${nTotColWidth}px` );
 
-  } //end setTotalColumnsWidth()
+    return nTotColWidth;
+    
+  } //end updateTotalColumnsWidth()
 
   /**
    * Loops through all rows in the grid resizing the column specified by strDOMColId
@@ -300,43 +391,45 @@ function VwGridHdr( vwGrid, hdrProps, gridProps )
   {
     let strRowColId = rowColView.getColContainerId( row, strColToResizeId );
 
-    let strWidth = `${nWidth}px`;   // the default
-
-    /*
     const colHdr = getHdrColFromId( strColToResizeId );
 
-    if ( colHdr.width.endsWith( "%" ) || colHdr.width.endsWith( "m" ) )
+    let strWidth = `${nWidth}px`;   // the default
+
+    if ( colHdr.width.endsWith( "em" ) )
     {
-      if ( colHdr.width.endsWith( "%" ) )
-      {
-        strWidth = VwMetrics.pixelsToPct( m_strGridId, nWidth );
-      }
-      else
-      {
-        let strEnRem;
-        if ( colHdr.width.endsWith( "rem" ) )
-        {
-          strEnRem = "rem";
-        }
-        else
-        {
-          strEnRem = "em";
-
-        }
-
-        strWidth = VwMetrics.pixelsToEms( strRowColId, nWidth, strEnRem );
-
-      }
+      strWidth = convertToRemsOrEms(strRowColId, colHdr, nWidth );
     }
+
     colHdr.width = strWidth;
     
-     */
-
     $( `#${strRowColId}` ).css( "width", strWidth );
     $( `#${strRowColId}` ).css( "min-width", strWidth );
 
   } // end setColSize()
 
+  /**
+   * Converts pixel with to rems or ems base the the hdr col spec with property
+   *
+   * @param strRowColId The canonical row column id id
+   * @param colHdr The GridColHsr column spec
+   * @param nWidthInPx The width in pixels that need to be convert to rems/ems
+   * @return {string}
+   */
+  function convertToRemsOrEms( strRowColId, colHdr, nWidthInPx )
+  {
+    let strEmOrRem;
+    if ( colHdr.width.endsWith( "rem"))
+    {
+      strEmOrRem = "rem";
+    }
+    else
+    {
+      strEmOrRem = "em";
+    }
+
+    return VwMetrics.pixelsToEms( strRowColId, nWidthInPx, strEmOrRem );
+
+  }  // end convertToRemsOrEms()
 
   /**
    * Gets the hdr col object from its col id

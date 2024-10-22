@@ -93,10 +93,29 @@ function VwTileViewMgr( vwGrid, gridProps, tileProps, implProps )
   {
     handleClearView();
 
-    for ( const dataItem of m_dataModel.getDataSet() )
+    const aDataItems = m_dataModel.getDataSet();
+
+    let nViewPortSize = tileProps.viewPortSize;
+    let nNbrTiles = 0;
+
+    for ( const dataItem of aDataItems )
     {
-      await handleAddTile( dataItem );
-    }
+      if ( nViewPortSize  )
+      {
+
+        if ( ++nNbrTiles > nViewPortSize || nNbrTiles > aDataItems.length )
+        {
+          break;
+        }
+
+        await handleAddTile( dataItem );
+
+      }
+      else
+      {
+        await handleAddTile( dataItem );
+      }
+    } // end for()
 
   } // end handleRefresh()
 
@@ -111,10 +130,25 @@ function VwTileViewMgr( vwGrid, gridProps, tileProps, implProps )
 
     handleClearView();
 
+    let nViewPortSize = tileProps.viewPortSize;
+    let nNbrTiles = 0;
+
     for ( const dataItem of aFolderItems )
     {
-      await handleAddTile( dataItem );
-    }
+      if ( nViewPortSize )
+      {
+        if ( ++nNbrTiles > nViewPortSize || nNbrTiles > aFolderItems.length )
+        {
+          break
+        }
+
+        await handleAddTile( dataItem );
+      }
+      else
+      {
+        await handleAddTile( dataItem );
+      }
+    }  // end for()
 
   } // end handleOpenFolder()
 

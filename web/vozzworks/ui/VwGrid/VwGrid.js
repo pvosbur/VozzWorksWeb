@@ -14,6 +14,7 @@ import VwScrollBar            from "../VwScrollBar/VwScrollBar.js";
 import VwGridDataModel        from "./VwGridDataModel.js";
 import VwHashMap              from "../../util/VwHashMap/VwHashMap.js";
 import VwTileViewMgr          from "./VwTileViewMgr.js";
+
 VwCssImport( "/vozzworks/ui/VwGrid/style");
 
 /**
@@ -72,7 +73,8 @@ function VwGrid( strParent, gridModel, gridProps )
   this.onFolderClosed = ( fnOnFolderClosed ) => addGridEventHandler( VwGrid.FolderClosed, fnOnFolderClosed );
   this.onViewOpened = ( fnOnViewOpened ) => addGridEventHandler( VwGrid.ViewOpened, fnOnViewOpened );
   this.onViewClosed = ( fnOnViewClosed ) => addGridEventHandler( VwGrid.ViewClosed, fnOnViewClosed );
-
+  this.getVertScrollBar = () => m_vertScrollBar;
+  this.getHorzScrollBar = () => m_horzScrollBar;
   this.show = handleShowView;
 
   /**
