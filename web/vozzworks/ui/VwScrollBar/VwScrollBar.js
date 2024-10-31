@@ -76,7 +76,6 @@ function VwScrollBar( strScrollContainerParentId, strScrollContentId, scrollbarP
     }
 
     $( m_scrollContentParentEle ).css( "overflow", "hidden" );
-    $( m_scrollContentParentEle ).css( "position", "relative" );
 
     VwSlider.call( self, SCROLL_CONTAINER_ID, m_scrollbarProps, false );
 

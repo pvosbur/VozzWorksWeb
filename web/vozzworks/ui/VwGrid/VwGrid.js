@@ -542,7 +542,7 @@ function VwGrid( strParent, gridModel, gridProps )
     scrollProps.orientation = "vert";
     scrollProps.scrollBarsOutsideEdge = m_props.scrollBarsOutsideEdge;
 
-    m_vertScrollBar = new VwScrollBar( m_strGridId, `${m_strGridId}_gridBody`, scrollProps );
+    m_vertScrollBar = new VwScrollBar( `${m_strGridId}_gridDataContainer`, `${m_strGridId}_gridBody`, scrollProps );
 
   } // end setupVertScrollBarContainer()
 
