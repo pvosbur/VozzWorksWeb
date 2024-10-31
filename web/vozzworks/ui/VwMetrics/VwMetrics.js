@@ -66,4 +66,28 @@ VwMetrics.pixelsToPct = function( nWidth, nPixels)
 
 } // end VwMetrics.pixelsToPct()
 
+/**
+ * Returns the width of an element plus any padding or border widths
+ * @param strElementId
+ */
+VwMetrics.rawWidth = function( strElementId )
+{
+  // if css box-sizing is border-box, then width 
+  if ( $(`#${strElementId}`).css( "box-sizing" ) == "border-box" )
+  {
+    return $(`#${strElementId}`).width();
+
+  }
+  const strPadding = $(`#${strElementId}`).css("padding" );
+  // strip off the px at end
+  const nPadding = Number( strPadding.substring( 0, strPadding.length - 2 ) );
+
+  const strBorder = $(`#${strElementId}`).css("border-left" );
+  // strip off the px at end
+  const nBorder = Number( strPadding.substring( 0, strBorder.length - 2 ) );
+
+  return $(`#${strElementId}`).width() + (nPadding * 2) + nBorder;
+
+}
+
 export default VwMetrics;

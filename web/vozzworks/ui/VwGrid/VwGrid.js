@@ -110,6 +110,7 @@ function VwGrid( strParent, gridModel, gridProps )
       handleSetDataModel( gridModel );
     }
 
+    setupActions();
     m_promiseMgr.success( self );
 
   } // end configObject()
@@ -310,6 +311,15 @@ function VwGrid( strParent, gridModel, gridProps )
   } // end createTileView()
 
   /**
+   * Actions handlers goe here
+   */
+  function setupActions()
+  {
+    $(window).on( "resize", () => self.resize() );
+
+  } // end  setupActions()
+
+  /**
    * Process the global grid props for all defined views
    * @param vwXPath
    */
@@ -503,6 +513,14 @@ function VwGrid( strParent, gridModel, gridProps )
    */
   function updateScrollBars()
   {
+    // make sure grid is still in DOM befor resizing
+    if ( !$(`#${m_strGridId}` ) )
+    {
+      // remove event handler if not in dom
+      $( window ).off( "resize", () => self.resize() );
+      return;
+    }
+
     if ( m_vertScrollBar )
     {
       m_vertScrollBar.resize();
@@ -522,6 +540,7 @@ function VwGrid( strParent, gridModel, gridProps )
   {
     const scrollProps = {};
     scrollProps.orientation = "vert";
+    scrollProps.scrollBarsOutsideEdge = m_props.scrollBarsOutsideEdge;
 
     m_vertScrollBar = new VwScrollBar( m_strGridId, `${m_strGridId}_gridBody`, scrollProps );
 

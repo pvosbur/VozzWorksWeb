@@ -10,6 +10,7 @@ import VwExString               from "../../util/VwExString/VwExString.js";
 import VwDate                   from "../../util/VwDate/VwDate.js";
 import {VwClass}                from "../../util/VwReflection/VwReflection.js";
 import VwMouseClickMgr          from "../../util/VwMouseClickMgr/VwMouseClickMgr.js";
+import hjdrColSpec from "../../util/VwEdit/VwEdit.js";
 
 function VwRowColViewMgr( vwGrid, gridHdr, vwXPath, viewSpec, gridProps )
 {
@@ -481,6 +482,7 @@ function VwRowColViewMgr( vwGrid, gridHdr, vwXPath, viewSpec, gridProps )
       case "text":
       case "number":
       case "float":
+      case "filler":
 
         return renderTextDataCol( rowData, hdrColSpec, vwXpath );
 
@@ -529,7 +531,15 @@ function VwRowColViewMgr( vwGrid, gridHdr, vwXPath, viewSpec, gridProps )
         strId = hdrColSpec.id ;
 
       }
-      strColData = rowData[strId];
+
+      if ( hdrColSpec.type == "filler" )
+      {
+        strColData = "&nbsp;";
+      }
+      else
+      {
+        strColData = rowData[strId];
+      }
     }
 
     return `<span id="${strColId}" class="${strClass}"}>${strColData}</span>`;

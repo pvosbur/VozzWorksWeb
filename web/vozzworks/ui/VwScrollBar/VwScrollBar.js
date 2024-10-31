@@ -16,15 +16,6 @@
 
 import VwSlider from "../VwSlider/VwSlider.js";
 
-/**
- * jQuery invoker
- */
-$.fn.vwScrollbar = function ( objProperties )
-{
-  return new VwSlider( this[0].id, objProperties );
-
-};
-
 await  VwCssImport( "/vozzworks/ui/VwScrollBar/style", true);
 
 /**
@@ -48,6 +39,8 @@ function VwScrollBar( strScrollContainerParentId, strScrollContentId, scrollbarP
   const m_scrollablContainerEle = $(`#${strScrollContentId}` )[0];
   const m_scrollContentParentEle = $(m_scrollablContainerEle).parent()[0];
 
+  let   m_vertScrollContainerEle;
+  let   m_horzScrollContainerEle;
   let   m_bVertScrollShowing = false;
   let   m_nCurThumbPos;
   let   m_fVertScrollBar;
@@ -116,6 +109,7 @@ function VwScrollBar( strScrollContainerParentId, strScrollContentId, scrollbarP
    */
   function resizeVertScrollbar()
   {
+    calculateVertScrollContainerPosition();
     try
     {
       $( `#${SCROLL_CONTAINER_ID}` ).show();
@@ -141,6 +135,7 @@ function VwScrollBar( strScrollContainerParentId, strScrollContentId, scrollbarP
    */
   function resizeHorzScrollbar( nWidth )
   {
+    calculateHorzScrollContainerPosition();
     const nCurWidth = $( m_scrollablContainerEle).width();
 
     if ( nCurWidth == 0 )
@@ -270,19 +265,14 @@ function VwScrollBar( strScrollContainerParentId, strScrollContentId, scrollbarP
       $( m_scrollablContainerEle ).attr( "tabindex", "0");
     }
 
-    const vertScrollContainerEle = $("<div>").attr("id", SCROLL_CONTAINER_ID ).addClass("VwVertScroll").addClass( scrollbarProps.cssScrollContainer )[0];
-    $( m_scrollContainerParentEle ).append( vertScrollContainerEle );
+    m_vertScrollContainerEle = $( "<div>").attr( "id", SCROLL_CONTAINER_ID ).addClass( "VwVertScroll").addClass( scrollbarProps.cssScrollContainer )[0];
+    $( m_scrollContainerParentEle ).append( m_vertScrollContainerEle );
 
-    const nHeight = $( m_scrollablContainerEle ).parent().height();
-    $(vertScrollContainerEle).height(nHeight );
-
-    const offsetParent = $( m_scrollContentParentEle).offset();
-    offsetParent.left = $( m_scrollContentParentEle).width();
-    $(vertScrollContainerEle).offset( offsetParent );
+    //todocalculateVertScrollContainerPosition();
 
     const observer = new MutationObserver((mutationRecords) =>
                                           {
-                                            resize();
+                                            //resize();
 
                                           });
 
@@ -294,6 +284,39 @@ function VwScrollBar( strScrollContainerParentId, strScrollContentId, scrollbarP
 
    } // end createVertScrollContainer()
 
+  function calculateVertScrollContainerPosition()
+  {
+    const strPadding = $(m_scrollContainerParentEle).css("padding" );
+// strip off the px at end
+    const nPadding = Number( strPadding.substring( 0, strPadding.length - 2 ) );
+    const strBorder = $(m_scrollContainerParentEle).css("border-left" ).split( " ")[0];
+// strip off the px at end
+    const nBorder = Number( strBorder.substring( 0, strBorder.length - 2 ) );
+
+    const nContainerWidth = $(m_scrollContainerParentEle).width() ;
+
+    const nHeight = $( m_scrollContainerParentEle ).height();
+    $( m_vertScrollContainerEle).height( nHeight );
+
+    const offsetParent = $( m_scrollContainerParentEle).offset();
+
+    if ( scrollbarProps.scrollBarsOutsideEdge )
+    {
+      offsetParent.left += nContainerWidth  + (nPadding * 2 ) + nBorder * 2;
+    }
+    else
+    {
+      offsetParent.left += (nContainerWidth + nBorder + (nPadding * 2)) - $( m_vertScrollContainerEle ).width();
+    }
+
+    offsetParent.top += nBorder;
+
+    $( m_vertScrollContainerEle).css( "top", `${offsetParent.top }px`)
+    $( m_vertScrollContainerEle).css( "left", `${offsetParent.left }px`)
+
+
+  } // end calculateVertScrollContainerPosition()
+  
   /**
    * Create the horizontal scrollbar container that will house the horizontal slider
    * @returns {string}
@@ -303,17 +326,28 @@ function VwScrollBar( strScrollContainerParentId, strScrollContentId, scrollbarP
     $( m_scrollablContainerEle ).addClass( "VwScrollContainer").addClass( scrollbarProps.cssScrollParent );
     $( m_scrollablContainerEle ).css( "white-space", "nowrap" );
 
-    const horzScrollContainerEle = $("<div>").attr("id", SCROLL_CONTAINER_ID).addClass("VwHorzScroll").addClass( scrollbarProps.cssScrollContainer )[0];
+    m_horzScrollContainerEle = $( "<div>").attr( "id", SCROLL_CONTAINER_ID).addClass( "VwHorzScroll").addClass( scrollbarProps.cssScrollContainer )[0];
 
-    $( m_scrollContainerParentEle ).append( horzScrollContainerEle );
+    $( m_scrollContainerParentEle ).append( m_horzScrollContainerEle );
+
+    calculateHorzScrollContainerPosition();
+
+  } // end createHorzScrollContainer()
+
+  /**
+   * Calulate the horizontal scroll container
+   */
+  function calculateHorzScrollContainerPosition()
+  {
     const offsetHorzScroll = $( m_scrollContentParentEle).offset();
 
     offsetHorzScroll.top += $( m_scrollContentParentEle ).height();
-    $(horzScrollContainerEle).width( m_scrollContainerParentEle.offsetWidth );
-    $(horzScrollContainerEle).offset( offsetHorzScroll );
+    $( m_horzScrollContainerEle).width( m_scrollContainerParentEle.offsetWidth );
 
+    $( m_horzScrollContainerEle).css( "top", `${offsetHorzScroll.top }px`)
+    $( m_horzScrollContainerEle).css( "left", `${offsetHorzScroll.left }px`)
 
-  } // end createHorzScrollContainer()
+  } // end calculateHorzScrollContainerPosition()
 
   /**
    * Install the DOM data container change listener to up date the scroll bar change
