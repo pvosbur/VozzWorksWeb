@@ -28,6 +28,11 @@ VwCssImport( "/vozzworks/ui/VwGrid/style");
  */
 function VwGrid( strParent, gridModel, gridProps )
 {
+  if ( arguments.length == 0 ) // subclass prototype call
+  {
+    return;
+  }
+
   const self = this;
   const m_props = {};
   const m_strGridId = `${strParent}_vwGrid`;
