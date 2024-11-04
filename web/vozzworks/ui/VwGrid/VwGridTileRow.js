@@ -87,6 +87,8 @@ function VwGridTileRow( strParentId, vwGrid, strTileId, tileProps, implProps )
       m_aTiles.push( tile );
     }
 
+    return tile;
+
   } // end addTile()
 
 

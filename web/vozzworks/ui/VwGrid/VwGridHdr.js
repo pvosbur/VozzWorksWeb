@@ -64,8 +64,6 @@ function VwGridHdr( vwGrid, hdrProps, gridProps )
 
     setupHdrProps();
 
-    setupEventHandlers();
-
   } // end configObject()
 
   /**
@@ -497,23 +495,6 @@ function VwGridHdr( vwGrid, hdrProps, gridProps )
     } // end for()
   } // end hideNonSelectedSortArrows()
 
-  /**
-   * Rebuild the grid colum header
-   */
-  function handleOnViewOpened()
-  {
-    handleRefresh();
-
-  } // end handleOnViewOpened()
-
-  /**
-   * Register event handlers
-   */
-  function setupEventHandlers()
-  {
-    vwGrid.onViewOpened( handleOnViewOpened );
-
-  } // end setupEventHandlers()
 
   /**
    * Config header props

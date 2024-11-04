@@ -19,13 +19,14 @@ function VwTileViewMgr( vwGrid, gridProps, tileProps, implProps )
   let   m_dataModel = vwGrid.getDataModel();
   let   m_dataIdProp;
 
+  this.getName = ()=> tileProps.name;
   this.openFolder = handleOpenFolder;
   this.setDataModel = handleSetDataModel;
   this.add = handleAddTile;
   this.remove = handleRemoveItem;
   this.update = handleUpdateItem;
   this.clear  = handleClearView;
-  this.onPostItemAdd = ( fnPostItemAddistener ) => m_mapPostTileAddListeners.put( fnPostItemAddistener, fnPostItemAddistener );
+  this.onTileAdded = ( fnPostItemAddistener ) => m_mapPostTileAddListeners.put( fnPostItemAddistener, fnPostItemAddistener );
   this.getDomItemId = (dataItem ) => m_mapDataItemDomIds.get( dataItem[m_dataIdProp] );
   this.refresh = handleRefresh;
 
@@ -63,9 +64,9 @@ function VwTileViewMgr( vwGrid, gridProps, tileProps, implProps )
 
     m_mapDataItemDomIds.put( dataItem[m_dataIdProp], `${tileRow.getDomTileId()}_${dataItem[m_dataIdProp]}` );
 
-    await tileRow.add( dataItem, bPrepend );
+    const tile = await tileRow.add( dataItem, bPrepend );
 
-    firePostTileAddEvent( dataItem );
+    firePostTileAddEvent( tile );
 
   } // end handleAddTile()
 
@@ -156,11 +157,11 @@ function VwTileViewMgr( vwGrid, gridProps, tileProps, implProps )
    * Call listeners callback for row just added
    * @param dataRow The data item added
    */
-  function firePostTileAddEvent( dataRow )
+  function firePostTileAddEvent( tile )
   {
     for( const fnPostTileAddListener of m_mapPostTileAddListeners.values() )
     {
-      fnPostTileAddListener( dataRow );
+      fnPostTileAddListener( tile );
     }
 
   } // end firePostTileAddEvent()

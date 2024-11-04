@@ -4,18 +4,16 @@
  * Time: 8:23 AM
  * 
  */
-import VwSortObjectImplementor  from "../../util/VwSortObjectImplementor/VwSortObjectImplentor.js";
 import VwHashMap                from "../../util/VwHashMap/VwHashMap.js";
 import VwExString               from "../../util/VwExString/VwExString.js";
 import VwDate                   from "../../util/VwDate/VwDate.js";
 import {VwClass}                from "../../util/VwReflection/VwReflection.js";
 import VwMouseClickMgr          from "../../util/VwMouseClickMgr/VwMouseClickMgr.js";
-import hjdrColSpec from "../../util/VwEdit/VwEdit.js";
+import VwGridHdr                from "./VwGridHdr.js";
 
-function VwRowColViewMgr( vwGrid, gridHdr, vwXPath, viewSpec, gridProps )
+function VwRowColViewMgr( vwGrid, vwXPath, viewSpec, gridProps )
 {
   const self = this;
-  const m_aHdrCols = toArray( gridHdr.getHdrCols() );
   const m_strGridId = vwGrid.getGridId();
   const m_strGridBodyId = vwGrid.getBodyId();
   const m_mapColFormatters = new VwHashMap();
@@ -32,15 +30,18 @@ function VwRowColViewMgr( vwGrid, gridHdr, vwXPath, viewSpec, gridProps )
   const m_strRowHoveredOut = "rowHoveredOut";
   const m_strRowDblClicked = "rowDblClicked";
 
+  let   m_aHdrCols;
+
+  let   m_gridHdr;
   let   m_dataModel = vwGrid.getDataModel();
   let   m_dataIdProp;
   let   m_curSelectedItem;
-  let   m_bDblClick = false;
 
   this.add = handleAddItem;
   this.remove = handleRemoveItem;
   this.update = handleUpdateItem;
   this.clear = handleClear;
+  this.getName = ()=> viewSpec.name;
   this.getProperty = (strPropId ) => m_viewProps[strPropId];
   this.onColFormat = ( strColId, fnOnColFormat) => m_mapColFormatters.put( strColId, fnOnColFormat );
   this.onControlCreate = ( strColId, fnOnControlCreate) => m_mapCustomControlImpl.put( strColId, fnOnControlCreate );
@@ -61,10 +62,11 @@ function VwRowColViewMgr( vwGrid, gridHdr, vwXPath, viewSpec, gridProps )
 
   function configObject()
   {
+    setupGridHdr();
+
     setupBodyProps();
     setupRowColProps();
-
-    gridHdr.onHdrColClick( handleHdrColClicked )
+    setupEventListeners();
 
   } // end configObject()
 
@@ -99,6 +101,30 @@ function VwRowColViewMgr( vwGrid, gridHdr, vwXPath, viewSpec, gridProps )
   } // end handleSetDataModel()
 
 
+  /**
+   * Setup row/cpl view's grid header
+   */
+  function setupGridHdr()
+  {
+    const hdrProps = vwXPath.evaluate( "//gridHdr" );
+    m_gridHdr = new VwGridHdr( vwGrid, hdrProps, gridProps );
+
+    m_aHdrCols = toArray( m_gridHdr.getHdrCols() );
+  } // end setupGridHdr()
+
+
+  /**
+   * Event Listener handlers defined here
+   */
+  function setupEventListeners()
+  {
+    m_gridHdr.onHdrColClick( handleHdrColClicked )
+    vwGrid.onViewOpened( self,() =>
+                         {
+                           m_gridHdr.refresh()
+                         } );
+
+  } // end setupEventListeners()
 
   /**
    * Click handle when a sort column is clicked

@@ -292,22 +292,29 @@
     loadGridModel( gridDataModel);
 
     const vwGrid = await new VwGrid( "vwGrid", null, strGridConfigXml);
-    const viewMgr = vwGrid.getViewMgr( "main");
-    viewMgr.onColFormat( "size", handleSizeFormat );
+    const mainViewMgr = vwGrid.getViewMgr( "main");
+    mainViewMgr.onColFormat( "size", handleSizeFormat );
     /*
-    viewMgr.onControlCreated( "isSelected", handleCheckBoxCreated );
-    viewMgr.onRowSelected( handleOnRowSelected );
-    viewMgr.onRowDeSelected( handleOnRowDeSelected );
-    viewMgr.onRowHoveredIn( handleOnRowHoveredIn );
-    viewMgr.onRowHoveredOut( handleOnRowHoveredOut );
-    viewMgr.onRowDblClicked( handleItemDblClicked );
+     mainViewMgr.onRowDeSelected( handleOnRowDeSelected );
+    mainViewMgr.onRowHoveredIn( handleOnRowHoveredIn );
+    mainViewMgr.onRowHoveredOut( handleOnRowHoveredOut );
+    mainViewMgr.onRowDblClicked( handleItemDblClicked );
      */
+
+    mainViewMgr.onRowSelected( handleOnRowSelected );
+    mainViewMgr.onControlCreated( "isSelected", handleCheckBoxCreated );
 
     vwGrid.setBreadCrumbMgr( breadCrumbBar );
     vwGrid.setDataModel( gridDataModel );
-     vwGrid.onFolderOpened( (folderItem ) => console.log( `Folder: ${ folderItem.title} opened`) );
+    vwGrid.onFolderOpened( (folderItem ) => console.log( `Folder: ${ folderItem.title} opened`) );
     vwGrid.onFolderClosed( (folderItem ) => console.log( `Folder: ${ folderItem.title} closed`) );
 
+    const galleryViewMgr = vwGrid.getViewMgr( "gallery");
+    galleryViewMgr.onTileAdded( (tileAdded) =>
+                                {
+                                  const tileData = tileAdded.getTileData();
+                                  console.log( tileData);
+                                });
     setupActionBtns( vwGrid );
     setupGridSearchBar( gridDataModel) ;
 
@@ -379,7 +386,7 @@
 
     checkBoxInstance.onSelectionChange( (bSelected ) =>
      {
-       console.log( `Chackbox Id: ${checkBoxInstance.getId()} check state = ${bSelected}`);
+       console.log( `Chackbox Id: ${dataItem.id} check state = ${bSelected}`);
      });
   }
 

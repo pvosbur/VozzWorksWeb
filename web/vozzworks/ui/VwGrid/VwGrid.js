@@ -8,7 +8,6 @@
 import VwPromiseMgr           from "../../util/VwPromiseMgr/VwPromiseMgr.js";
 import VwXmlProcessor         from "../../util/VwXmlProcessor/VwXmlProcessor.js";
 import VwXPath                from "../VwTree/VwXPath.js";
-import VwGridHdr              from "./VwGridHdr.js";
 import VwRowColViewMgr        from "./VwRowColViewMgr.js";
 import VwScrollBar            from "../VwScrollBar/VwScrollBar.js";
 import VwGridDataModel        from "./VwGridDataModel.js";
@@ -39,12 +38,10 @@ function VwGrid( strParent, gridModel, gridProps )
   const m_strGridHdrId = `${m_strGridId}_gridHdr`;
   const m_strGridBodyId = `${m_strGridId}_gridBody`;
   const m_mapViews = new VwHashMap();
-  const m_mapGridEventHandlers = new VwHashMap();
+  const m_mapEventHandlersByViewName = new VwHashMap();
 
-  let   m_gridHdr;
   let   m_gridViewMgr;
   let   m_strGridShellXml;
-  let   m_hdrProps;
   let   m_promiseMgr;
   let   m_vertScrollBar;
   let   m_horzScrollBar;
@@ -74,10 +71,10 @@ function VwGrid( strParent, gridModel, gridProps )
   this.setHorzScrollPos = (nScrollPos ) => m_horzScrollBar?m_horzScrollBar.setThumbPos( nScrollPos ):null;
   this.openFolder = handleOpenFolder;
   this.closeFolder = handleCloseFolder;
-  this.onFolderOpened = ( fnOnFolderOpened ) => addGridEventHandler( VwGrid.FolderOpened, fnOnFolderOpened );
-  this.onFolderClosed = ( fnOnFolderClosed ) => addGridEventHandler( VwGrid.FolderClosed, fnOnFolderClosed );
-  this.onViewOpened = ( fnOnViewOpened ) => addGridEventHandler( VwGrid.ViewOpened, fnOnViewOpened );
-  this.onViewClosed = ( fnOnViewClosed ) => addGridEventHandler( VwGrid.ViewClosed, fnOnViewClosed );
+  this.onFolderOpened = ( fnOnFolderOpened ) => addGridEventHandler( VwGrid.FolderOpened, null, fnOnFolderOpened );
+  this.onFolderClosed = ( fnOnFolderClosed ) => addGridEventHandler( VwGrid.FolderClosed, null, fnOnFolderClosed );
+  this.onViewOpened = ( viewMgr, fnOnViewOpened ) => addGridEventHandler( VwGrid.ViewOpened, viewMgr, fnOnViewOpened );
+  this.onViewClosed = ( viewMgr, fnOnViewClosed ) => addGridEventHandler( VwGrid.ViewClosed, viewMgr, fnOnViewClosed );
   this.getVertScrollBar = () => m_vertScrollBar;
   this.getHorzScrollBar = () => m_horzScrollBar;
   this.show = handleShowView;
@@ -164,7 +161,7 @@ function VwGrid( strParent, gridModel, gridProps )
 
     if ( m_currentViewSpec )
     {
-      fireGridEventHandlers( VwGrid.ViewClosed, m_currentViewSpec.view.name );
+      fireGridEventHandlers( m_gridViewMgr, VwGrid.ViewClosed, m_currentViewSpec.view.name );
      }
 
     m_currentViewSpec = viewSpecToOpen;
@@ -182,7 +179,7 @@ function VwGrid( strParent, gridModel, gridProps )
       }
     }
 
-    await fireGridEventHandlers( VwGrid.ViewOpened );
+    await fireGridEventHandlers( m_gridViewMgr, VwGrid.ViewOpened );
 
     calcGridDataContainterHeight();
 
@@ -260,13 +257,7 @@ function VwGrid( strParent, gridModel, gridProps )
    */
   function createRowColView( viewSpec, vwXpath )
   {
-
-    // initial load if we get here
-    m_hdrProps = vwXpath.evaluate( "//gridHdr" );
-
-    viewSpec.gridHdr = m_gridHdr = new VwGridHdr( self, m_hdrProps, m_props );
-    viewSpec.gridViewMgr = m_gridViewMgr = new VwRowColViewMgr( self, m_gridHdr, vwXpath, viewSpec.view, m_props );
-
+    viewSpec.gridViewMgr = m_gridViewMgr = new VwRowColViewMgr( self,  vwXpath, viewSpec.view, m_props );
     viewSpec.gridViewMgr.onPostItemAdd( handlePostItemAdded );
 
   } // end createRowColView()
@@ -279,7 +270,6 @@ function VwGrid( strParent, gridModel, gridProps )
    */
   function createTileView( viewSpec, vwXpath )
   {
-
     let aTileProps;
 
     if ( !Array.isArray( viewSpec.view.props.prop ) )
@@ -309,9 +299,11 @@ function VwGrid( strParent, gridModel, gridProps )
 
     }
 
+    tileProps.name = viewSpec.view.name;
+
     viewSpec.gridViewMgr = m_gridViewMgr = new VwTileViewMgr( self, m_props, tileProps, implProps );
 
-    viewSpec.gridViewMgr.onPostItemAdd( handlePostItemAdded );
+    viewSpec.gridViewMgr.onTileAdded( handlePostItemAdded );
 
   } // end createTileView()
 
@@ -586,6 +578,13 @@ function VwGrid( strParent, gridModel, gridProps )
 
   } // end toArray()
 
+  /**
+   * Gets the view manager instance for the view requested.
+   *
+   * @param strViewName The name of the view to get as defined in the view xml configuration
+   *
+   * @return {VwRowColViewMgr|VwTileViewMgr|*}
+   */
   function handleGetViewMgr( strViewName )
   {
     if ( !strViewName )
@@ -739,14 +738,33 @@ function VwGrid( strParent, gridModel, gridProps )
    * @param strEventType The event handler type must be one of "itemDblClick", "folderOpened", "folderClosed", "viewOpened", "viewClosed"
    * @param fnEeventHandler   The callback handler to be invoded
    */
-  function addGridEventHandler( strEventType, fnEventHandler )
+  function addGridEventHandler( strEventType, viewMgr, fnEventHandler )
   {
-    let aEventHandlers = m_mapGridEventHandlers.get( strEventType );
+    let strViewName;
+    if ( !viewMgr )
+    {
+      strViewName = self.getGridId();
+    }
+    else
+    {
+      strViewName = viewMgr.getName();
+    }
+
+    let mapEventHandlersByEventType = m_mapEventHandlersByViewName.get( strViewName );
+
+
+    if ( !mapEventHandlersByEventType )
+    {
+      mapEventHandlersByEventType = new VwHashMap();
+      m_mapEventHandlersByViewName.put( strViewName, mapEventHandlersByEventType );
+    }
+
+    let aEventHandlers = mapEventHandlersByEventType.get( strEventType );
 
     if ( !aEventHandlers )
     {
       aEventHandlers = [];
-      m_mapGridEventHandlers.put( strEventType, aEventHandlers );
+      mapEventHandlersByEventType.put( strEventType, aEventHandlers );
     }
 
     const eventNdx = aEventHandlers.findIndex( (fnHandler) => fnEventHandler == fnHandler );
@@ -758,9 +776,33 @@ function VwGrid( strParent, gridModel, gridProps )
 
   } // end addGridEventHandler()
 
-  async function fireGridEventHandlers( strEventType, arg )
+  /**
+   *
+   * @param strEventType
+   * @param arg
+   * @return {Promise<void>}
+   */
+  async function fireGridEventHandlers( viewMgr, strEventType, arg )
   {
-    const aEventHandlers = m_mapGridEventHandlers.get( strEventType );
+    let strViewName;
+
+    if ( !viewMgr )
+    {
+      strViewName = self.getGridId();
+    }
+    else
+    {
+      strViewName= viewMgr.getName();
+    }
+
+    const mapHandlersByViewName = m_mapEventHandlersByViewName.get( strViewName );
+
+    if ( !mapHandlersByViewName )
+    {
+      return;
+
+    }
+    const aEventHandlers =mapHandlersByViewName.get( strEventType );
 
     if ( !aEventHandlers )
     {

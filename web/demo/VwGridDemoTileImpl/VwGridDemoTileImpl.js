@@ -15,6 +15,8 @@ function VwGridDemoTileImpl( strParentId, strTileId, vwGrid, dataItem, tileProps
 {
   let m_strTileHtml;
 
+  this.getTileData = () => dataItem;
+
   configObject();
 
   /**
