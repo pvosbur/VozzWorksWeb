@@ -219,8 +219,12 @@ function VwGrid( strParent, gridModel, gridProps )
    */
   function processViews( xmlGraph, vwXpath )
   {
-    const aViews = xmlGraph.views.view;
+    let aViews = xmlGraph.views.view;
 
+    if ( !Array.isArray(aViews) )
+    {
+      aViews = [ aViews ];
+    }
     m_strDefaultView = m_props.defaultView;
 
     if ( !m_strDefaultView )
