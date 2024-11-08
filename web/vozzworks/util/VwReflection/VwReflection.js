@@ -111,7 +111,6 @@ export function VwConstructor( vwClass,fnConstructor )
  */
 export function VwMethod( strMethodName, astrParameters )
 {
-
   const self = this;
 
   // Make sure VwMethod was created internally
@@ -145,7 +144,7 @@ export function VwMethod( strMethodName, astrParameters )
     
     return 0;
     
-  }
+  } // end getParamCount()
 
   /**
    * Returns the parameter names
@@ -155,7 +154,7 @@ export function VwMethod( strMethodName, astrParameters )
   {
     return astrParameters;
     
-  }
+  } // end getParamNames()
 
   /**
    * Invokes the methos
@@ -175,13 +174,13 @@ export function VwMethod( strMethodName, astrParameters )
     
     return fnMethod.apply( objInstance, aobjParams );
 
-  }
+  } // end invoke()
   
 } //end VwMethod{}
 
 
 /**
- * Class to old a property description
+ * Class to hold a property description
  * 
  * @param strName The property name
  * @param objInstance the object instance this pro[perty is for
@@ -219,7 +218,7 @@ export function VwProperty( strName )
     }
 
     return m_objInstance[ strName ];
-  }
+  } // end getValue()
 
 
   /**
@@ -236,7 +235,7 @@ export function VwProperty( strName )
 
     m_objInstance[ strName ] = objValue;
 
-  }
+  } // end setValue()
 
 } // end VwProperty{}
 
