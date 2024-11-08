@@ -562,8 +562,10 @@ function VwListBox( strParentId, vwDataModel, listBoxProps )
    */
   function addScrollBars()
   {
-    m_vertScrollBar = new VwScrollBar( `content_${m_strListBoxId}`, {"orientation":"vert"} );
-    m_horzScrollBar = new VwScrollBar( `content_${m_strListBoxId}`, {"orientation":"horz"} );
+    const strContentId = `content_${m_strListBoxId}`;
+
+    m_vertScrollBar = new VwScrollBar( strContentId, strContentId, {"orientation":"vert"} );
+    m_horzScrollBar = new VwScrollBar( strContentId, strContentId, {"orientation":"horz"} );
 
   } // end addScrollBars()
 

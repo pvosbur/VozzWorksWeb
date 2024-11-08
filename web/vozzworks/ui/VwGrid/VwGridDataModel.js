@@ -321,14 +321,14 @@ function VwGridDataModel( dataModelProps )
       strIdProp = m_gridProps.dataIdProp;
     }
 
-    const objResponse = findById( dataItemToUpdate[strIdProp ] );
+    const ndx = m_aDataSet.findIndex( (data) => data[strIdProp] == dataItemToUpdate[strIdProp ] );
 
-    if ( !objResponse )
+    if (  ndx === undefined )
     {
       throw "Cannot find grid data item for id: " + strIdProp;
     }
 
-    m_aDataSet[ objResponse.index ] = dataItemToUpdate;
+    m_aDataSet[ ndx ] = dataItemToUpdate;
 
     if ( bSilent )
     {

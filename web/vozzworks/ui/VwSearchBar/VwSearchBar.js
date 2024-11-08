@@ -21,7 +21,7 @@ VwCssImport( "/vozzworks/ui/VwSearchBar/style");
 /**
  * SearchBar object
  * @param strParent The parent id wher the searchbar will be places
- * @param filterImplementor a filter implementor. it must support the applyTextFilter method
+ * @param m_filterImplementor a filter implementor. it must support the applyTextFilter method
  * @param searchProps
  *
  * cssSearchBar: String.        Css class for the parent DIV. Default is "VwSearchBar".
@@ -45,6 +45,7 @@ function VwSearchBar( strParent, filterImplementor, searchProps )
   const self = this;
   const SEARCH_ID_BASE = `${strParent}_`;
 
+  let m_filterImplementor = filterImplementor;
   let m_clearBtn;
   let m_searchProps;
   let m_fnOnSearchTextCleared;
@@ -53,6 +54,7 @@ function VwSearchBar( strParent, filterImplementor, searchProps )
 
   // PUBLIC Methods
   this.clear = clearInputField;
+  this.setFilterImplementor = ( filterImplementor ) => m_filterImplementor = filterImplementor;
   this.getSearchText = getSearchText;
   this.showClearIcon = showClearIcon;
   this.setFocus = () => $( `#${SEARCH_ID_BASE}searchText` ).focus();
@@ -173,10 +175,7 @@ function VwSearchBar( strParent, filterImplementor, searchProps )
       m_fnOnSearchTextChange( strSearchText );
     }
 
-    if ( filterImplementor )
-    {
-      filterImplementor.applyTextFilter( strSearchText );
-    }
+    m_filterImplementor.applyTextFilter( strSearchText );
 
     updateAutoHideClearXStatus();
     
@@ -245,7 +244,7 @@ function VwSearchBar( strParent, filterImplementor, searchProps )
   function clearInputField()
   {
     $( `#${SEARCH_ID_BASE}searchText` ).val( "" );
-    filterImplementor.applyTextFilter( "" );
+    m_filterImplementor.applyTextFilter( "" );
 
   } // end clearInputField()
 
