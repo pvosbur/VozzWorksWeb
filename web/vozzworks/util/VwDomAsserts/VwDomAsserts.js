@@ -76,7 +76,7 @@ VwDomAssertions.equals = ( strDomEleId, strExpectedElementVal, strFailMsg ) =>
 
   if ( !(strElementVal == strElementVal ))
   {
-    VwAssertions.processErrorStack( `Assert Failure equals ${strFailMsg} '${strElementVal}''` );
+    VwAssert.processErrorStack( `Assert Failure equals ${strFailMsg} '${strElementVal}''` );
   }
 
 } // end VwDomAssertions.equals()
@@ -92,7 +92,7 @@ VwDomAssertions.existsById = ( strDomEleId, strFailMsg ) =>
 
   if ( !(strElement ) )
   {
-    VwAssertions.processErrorStack(  `Assert Failure existsById: ${strFailMsg}` );
+    VwAssert.processErrorStack(  `Assert Failure existsById: ${strFailMsg}` );
   }
 
 } // end VwDomAssertions.existsById()
@@ -109,7 +109,7 @@ VwDomAssertions.existsByClass = ( strDomEleClassName, strFailMsg ) =>
 
   if ( !(strElement ) )
   {
-    VwAssertions.processErrorStack( `Assert Failure existsByClass: ${strFailMsg}` );
+    VwAssert.processErrorStack( `Assert Failure existsByClass: ${strFailMsg}` );
   }
 
 } // end VwDomAssertions.existsByClass()
@@ -155,7 +155,7 @@ VwDomAssertions.waitForElement = async ( strDomEleId, nMaxWaitTime, strFailMsg )
 
       if ( (Date.now() - nStartTime) >= nMaxWaitTime )
       {
-        fail( VwAssertions.processErrorStack( `Assert Failure waitForElement: ${strFailMsg}` ) ) // This will throw an exception
+        fail( VwAssert.processErrorStack( `Assert Failure waitForElement: ${strFailMsg}` ) ) // This will throw an exception
       }
 
       setTimeout( timeoutHandler, 50 );
@@ -179,12 +179,12 @@ VwDomAssertions.isEmpty = ( strDomEleId, strFailMsg ) =>
 
   if ( !(strElement ) )
   {
-    VwAssertions.processErrorStack(  `Assert Failure isEmpty, element is null: ${strFailMsg}` );
+    VwAssert.processErrorStack(  `Assert Failure isEmpty, element is null: ${strFailMsg}` );
   }
 
   if ( $(`#${strDomEleId}`).length > 0 )
   {
-    VwAssertions.processErrorStack(  `Assert Failure isEmpty: ${strFailMsg}` );
+    VwAssert.processErrorStack(  `Assert Failure isEmpty: ${strFailMsg}` );
 
   }
 
@@ -202,7 +202,7 @@ VwDomAssertions.isNotNull = ( strDomEleId, strFailMsg ) =>
 
   if ( !strElementVal)
   {
-    VwAssertions.processErrorStack(  `Assert Failure isNotNull: ${strFailMsg}` );
+    VwAssert.processErrorStack(  `Assert Failure isNotNull: ${strFailMsg}` );
   }
 
 } // end VwDomAssertions.isNotNull()
@@ -219,7 +219,7 @@ VwDomAssertions.isNull = ( strDomEleId, strFailMsg ) =>
 
   if ( strElementVal)
   {
-    VwAssertions.processErrorStack(  `Assert Failure isNull: ${strFailMsg}` );
+    VwAssert.processErrorStack(  `Assert Failure isNull: ${strFailMsg}` );
   }
 
 } // end VwDomAssertions.isNull()
@@ -249,7 +249,7 @@ VwDomAssertions.cssEquals = ( strDomElelId, strCssProperty, strCssExpectedVal, s
 
   if ( !(strCssVal == strCssExpectedVal) )
   {
-    VwAssertions.processErrorStack( `Assert Failure cssEquals: ${strFailMsg} '${strCssVal}'` );
+    VwAssert.processErrorStack( `Assert Failure cssEquals: ${strFailMsg} '${strCssVal}'` );
   }
 
   /**

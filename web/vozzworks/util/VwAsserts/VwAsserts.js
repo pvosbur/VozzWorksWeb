@@ -24,13 +24,13 @@ function VwAssert()
  * @param objToTest The object to test
  * @param strFailMsg  throws exception if objToTest is null with the strFailMsg as the Exception reason
  */
-VwAssertions.isNotNull = ( objToTest, strFailMsg ) =>
+VwAssert.isNotNull = ( objToTest, strFailMsg ) =>
 {
   if ( !objToTest )
   {
-    VwAssertions.processErrorStack( `Assert Failure isNotNull: ${strFailMsg}` );
+    VwAssert.processErrorStack( `Assert Failure isNotNull: ${strFailMsg}` );
   }
-} // end VwAssertions.isNotNull()
+} // end VwAssert.isNotNull()
 
 
 /**
@@ -39,14 +39,14 @@ VwAssertions.isNotNull = ( objToTest, strFailMsg ) =>
  * @param objToTest The object to test
  * @param strFailMsg  throws exception if objToTest is not null with the strFailMsg as the Exception reason
  */
-VwAssertions.isNull = ( objToTest, strFailMsg ) =>
+VwAssert.isNull = ( objToTest, strFailMsg ) =>
 {
   if ( !objToTest )
   {
-    VwAssertions.processErrorStack(`Assert Failure isNull: ${strFailMsg}` );
+    VwAssert.processErrorStack(`Assert Failure isNull: ${strFailMsg}` );
   }
 
-} // end VwAssertions.isNull()
+} // end VwAssert.isNull()
 
 /**
  * Asserts the boolean expression ffrom some compare is true
@@ -54,22 +54,22 @@ VwAssertions.isNull = ( objToTest, strFailMsg ) =>
  *
  * @param strFailMsg Throws an exception if the btest is false with the strFailMsg as the Exception reason
  */
-VwAssertions.isTrue = ( bTest, strFailMsg ) =>
+VwAssert.isTrue = ( bTest, strFailMsg ) =>
 {
   if (! bTest )
   {
-    VwAssertions.processErrorStack( `Assert Failure isTrue: ${strFailMsg}` );
+    VwAssert.processErrorStack( `Assert Failure isTrue: ${strFailMsg}` );
 
   }
 
-} // end VwAssertions.isTrue()
+} // end VwAssert.isTrue()
 
 
 /**
  * THis creates a statckn trace so we can show the developer the harmess class, method name and line nbr of the assert that failed
  * @param strErrMsg
  */
-VwAssertions.processErrorStack = ( strErrMsg ) =>
+VwAssert.processErrorStack = ( strErrMsg ) =>
 {
 
   const errStack = new Error( strErrMsg ).stack;

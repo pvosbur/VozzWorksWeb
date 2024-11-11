@@ -177,7 +177,7 @@ function VwUnitTester( strUnitTestProps, strSuiteProps )
 
         }
 
-        VwAssertions.isNotNull( harnessClass, `Expected to get a VwClassObject for the test harness ${strNameOrPathToTestHarness} but got null` )
+        VwAssert.isNotNull( harnessClass, `Expected to get a VwClassObject for the test harness ${strNameOrPathToTestHarness} but got null` )
 
         const harnessSpec = {};
         harnessSpec.harnessClass = harnessClass;
@@ -212,7 +212,7 @@ function VwUnitTester( strUnitTestProps, strSuiteProps )
 
     const aFilteredMethods = aMethodsToTest.filter( vwMethod => vwMethod.getName().startsWith( "test"))
 
-    VwAssertions.isNotNull( aFilteredMethods, `Expected an array of public methods to test that start with 'test for ${harnessSpec.strNameOrPathToTestHarness} but got none  `)
+    VwAssert.isNotNull( aFilteredMethods, `Expected an array of public methods to test that start with 'test for ${harnessSpec.strNameOrPathToTestHarness} but got none  `)
 
     const harnessImpl = harnessSpec.harnessClass.getConstructor().newInstance( [m_utils] );
 
