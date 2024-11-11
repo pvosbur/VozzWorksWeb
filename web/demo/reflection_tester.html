@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+</body>
+<script type="module">
+
+  import VwExString from "../vozzworks/util/VwExString/VwExString.js";
+  import {VwClass,VwConstructor,VwMethod,VwProperty} from "../vozzworks/util/VwReflection/VwReflection.js";
+
+  doTest();
+  
+  async function doTest()
+  {
+
+    const objClass = await VwClass.forModule( "/demo/js/VwRefelectionTest.js" );
+    const testConstructor = objClass.getConstructor();
+    const nParamCount = testConstructor.getParamCount();
+    const astrNames = testConstructor.getParamNames();
+
+    console.log("Param Names:")
+    for ( const strName of astrNames )
+    {
+      console.log( strName );
+    }
+
+    let aMethods = objClass.getPublicMethods();
+    const methodSetFirstName = objClass.getPublicMethod( "setFirstName" );
+    const methodSetLastName = objClass.getPublicMethod( "setLastName" );
+    const methodSetAge = objClass.getPublicMethod( "setAge" );
+    const methodGetAge = objClass.getPublicMethod( "getAge" );
+    const methodGetBirthDay = objClass.getPublicMethod( "getBirthday" );
+    const methodHello = objClass.getPublicMethod( "sayHello" );
+
+
+    const test1 = await testConstructor.newInstance( ["Test One"] );
+    methodSetAge.invoke( test1, [20] );
+    const nAge = methodGetAge.invoke( test1 );
+
+    const init = {};
+    init.setFirstName = "Ted";
+    init.setBirthday = new Date("1953-06-28")
+
+    for ( const strPropName in init )
+    {
+      const method = objClass.getPublicMethod( strPropName );
+      const val = init[strPropName];
+
+      method.invoke( test1, [val]);
+
+    }
+
+    const bday = methodGetBirthDay.invoke( test1 );
+
+    console.log( bday );
+
+    /*
+    const strCName = constructor.getName();
+
+     let strName = aMethods[0].getName();
+
+    methodSpeak.invoke( test2 );
+
+
+    strName = aMethods[0].getName();
+
+    nParamCount = aMethods[0].getParamCount();
+    astrNames = aMethods[0].getParamNames();
+
+
+    const objClass2 = await VwClass.forModule( "/js/reflection_test.js", "Test2" )
+    constructor = objClass2.getConstructor();
+
+
+    aMethods = objClass2.getPublicMethods();
+
+    var objTest2 = constructor.newInstance();
+
+    objTest2.speak();
+    objTest2.bark("Woff");
+
+    var aStrm2ParanNames = aMethods[1].getParamNames();
+
+    aMethods[1].invoke( objTest2, ["Bark Like a FUCKING Dog"] );
+
+     */
+  }
+
+</script>
+</html>

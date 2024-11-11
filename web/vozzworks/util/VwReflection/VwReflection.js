@@ -95,8 +95,37 @@ export function VwConstructor( vwClass,fnConstructor )
 
     }
 
-    return VwClass.getParamNames( fnConstructor.toString() );
-    
+    let str = fnConstructor.toString();
+
+    // Remove comments of the form /* ... */
+    // Removing comments of the form //
+    // Remove body of the function { ... }
+    // removing '=>' if func is arrow function
+    str = str.replace(/\/\*[\s\S]*?\*\//g, '')
+            .replace(/\/\/(.)*/g, '')
+            .replace(/{[\s\S]*}/, '')
+            .replace(/=>/g, '')
+            .trim();
+
+    let nStartParen = str.indexOf("(");
+    const nEndParen = str.indexOf(")");
+    if (nStartParen < 0 )
+    {
+      throw `${fnConstructor.name} invalid, missing open "("`;
+    }
+
+    if (nEndParen < 0 )
+    {
+      throw `${fnConstructor.name} invalid, missing closing ")"`;
+    }
+
+    const strParamNames = str.substring( ++nStartParen, nEndParen ).trim();
+
+    const astrParamNames = strParamNames.split( ",");
+
+    return astrParamNames;
+
+
   }
   
 }  // end VwConstructor{}
@@ -248,10 +277,8 @@ export function VwProperty( strName )
 export function VwClass( fnClass )
 {
   const self = this;
-
   const m_aPublicMethods = [];
   const m_aProperties = [];
-
 
   this.getConstructor = getConstructor;
   this.getPublicMethods = () => m_aPublicMethods;
@@ -531,5 +558,4 @@ VwClass.getParamNames = function( strParams )
 
   return aParamNames;
 
-  
 };
